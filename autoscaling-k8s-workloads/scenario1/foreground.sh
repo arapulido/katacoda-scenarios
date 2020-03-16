@@ -1,12 +1,8 @@
 #!/bin/bash
 
-NPODS=$(kubectl get pods --field-selector=status.phase=Running | grep -v NAME | wc -l)
-
-
-while [ "$NPODS" != "4" ]; do
-  echo "Num pods: $NPODS"
+while [ ! -f "/usr/local/bin/prepenvironment" ]; do
   sleep 0.3
-  NPODS=$(kubectl get pods --field-selector=status.phase=Running | grep -v NAME | wc -l)
 done
+sleep 0.3
 
-echo "Pods ready!"
+prepenvironment

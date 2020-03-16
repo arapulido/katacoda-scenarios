@@ -6,6 +6,7 @@
   "details": {
     "intro": {
       "courseData": "background.sh",
+      "code": "foreground.sh",
       "text": "intro.md"
     },
     "steps": [
@@ -29,12 +30,8 @@
     "host01": [
       {
         "file": "prepenvironment",
-        "target": "/root/",
+        "target": "/usr/local/bin",
         "chmod": "+x"
-      },
-      {
-        "file": "test_file",
-        "target": "/root/"
       }
     ]
     }

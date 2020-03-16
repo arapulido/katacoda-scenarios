@@ -14,7 +14,4 @@ while [ "$NPODS" != "4" ]; do
   NPODS=$(kubectl get pods --field-selector=status.phase=Running | grep -v NAME | wc -l)
 done
 
-kubectl port-forward "$(kubectl get pods --selector=service=frontend --output=jsonpath={.items[0].metadata.name})" 3000 &
-
-
 echo "complete">>/root/status.txt

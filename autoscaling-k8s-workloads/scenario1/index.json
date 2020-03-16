@@ -38,7 +38,7 @@
     ]
   },
   "assets": {
-    "host01": [
+    "client": [
       {
         "file": "prepenvironment",
         "target": "/usr/local/bin/",

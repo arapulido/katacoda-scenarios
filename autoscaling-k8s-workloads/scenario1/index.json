@@ -1,0 +1,54 @@
+{
+  "title": "Scenario 1",
+  "description": "",
+  "difficulty": "Intermediate",
+  "time": "60 minutes",
+  "details": {
+    "intro": {
+      "courseData": "background.sh",
+      "code": "foreground.sh",
+      "text": "intro.md"
+    },
+    "steps": [
+      {
+        "title": "Step 1",
+        "text": "step1.md"
+      },
+      {
+        "title": "Step 2",
+        "text": "step2.md"
+      },
+      {
+        "title": "Step 3",
+        "text": "step3.md"
+      }
+    ],
+    "finish": {
+      "text": "finish.md"
+    }
+  },
+  "environment": {
+    "uilayout": "editor-terminal",
+    "showdashboard": true,
+    "dashboards": [
+      {
+        "name": "Ecommerce App",
+        "port": 5000
+      }
+    ]
+  },
+  "assets": {
+    "host01": [
+      {
+        "file": "prepenvironment",
+        "target": "/usr/local/bin/",
+        "chmod": "+x"
+      }
+    ]
+  },
+  "backend": {
+    "imageid": "datadog-kubernetes-cluster-running", 
+    "reuseConnection": "true", 
+    "livetime": "1h"
+  }
+}

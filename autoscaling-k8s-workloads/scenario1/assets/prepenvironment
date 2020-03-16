@@ -1,0 +1,27 @@
+#!/bin/bash
+show_progress()
+{
+  local -r pid="${1}"
+  local -r delay='1'
+
+  while true; do 
+    grep -i "complete" status.txt &> /dev/null
+    if [[ "$?" -ne 0 ]]; then     
+        sleep "${delay}" 
+    else
+      break
+    fi
+    
+  done
+}
+while [ ! -f "status.txt" ]; do
+  sleep 0.3
+done
+show_progress
+if [ ! -f "/root/provisioned" ]; then
+  touch /root/provisioned
+  printf "\n\nOK, the training environment is installed and ready to go.\n\n"
+else
+  printf "\n\nWelcome back to the training lab.\n\n"
+fi
+printf "Provisioning Complete\n\n"

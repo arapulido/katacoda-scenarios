@@ -37,15 +37,15 @@
     ]
   },
   "assets": {
-    "client": [
+    "host01": [
       {
         "file": "prepenvironment",
-        "target": "~",
+        "target": "~/",
         "chmod": "+x"
       },
       {
-        "file": "test",
-        "target": "~"
+        "file": "test_file",
+        "target": "~/"
       }
     ]
   },

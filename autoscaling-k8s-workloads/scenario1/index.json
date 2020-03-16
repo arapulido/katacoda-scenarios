@@ -6,7 +6,6 @@
   "details": {
     "intro": {
       "courseData": "background.sh",
-      "code": "foreground.sh",
       "text": "intro.md"
     },
     "steps": [
@@ -41,8 +40,12 @@
     "client": [
       {
         "file": "prepenvironment",
-        "target": "/usr/local/bin/",
+        "target": "~",
         "chmod": "+x"
+      },
+      {
+        "file": "test",
+        "target": "~"
       }
     ]
   },

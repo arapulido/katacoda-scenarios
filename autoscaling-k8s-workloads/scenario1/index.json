@@ -24,6 +24,19 @@
     ],
     "finish": {
       "text": "finish.md"
+    },
+    "assets": {
+    "host01": [
+      {
+        "file": "prepenvironment",
+        "target": "/root/",
+        "chmod": "+x"
+      },
+      {
+        "file": "test_file",
+        "target": "/root/"
+      }
+    ]
     }
   },
   "environment": {
@@ -33,19 +46,6 @@
       {
         "name": "Ecommerce App",
         "port": 5000
-      }
-    ]
-  },
-  "assets": {
-    "host01": [
-      {
-        "file": "prepenvironment",
-        "target": "~/",
-        "chmod": "+x"
-      },
-      {
-        "file": "test_file",
-        "target": "~/"
       }
     ]
   },

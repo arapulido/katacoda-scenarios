@@ -32,6 +32,14 @@
         "file": "prepenvironment",
         "target": "/usr/local/bin",
         "chmod": "+x"
+      },
+      {
+        "file": "datadog-agent.yaml",
+        "target": "/root/datadog/"
+      },
+      {
+        "file": "serviceaccount.yaml",
+        "target": "/root/datadog/"
       }
     ]
     }
@@ -42,7 +50,7 @@
     "dashboards": [
       {
         "name": "Ecommerce App",
-        "port": 3000
+        "port": 30001
       }
     ]
   },

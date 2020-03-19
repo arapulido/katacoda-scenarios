@@ -18,3 +18,5 @@ Create the service account, the ClusterRole and the ClusterRoleBinding applying 
 Finally, we will deploy the Datadog agent. In the editor, open the file called `datadog-agent.yaml` and explore the different options we have set up for our agent. Can you tell what options set up APM and log collection?
 
 Deploy the Datadog agent DaemonSet applying the `datadog-agent.yaml` manifest: `kubectl apply -f datadog/datadog-agent.yaml`{{execute}}.
+
+Wait until the Datadog agent is running before moving to the next step: `kubectl get pods -l app=datadog-agent -w`{{execute}}.

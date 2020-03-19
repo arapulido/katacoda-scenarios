@@ -39,10 +39,6 @@ spec:
           value: kubernetes-cluster 
         - name: DD_LOGS_ENABLED
           value: "true"
-        - name: DD_TAGS
-          value: "env:ruby-shop"
-        - name: DD_ENV
-          value: "ruby-shop"
         - name: DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL
           value: "true"
         - name: DD_CRI_SOCKET_PATH
@@ -52,6 +48,8 @@ spec:
             fieldRef:
               apiVersion: v1
               fieldPath: status.hostIP
+        - name: DD_KUBELET_TLS_VERIFY
+          value: "false"
         image: datadog/agent:7
         imagePullPolicy: Always
         livenessProbe:

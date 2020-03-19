@@ -5,4 +5,6 @@ while [ ! -f "/usr/local/bin/prepenvironment" ]; do
 done
 sleep 0.3
 
+clear
+
 prepenvironment

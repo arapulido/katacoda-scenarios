@@ -1,19 +1,7 @@
-apiVersion: v1
-kind: Secret
-metadata:
-  name: datadog-secret
-  namespace: datadog
-  labels:
-    app: "datadog"
-type: Opaque
-data:
-  api-key: <replace_with_base64_of_your_api_key> 
----
 apiVersion: extensions/v1beta1
 kind: DaemonSet
 metadata:
   name: datadog-agent
-  namespace: datadog
 spec:
   revisionHistoryLimit: 10
   selector:
@@ -33,11 +21,6 @@ spec:
             secretKeyRef:
               key: api-key
               name: datadog-secret
-        - name: DD_CLUSTER_AGENT_AUTH_TOKEN 
-          valueFrom:
-            secretKeyRef:
-              key: token
-              name: datadog-auth-token 
         - name: DD_SITE
           value: datadoghq.com
         - name: DD_DOGSTATSD_NON_LOCAL_TRAFFIC
@@ -47,23 +30,21 @@ spec:
         - name: DD_HEALTH_PORT
           value: "5555"
         - name: DD_COLLECT_KUBERNETES_EVENTS
-          value: "false"
+          value: "true"
         - name: DD_LEADER_ELECTION
-          value: "false"
+          value: "true"
         - name: DD_APM_ENABLED
           value: "true"
         - name: DD_CLUSTER_NAME
           value: kubernetes-cluster 
-        - name: DD_KUBELET_TLS_VERIFY
-          value: "false"
         - name: DD_LOGS_ENABLED
-          value: "false"
+          value: "true"
         - name: DD_TAGS
           value: "env:ruby-shop"
         - name: DD_ENV
           value: "ruby-shop"
         - name: DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL
-          value: "false"
+          value: "true"
         - name: DD_CRI_SOCKET_PATH
           value: /var/run/crio/crio.sock
         - name: DD_KUBERNETES_KUBELET_HOST
@@ -71,7 +52,7 @@ spec:
             fieldRef:
               apiVersion: v1
               fieldPath: status.hostIP
-        image: datadog/agent:latest
+        image: datadog/agent:7
         imagePullPolicy: Always
         livenessProbe:
           failureThreshold: 3
@@ -117,13 +98,7 @@ spec:
           name: logpodpath
         - mountPath: /var/lib/docker/containers
           name: logcontainerpath
-      dnsPolicy: ClusterFirst
-      restartPolicy: Always
-      schedulerName: default-scheduler
-      securityContext: {}
-      serviceAccount: datadog-agent
       serviceAccountName: datadog-agent
-      terminationGracePeriodSeconds: 30
       volumes:
       - hostPath:
           path: /var/run/crio/crio.sock

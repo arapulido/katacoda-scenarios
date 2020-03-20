@@ -48,6 +48,14 @@ spec:
             fieldRef:
               apiVersion: v1
               fieldPath: status.hostIP
+        - name: DD_AGENT_HOST
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP
+        - name: DOGSTATSD_HOST_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP
         - name: DD_KUBELET_TLS_VERIFY
           value: "false"
         image: datadog/agent:7

@@ -60,6 +60,8 @@ spec:
               value: 'true'
             - name: DD_LEADER_ELECTION
               value: 'true'
+            - name: DD_KUBELET_TLS_VERIFY
+              value: 'false'
             - name: DD_KUBERNETES_KUBELET_HOST
               valueFrom:
                 fieldRef:

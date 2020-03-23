@@ -2,15 +2,15 @@ touch status.txt
 echo ""> /root/status.txt
 wall -n "Creating ecommerce deployment"
 
-kubectl apply -f https://raw.githubusercontent.com/arapulido/ecommerce-app-kubernetes-manifests/master/db.yaml
-kubectl apply -f https://raw.githubusercontent.com/arapulido/ecommerce-app-kubernetes-manifests/master/advertisements.yaml
-kubectl apply -f https://raw.githubusercontent.com/arapulido/ecommerce-app-kubernetes-manifests/master/discounts.yaml
-kubectl apply -f https://raw.githubusercontent.com/arapulido/ecommerce-app-kubernetes-manifests/master/frontend.yaml
-kubectl apply -f https://raw.githubusercontent.com/arapulido/ecommerce-app-kubernetes-manifests/master/regular-traffic.yaml
+git clone https://github.com/arapulido/autoscaling-workshop-files.git k8s-manifests
+cd k8s-manifests
+
+kubectl apply -f metrics-server/
+kubectl apply -f ecommerce-app/
 
 NPODS=$(kubectl get pods --field-selector=status.phase=Running | grep -v NAME | wc -l)
 
-while [ "$NPODS" != "4" ]; do
+while [ "$NPODS" != "5" ]; do
   sleep 0.3
   NPODS=$(kubectl get pods --field-selector=status.phase=Running | grep -v NAME | wc -l)
 done

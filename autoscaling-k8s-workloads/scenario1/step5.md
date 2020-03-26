@@ -21,6 +21,6 @@ NAME             TYPE      DATA      AGE
 datadog-app-key   Opaque    1         8s
 ```
 
-Before deploying the datadog cluster agent, we will delete the current Datadog agent DaemonSet, to avoid conflicts: `kubectl delete daemonset datadog-agent`{{execture}}
+Before deploying the datadog cluster agent, we will delete the current Datadog agent DaemonSet, to avoid conflicts: `kubectl delete daemonset datadog-agent`{{execute}}
 
 We will now deploy the Datadog Cluster Agent. Open the file called `datadog/datadog-cluster-agent.yaml` in the editor and try to understand the different options that are set there. Can you spot which option enables the External Metrics Server for the HPA controller? Let's deploy it by executing `kubectl apply -f datadog/datadog-cluster-agent.yaml`{{execute}}

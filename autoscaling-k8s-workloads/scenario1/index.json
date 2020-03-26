@@ -53,10 +53,8 @@
     }
   },
   "environment": {
-    "uilayout": "terminal",
+    "uilayout": "editor-terminal",
     "showdashboard": true,
-    "showide": true,
-    "idePort": 23000,
     "dashboards": [
       {
         "name": "Ecommerce App",

@@ -51,6 +51,8 @@ spec:
                 secretKeyRef:
                   key: token
                   name: datadog-auth-token
+            - name: DD_CLUSTER_AGENT_ENABLED
+              value: 'true'
 
             ## Set DD_SITE to 'datadoghq.eu' to send your Agent data to the Datadog EU site
             - name: DD_SITE

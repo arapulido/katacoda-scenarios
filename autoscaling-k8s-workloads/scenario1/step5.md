@@ -25,9 +25,11 @@ Before deploying the datadog cluster agent, we will delete the current Datadog a
 
 We will now deploy the Datadog Cluster Agent. Open the file called `datadog/datadog-cluster-agent.yaml` in the editor and try to understand the different options that are set there. Can you spot which option enables the External Metrics Server for the HPA controller? Let's deploy it by executing `kubectl apply -f datadog/datadog-cluster-agent.yaml`{{execute}}
 
-We will now deploy a slightly different version of the Datadog host agent. Open the file called `datadog/datadog-agent-with-cluster-agent.yaml` and try to spot the differences. What are the differences between this manifest and the one we had deployed before? (`datadog/datadog-agent.yaml`). Let's deploy this new one by executing the following command: `kubectl apply -f datadog/datadog-agent-with-cluster-agent.yaml`{{execute}}
+We will now deploy a slightly different version of the Datadog host agent. Open the file called `datadog/datadog-agent-with-cluster-agent.yaml` and try to spot the differences. What are the differences between this manifest and the one we had deployed before? (`datadog/datadog-agent.yaml`). You can spot the differences running the following `diff` command: `diff -u datadog/datadog-agent.yaml datadog/datadog-agent-with-cluster-agent.yaml`{{execute}}
 
-Once the pod is running, let's check that the communication between the host agent and the cluster agent is working correctly. Execute the following command: `kubectl exec -ti $(kubectl get pods -l app=datadog-agent -o jsonpath='{.items[0].metadata.name}') -- agent status` {{execute}} With this command we are executing the status command for the Datadog agent on the first pod for a list of pods with label `app=datadog-agent`. If the agent host is correctly communicating with the cluster agent, at the botton of the output from running that command you should get something similar to this:
+Let's deploy this new one by executing the following command: `kubectl apply -f datadog/datadog-agent-with-cluster-agent.yaml`{{execute}}
+
+Once the pod is running, let's check that the communication between the host agent and the cluster agent is working correctly. Execute the following command: `kubectl exec -ti $(kubectl get pods -l app=datadog-agent -o jsonpath='{.items[0].metadata.name}') -- agent status`{{execute}} With this command we are executing the status command for the Datadog agent on the first pod for a list of pods with label `app=datadog-agent`. If the agent host is correctly communicating with the cluster agent, at the botton of the output from running that command you should get something similar to this:
 
 ```
 =====================

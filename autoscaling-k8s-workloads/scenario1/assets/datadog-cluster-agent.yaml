@@ -68,3 +68,15 @@ spec:
     protocol: TCP
   selector:
     app: datadog-cluster-agent
+---
+  kind: Service
+  apiVersion: v1
+  metadata:
+    name: datadog-custom-metrics-server
+  spec:
+    selector:
+      app: datadog-cluster-agent
+    ports:
+    - protocol: TCP
+      port: 443
+      targetPort: 443

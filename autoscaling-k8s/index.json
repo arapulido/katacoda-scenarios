@@ -1,0 +1,80 @@
+{
+  "title": "Scenario 1",
+  "description": "",
+  "difficulty": "Intermediate",
+  "time": "60 minutes",
+  "details": {
+    "intro": {
+      "courseData": "background.sh",
+      "code": "foreground.sh",
+      "text": "intro.md"
+    },
+    "steps": [
+      {
+        "title": "Step 1",
+        "text": "step1.md"
+      },
+      {
+        "title": "Step 2",
+        "text": "step2.md"
+      },
+      {
+        "title": "Step 3",
+        "text": "step3.md"
+      },
+      {
+        "title": "Step 4",
+        "text": "step4.md"
+      },
+      {
+        "title": "Step 5",
+        "text": "step5.md"
+      }
+    ],
+    "finish": {
+      "text": "finish.md"
+    },
+    "assets": {
+    "host01": [
+      {
+        "file": "prepenvironment",
+        "target": "/usr/local/bin",
+        "chmod": "+x"
+      },
+      {
+        "file": "datadog-agent.yaml",
+        "target": "/root/datadog/"
+      },
+      {
+        "file": "serviceaccount.yaml",
+        "target": "/root/datadog/"
+      },
+      {
+        "file": "datadog-agent-with-cluster-agent.yaml",
+        "target": "/root/datadog/"
+      },
+      {
+        "file": "datadog-cluster-agent.yaml",
+        "target": "/root/datadog/"
+      },
+      {
+        "file": "cluster-agent-external-metrics.yaml",
+        "target": "/root/datadog/"
+      }
+    ]
+    }
+  },
+  "environment": {
+    "uilayout": "editor-terminal",
+    "showdashboard": true,
+    "dashboards": [
+      {
+        "name": "Ecommerce App",
+        "port": 30001
+      }
+    ]
+  },
+  "backend": {
+    "imageid": "datadog-kubernetes-cluster-running:1.16"
+  }
+}

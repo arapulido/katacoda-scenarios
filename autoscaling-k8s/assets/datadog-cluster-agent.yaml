@@ -1,0 +1,82 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: datadog-cluster-agent
+spec:
+  selector:
+    matchLabels:
+      app: datadog-cluster-agent
+  template:
+    metadata:
+      labels:
+        app: datadog-cluster-agent
+      name: datadog-agent
+      annotations:
+        ad.datadoghq.com/datadog-cluster-agent.check_names: '["prometheus"]'
+        ad.datadoghq.com/datadog-cluster-agent.init_configs: '[{}]'
+        ad.datadoghq.com/datadog-cluster-agent.instances: '[{"prometheus_url": "http://%%host%%:5000/metrics","namespace": "datadog.cluster_agent","metrics": ["go_goroutines","go_memstats_*","process_*","api_requests","datadog_requests","external_metrics", "cluster_checks_*"]}]'
+    spec:
+      serviceAccountName: datadog-agent
+      containers:
+      - image: datadog/cluster-agent:latest
+        imagePullPolicy: Always
+        name: datadog-cluster-agent
+        env:
+          - name: DD_API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: datadog-secret
+                key: api-key
+          # Optionally reference an APP KEY for the External Metrics Provider.
+          - name: DD_APP_KEY
+            valueFrom:
+              secretKeyRef:
+                name: datadog-app-key
+                key: app-key
+          - name: DD_COLLECT_KUBERNETES_EVENTS
+            value: "true"
+          - name: DD_LEADER_ELECTION
+            value: "true"
+          - name: DD_CLUSTER_CHECKS_ENABLED 
+            value: "true"
+          - name: DD_EXTERNAL_METRICS_PROVIDER_ENABLED
+            value: 'true'
+          - name: DD_EXTERNAL_METRICS_PROVIDER_WPA_CONTROLLER
+            value: 'false'
+          - name: DD_CLUSTER_NAME
+            value: kubernetes
+          - name: DD_ENV
+            value: "ruby-shop"
+          - name: DD_TAGS
+            value: "env:ruby-shop"
+          # If using a secret, you can alternatively use:
+          - name: DD_CLUSTER_AGENT_AUTH_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: datadog-auth-token
+                key: token
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: datadog-cluster-agent
+  labels:
+    app: datadog-cluster-agent
+spec:
+  ports:
+  - port: 5005 # Has to be the same as the one exposed in the DCA. Default is 5005.
+    protocol: TCP
+  selector:
+    app: datadog-cluster-agent
+---
+  kind: Service
+  apiVersion: v1
+  metadata:
+    name: datadog-custom-metrics-server
+  spec:
+    selector:
+      app: datadog-cluster-agent
+    ports:
+    - protocol: TCP
+      port: 443
+      targetPort: 443

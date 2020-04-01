@@ -1,5 +1,3 @@
-## HPA with external metrics
-
 We have set up our Datadog Cluster Agent to also work as a HPA External Metrics server. That means that we can drive our scaling events based on any metric we have in our Datadog account.
 
 Let's check what metrics do we have available by navigating to the [Metrics Summary in Datadog](https://app.datadoghq.com/metric/summary). Spend a bit of time checking the different metrics that we have available and try to understand what some of those are tracking. TIP: Clicking on any available metric in the Metrics Summary will show a description of the metric and the available tags for that metric.
@@ -28,7 +26,7 @@ spec:
   - type: External
     external:
       metric:
-        name: "trace.rack.request.duration.by.resource_service.p100"
+        name: "trace.rack.request.duration.by.resource_service.100p"
         selector:
           matchLabels:
             service: store-frontend

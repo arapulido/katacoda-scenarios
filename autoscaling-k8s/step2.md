@@ -1,6 +1,10 @@
 We are now going to deploy Datadog in our cluster to start monitoring our infrastructure and applications.
 
-Log into [Datadog](https://app.datadoghq.com/) and navigate to the [API seetings page](https://app.datadoghq.com/account/settings#api) to reveal your API key. Then, add your Datadog API key to the secrets. You can do this executing the following command in the terminal:
+Log into [Datadog](https://app.datadoghq.com/) and navigate to the [API seetings page](https://app.datadoghq.com/account/settings#api) to reveal your API key.
+
+![Screenshot of API Keys area](images/api_key.png)
+
+Then, add your Datadog API key to the secrets. You can do this executing the following command in the terminal:
 
 ```
 $ kubectl create secret generic datadog-secret --from-literal api-key=<YOUR_DATADOG_API_KEY>

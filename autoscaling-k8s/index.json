@@ -75,7 +75,7 @@
       },
       {
         "file": "images/*",
-        "target": "/root/images/"
+        "target": "/root/"
       }
     ]
     }

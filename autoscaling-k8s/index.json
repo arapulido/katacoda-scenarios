@@ -11,11 +11,11 @@
     },
     "steps": [
       {
-        "title": "Step 1",
+        "title": "Setting up of our ecommerce application",
         "text": "step1.md"
       },
       {
-        "title": "Step 2",
+        "title": "Setting up the Datadog agent",
         "text": "step2.md"
       },
       {
@@ -33,6 +33,14 @@
       {
         "title": "HPA with External Metrics",
         "text": "step6.md"
+      },
+      {
+        "title": "HPA with External Metrics. Exercise",
+        "text": "step7.md"
+      },
+      {
+        "title": "WPA with External Metrics",
+        "text": "step8.md"
       }
     ],
     "finish": {
@@ -64,6 +72,10 @@
       {
         "file": "cluster-agent-external-metrics.yaml",
         "target": "/root/datadog/"
+      },
+      {
+        "file": "images/*",
+        "target": "/root/images/"
       }
     ]
     }

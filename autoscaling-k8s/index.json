@@ -72,10 +72,6 @@
       {
         "file": "cluster-agent-external-metrics.yaml",
         "target": "/root/datadog/"
-      },
-      {
-        "file": "images/*",
-        "target": "/root/"
       }
     ]
     }

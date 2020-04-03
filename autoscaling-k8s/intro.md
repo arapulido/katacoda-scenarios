@@ -1,4 +1,3 @@
-In this section, we are going to explore our ecommerce application and we are going to deploy the Datadog agent in our cluster to add observability.
+One of the advantages of using a container orchestrator like Kubernetes is the possibility of scaling our workloads depending on our application needs. Scaling our applications can be done manually by a Kubernetes administrator or we can create rules to scale our workloads automatically.
 
-We will show how, thanks to APM instrumentation, we have visibility into any request that comes in into our application.
-
+In this workshop we will be showing several ways on how to use our application metrics to make scaling decisions and automatically drive those decisions.

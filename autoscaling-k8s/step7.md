@@ -32,16 +32,16 @@ spec:
   scaleDownLimitFactor: 30
   scaleUpLimitFactor: 50
   minReplicas: 1
-  maxReplicas: 9
+  maxReplicas: 5
   scaleTargetRef:
     kind: Deployment
     apiVersion: apps/v1
     name: frontend
   metrics:
   - external:
-      highWatermark: "9"
-      lowWatermark: "2"
-      metricName: "trace.rack.request.duration.by.service.99p"
+      highWatermark: "7"
+      lowWatermark: "4"
+      metricName: "trace.rack.request.duration.by.resource_service.99p"
       metricSelector:
         matchLabels:
           service: store-frontend
@@ -63,24 +63,28 @@ In this section we are specifying the pods that will be the target for the horiz
 ```
 metrics:
 - external:
-    highWatermark: "9"
-    lowWatermark: "2"
-    metricName: "trace.rack.request.duration.by.service.99p"
+    highWatermark: "7"
+    lowWatermark: "4"
+    metricName: "trace.rack.request.duration.by.resource_service.99p"
     metricSelector:
     matchLabels:
         service: store-frontend
   type: External
 ```
 
-In this section we are specifying the metric that the WPA will use to drive the scaling events. In this case we are telling the WPA that when pods that are part of the Deployment `frontend` experience an average p99 latency over 8 seconds, to create a scaling event that will increase the number of replicas, but, once the p99 latency starts going down, to not scale down the deployment until the p99 latency is less than 2 seconds.
+In this section we are specifying the metric that the WPA will use to drive the scaling events. In this case we are telling the WPA that when pods that are part of the Deployment `frontend` experience an average p99 latency over 7 seconds, to create a scaling event that will increase the number of replicas, but, once the p99 latency starts going down, to not scale down the deployment until the p99 latency is less than 4 seconds.
 
 ```
 minReplicas: 1
-maxReplicas: 9
+maxReplicas: 5
 ```
 
-In this section of the specification we are specifiying the minimum and maximum number of replicas for the target that we want. In this case we are telling the HPA controller that, even if the replicas are experiencing over 9 seconds of p99 latency, to not go above 3 replicas.
+In this section of the specification we are specifiying the minimum and maximum number of replicas for the target that we want. In this case we are telling the HPA controller that, even if the replicas are experiencing over 7 seconds of p99 latency, to not go above 5 replicas.
 
 Create the HPA object by applying the manifest: `kubectl apply -f frontend-wpa.yaml`{{execute}}
 
-Let's generate a lot of traffic to force the creation of several replicas. Create the traffic applying the following manifest: `kubectl apply -f autoscaling/spike-traffic.yaml`{{execute}}
+Let's generate more traffic to force the creation of several replicas. Create the traffic applying the following manifest: `kubectl apply -f k8s-manifests/autoscaling/spike-traffic.yaml`{{execute}}
+
+Let's watch the frontend pods to see if they increase: `kubectl get pods -l service=frontend -w`{{execute}}
+
+Did the deployment scale? Navigate in Datadog to the Autoscaling Workshop dashboard you created in a previous step of this course. Can you see the the correlation between the increase in the p99 latency and the increase in number of replicas? Did you find any differences on how the deployment scaled with the regular HPA and how it is scaling with the WPA?

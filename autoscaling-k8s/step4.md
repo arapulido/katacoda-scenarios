@@ -11,7 +11,7 @@ resources:
 
 Let's imagine that we want to keep the CPU resources to an average of 50% what we requested to the scheduler, so we know we have some spare CPU to handle peaks correctly.
 
-We will create a Horizontal Pod Autoscaler (HPA) object that will create new replicas when CPU usage goes above 50% of the 100m requested, sharing the load between those replicas.
+We will create a [Horizontal Pod Autoscaler (HPA)](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/) object that will create new replicas when CPU usage goes above 50% of the 100m requested, sharing the load between those replicas.
 
 Create a file called `frontend-hpa-cpu.yaml` by executing the following command: `touch frontend-hpa-cpu.yaml`{{execute}}
 

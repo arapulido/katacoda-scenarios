@@ -60,4 +60,4 @@ This section specifies the mode in which VPA is operating. In our case, "Off" in
 
 Let's check the CPU and memory requests recommendations that the VPA provides for our deployment by examining our VPA object: `kubectl describe vpa frontend-vpa`{{execute}}
 
-What recommendations the VPA is giving? Tip: check the part of the output for the "Target" recommendation.
+What recommendations is the VPA giving? Tip: check the part of the output for the "Target" recommendation.

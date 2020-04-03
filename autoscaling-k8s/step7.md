@@ -29,8 +29,6 @@ metadata:
 spec:
   downscaleForbiddenWindowSeconds: 60
   upscaleForbiddenWindowSeconds: 30
-  scaleDownLimitFactor: 30
-  scaleUpLimitFactor: 50
   minReplicas: 1
   maxReplicas: 5
   scaleTargetRef:
@@ -81,6 +79,11 @@ maxReplicas: 5
 
 In this section of the specification we are specifiying the minimum and maximum number of replicas for the target that we want. In this case we are telling the HPA controller that, even if the replicas are experiencing over 7 seconds of p99 latency, to not go above 5 replicas.
 
+Other options in our manifest:
+
+ * `downscaleForbiddenWindowSeconds: 60`: Wait 60 seconds after a scaling event before scaling down
+ * `upscaleForbiddenWindowSeconds: 30`: Wait 30 seconds after a scaling event before scaling up
+
 Create the HPA object by applying the manifest: `kubectl apply -f frontend-wpa.yaml`{{execute}}
 
 Let's generate more traffic to force the creation of several replicas. Create the traffic applying the following manifest: `kubectl apply -f k8s-manifests/autoscaling/spike-traffic.yaml`{{execute}}
@@ -88,3 +91,7 @@ Let's generate more traffic to force the creation of several replicas. Create th
 Let's watch the frontend pods to see if they increase: `kubectl get pods -l service=frontend -w`{{execute}}
 
 Did the deployment scale? Navigate in Datadog to the Autoscaling Workshop dashboard you created in a previous step of this course. Can you see the the correlation between the increase in the p99 latency and the increase in number of replicas? Did you find any differences on how the deployment scaled with the regular HPA and how it is scaling with the WPA?
+
+Remove the spike in traffic by executing: `kubectl delete -f k8s-manifests/autoscaling/spike-traffic.yaml`{{execute}}
+
+For other WPA options and algorithm documentation you can check the [WPA documentation](https://github.com/DataDog/watermarkpodautoscaler).

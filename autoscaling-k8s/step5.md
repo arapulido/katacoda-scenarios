@@ -1,4 +1,4 @@
-We will deploy now the Datadog Cluster Agent that will work as External Metrics Server for our scaling events.
+We will deploy now the [Datadog Cluster Agent that will work as External Metrics Server](https://docs.datadoghq.com/agent/cluster_agent/external_metrics/) for our scaling events.
 
 First, we will create a token that will be used to secure the communication between the cluster agent and the host agents. Create the secret with the token by running the following command: `kubectl create secret generic datadog-auth-token --from-literal token="<ThirtyX2XcharactersXlongXtoken>"`{{execute}}
 

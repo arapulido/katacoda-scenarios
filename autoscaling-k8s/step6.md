@@ -2,6 +2,8 @@ We have set up our Datadog Cluster Agent to also work as a HPA External Metrics 
 
 Let's check what metrics do we have available by navigating to the [Metrics Summary in Datadog](https://app.datadoghq.com/metric/summary). Spend a bit of time checking the different metrics that we have available and try to understand what some of those are tracking. TIP: Clicking on any available metric in the Metrics Summary will show a description of the metric and the available tags for that metric.
 
+![Screenshot of Metrics Summary](autoscaling-k8s/assets/metrics_summary.png)
+
 As we discussed, the LETS (Latency, Errors, Traffic, Saturation) framework is a good place to start when we want to start tracking our application. We will scale our application using the latency we are seeing in the `store-frontend` service. Right now, our application is getting regular traffic coming from the deployment called `regular-traffic`. What latency is the service `store-frontend` experiencing? To answer that question we can navigate to the [Service Map](https://app.datadoghq.com/apm/map?env=ruby-shop) in Datadog and hover over the `store-frontend` service. What latency are we seeing?
 
 ![Screenshot of Service Map Latency](autoscaling-k8s/assets/service_map_latency.png)

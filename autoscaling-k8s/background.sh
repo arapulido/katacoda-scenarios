@@ -14,6 +14,7 @@ done
 echo "Applying metrics server and commerce app"
 
 kubectl apply -f k8s-manifests/metrics-server/
+kubectl apply -f k8s-manifests/kube-state-metrics/
 kubectl apply -f k8s-manifests/ecommerce-app/
 
 NPODS=$(kubectl get pods --field-selector=status.phase=Running | grep -v NAME | wc -l)

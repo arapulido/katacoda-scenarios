@@ -11,8 +11,8 @@ while [ "$NNODES" != "2" ]; do
   NNODES=$(kubectl get nodes | grep Ready | wc -l)
 done
 
-echo "Applying metrics server and commerce app"
-
+echo "Applying metrics server, kube-state-metrics and commerce app"
+kubectl create ns fake-traffic
 kubectl apply -f k8s-manifests/metrics-server/
 kubectl apply -f k8s-manifests/kube-state-metrics/
 kubectl apply -f k8s-manifests/ecommerce-app/

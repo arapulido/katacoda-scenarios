@@ -1,5 +1,3 @@
-## Horizontal Pod Autoscaling based on resource data
-
 Horizontal Pod Autoscaling based on resource data will allow us to automatically increase or decrease the number of replicas of our Frontend service based on resource usage.
 
 Open the `k8s-manifests/ecommerce-app/frontend.yaml` file in the editor and check again the resources part of the specification:
@@ -96,7 +94,6 @@ frontend-hpa-cpu   Deployment/frontend   102%/50%   1         3         3       
 
 Have the number of replicas increased? You can obtain more information about the different scaling events by describing the HPA object: `kubectl describe hpa frontend-hpa-cpu`{{execute}}
 
+Navigate in Datadog to the Autoscaling Workshop dashboard you created in a previous step of this course. Can you see the the correlation between the increase in CPU usage and the increase in number of replicas?
+
 Let's delete the extra traffic, the HPA and let's redeploy the `frontend` Deployment before doing the exercise by executing: `kubectl delete -f k8s-manifests/autoscaling/more-traffic.yaml && kubectl delete -f frontend-hpa-cpu.yaml && kubectl delete -f k8s-manifests/ecommerce-app/frontend.yaml && kubectl apply -f k8s-manifests/ecommerce-app/frontend.yaml`{{execute}}
-
-Exercise: Create an HPA object that will create scaling events when the `discounts` deployment pods average above 60% of their memory request.
-

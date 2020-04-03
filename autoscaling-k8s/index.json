@@ -31,11 +31,11 @@
         "text": "step3_1.md"
       },
       {
-        "title": "Step 4",
+        "title": "Horizontal Pod Autoscaling based on resource data",
         "text": "step4.md"
       },
       {
-        "title": "Step 5",
+        "title": "Datadog Cluster Agent",
         "text": "step5.md"
       },
       {

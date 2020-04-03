@@ -19,7 +19,7 @@ kubectl apply -f k8s-manifests/ecommerce-app/
 
 NPODS=$(kubectl get pods --field-selector=status.phase=Running | grep -v NAME | wc -l)
 
-while [ "$NPODS" != "5" ]; do
+while [ "$NPODS" != "4" ]; do
   sleep 0.3
   NPODS=$(kubectl get pods --field-selector=status.phase=Running | grep -v NAME | wc -l)
 done

@@ -19,8 +19,16 @@
         "text": "step2.md"
       },
       {
-        "title": "Step 3",
+        "title": "Browsing Datadog",
+        "text": "step2_1.md"
+      },
+      {
+        "title": "Vertical Pod Autoscaler",
         "text": "step3.md"
+      },
+      {
+        "title": "Building Dashboards",
+        "text": "step3_1.md"
       },
       {
         "title": "Step 4",

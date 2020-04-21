@@ -10,14 +10,14 @@ Clicking on that host will show some system metrics from it, like CPU utilizatio
 
 ## Containers
 
-From the Host Map, clicking on the dropdown in the upper right that reads `Hosts` you can select `Containers` and you will get a visualization of all the containers that are running in your infrastructure:
+From the Host Map, clicking on the dropdown in the upper left that reads `Hosts` you can select `Containers` and you will get a visualization of all the containers that are running in your infrastructure:
 
 ![Screenshot of Drowpdown](autoscaling-k8s/assets/containers_dropdown.png)
 ![Screenshot of Containers](autoscaling-k8s/assets/containers.png)
 
 ## Service Map
 
-As our application is receiving regular traffic and it is instrumented for APM, we should start seeing some traces arriving to Datadog. Those traces are used to build a diagram of our application. You can check it navigating to the [Service Map](https://app.datadoghq.com/apm/map):
+As our application receives traffic and is instrumented for APM, we should start seeing some traces arriving within Datadog. Those traces are used to build a diagram of our application’s activity. You can view this diagram by navigating to the [Service Map](https://app.datadoghq.com/apm/map):
 
 ![Screenshot of Service Map](autoscaling-k8s/assets/service_map.png)
 

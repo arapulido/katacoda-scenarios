@@ -1,6 +1,6 @@
 As we have explained, Vertical Scaling in Kubernetes refers to the amount of resources (CPU and memory) assigned to a particular Pod through their resources definition.
 
-Open the `k8s-manifests/ecommerce-app/frontend.yaml` file in the editor. This file define the Deployment and Service of the Frontend service (our monolith application) of our ecommerce application. Navigate until the `resources` section of our Pod definition. You will read something like:
+Open the `k8s-manifests/ecommerce-app/frontend.yaml` file in the editor. This file defines the Deployment and Service for the Frontend service (our monolith application) of our ecommerce application. Navigate to the `resources` section of our Pod definition. You will see something like:
 
 ```
 resources:

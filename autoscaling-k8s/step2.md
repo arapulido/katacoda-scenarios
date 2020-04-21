@@ -1,10 +1,10 @@
 We are now going to deploy Datadog in our cluster to start monitoring our infrastructure and applications.
 
-Log into [Datadog](https://app.datadoghq.com/) and navigate to the [API seetings page](https://app.datadoghq.com/account/settings#api) to reveal your API key.
+Log into [Datadog](https://app.datadoghq.com/) and navigate to the [API settings page](https://app.datadoghq.com/account/settings#api) to reveal your API key.
 
 ![Screenshot of API Keys area](autoscaling-k8s/assets/api_key.png)
 
-Then, add your Datadog API key to the secrets. You can do this executing the following command in the terminal:
+Then, add your Datadog API key to the secrets. You can do this by executing the following command in the terminal:
 
 ```
 $ kubectl create secret generic datadog-secret --from-literal api-key=<YOUR_DATADOG_API_KEY>
@@ -21,9 +21,9 @@ datadog-secret   Opaque    1         8s
 
 To deploy the Datadog agent, first we need to create the service account that will be used by the agent and give it the right RBAC persmissions.
 
-In the editor, open the file called `serviceaccount.yaml` and browse it a bit. You can see that we are going to create a service account called `datadog-agent` and give it some permissions to the Kubernetes API through a ClusterRole and a ClusterRoleBinding. You can learn more about RBAC in [the official Kuberentes documentation](https://kubernetes.io/docs/reference/access-authn-authz/rbac/).
+In the editor, open the file called `serviceaccount.yaml` in the "datadog" folder and browse it a bit. You can see that we are going to create a service account called `datadog-agent` and give it some permissions to the Kubernetes API through a ClusterRole and a ClusterRoleBinding. You can learn more about RBAC in [the official Kuberentes documentation](https://kubernetes.io/docs/reference/access-authn-authz/rbac/).
 
-Create the service account, the ClusterRole and the ClusterRoleBinding applying the `serviceaccount.yaml` manifest: `kubectl apply -f datadog/serviceaccount.yaml`{{execute}}
+Create the service account, the ClusterRole and the ClusterRoleBinding by applying the `serviceaccount.yaml` manifest: `kubectl apply -f datadog/serviceaccount.yaml`{{execute}}
 
 Finally, we will deploy the Datadog agent. In the editor, open the file called `datadog-agent.yaml` and explore the different options we have set up for our agent. Can you tell what options set up APM and log collection?
 

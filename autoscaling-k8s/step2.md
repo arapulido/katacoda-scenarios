@@ -29,4 +29,6 @@ Finally, we will deploy the Datadog agent. In the editor, open the file called `
 
 Deploy the Datadog agent DaemonSet applying the `datadog-agent.yaml` manifest: `kubectl apply -f datadog/datadog-agent.yaml`{{execute}}
 
-Wait until the Datadog agent is running before moving to the next step: `kubectl get pods -l app=datadog-agent -w`{{execute}}
+Wait until the Datadog agent is running: `kubectl get pods -l app=datadog-agent -w`{{execute}}
+
+Once the `datadog-agent` pod is running, let's check its status by running the following command: `kubectl exec -ti $(kubectl get pods -l app=datadog-agent -o jsonpath='{.items[0].metadata.name}') -- agent status`{{execute}} Browse the output. What checks is the Datadog agent running? If the `docker` check is not yet running, rerun the command above until you see the `docker` check running before moving to the next step.

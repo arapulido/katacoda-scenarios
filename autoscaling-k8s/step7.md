@@ -39,7 +39,7 @@ spec:
   - external:
       highWatermark: "7"
       lowWatermark: "4"
-      metricName: "trace.rack.request.duration.by.resource_service.99p"
+      metricName: "trace.rack.request.duration.by.service.99p"
       metricSelector:
         matchLabels:
           service: store-frontend
@@ -63,7 +63,7 @@ metrics:
 - external:
     highWatermark: "7"
     lowWatermark: "4"
-    metricName: "trace.rack.request.duration.by.resource_service.99p"
+    metricName: "trace.rack.request.duration.by.service.99p"
     metricSelector:
     matchLabels:
         service: store-frontend
@@ -86,12 +86,38 @@ Other options in our manifest:
 
 Create the HPA object by applying the manifest: `kubectl apply -f k8s-manifests/frontend-wpa.yaml`{{execute}}
 
-Let's generate more traffic to force the creation of several replicas. Create the traffic applying the following manifest: `kubectl apply -f k8s-manifests/autoscaling/spike-traffic.yaml`{{execute}}
+Let's check that the Cluster Agent is getting the metric correctly by executing the agent status for the Cluster Agent: `kubectl exec -ti $(kubectl get pods -l app=datadog-cluster-agent -o jsonpath='{.items[0].metadata.name}') -- agent status`{{execute}} Browse the output and check that you get an output similar to this one:
+
+```
+External Metrics
+----------------
+  Total: 1
+  Valid: 1
+
+* watermark pod autoscaler: default/frontend-wpa-latency
+  Metric name: trace.rack.request.duration.by.service.99p
+  Labels:
+  - service: store-frontend
+  Value: 6.563013076782227
+  Timestamp: 2020-04-21 14:46:30.000000 UTC
+  Valid: true
+```
+
+That states that the Cluster Agent is correctly getting the value of the metric requested by our WPA object. Let's get the WPA object again to see if the metric is being reflected there. Execute the following command: `kubectl get wpa frontend-wpa-latency`{{execute}}:
+
+```
+NAME                   VALUE    HIGH WATERMARK   LOW WATERMARK   AGE   MIN REPLICAS   MAX REPLICAS   DRY-RUN
+frontend-wpa-latency   65630m   7                4               11m   1              5
+```
+
+Let's generate more traffic to force the creation of several replicas. Create the traffic by applying the following manifest: `kubectl apply -f k8s-manifests/autoscaling/spike-traffic.yaml`{{execute}}
 
 Let's watch the frontend pods to see if they increase: `kubectl get pods -l service=frontend -w`{{execute}}
 
 Did the deployment scale? Navigate in Datadog to the Autoscaling Workshop dashboard you created in a previous step of this course. Can you see the the correlation between the increase in the p99 latency and the increase in number of replicas? Did you find any differences on how the deployment scaled with the regular HPA and how it is scaling with the WPA?
 
 Remove the spike in traffic by executing: `kubectl delete -f k8s-manifests/autoscaling/spike-traffic.yaml`{{execute}}
+
+Watch again the the frontend pods to see if they decrease: `kubectl get pods -l service=frontend -w`{{execute}} Why aren't they decreasing? Tip: Check the metric value and our low watermark. Is the metric value below our low watermark to create the scaling down event?
 
 For other WPA options and algorithm documentation you can check the [WPA documentation](https://github.com/DataDog/watermarkpodautoscaler).

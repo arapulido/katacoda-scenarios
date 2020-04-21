@@ -9,7 +9,7 @@ resources:
     memory: 100Mi
 ```
 
-We are making a contract with the Kubernetes Scheduler to ensure that the Node our Frontend service is running on, has always 10% CPU core and 100Mi memory reserved for this Pod. But, are those numbers enough for the resources our Pod will be using? Let's create a VPA to find out.
+We are making a contract with the Kubernetes Scheduler to ensure that the Node our Frontend service is running on, has always 10% CPU core and 100Mi memory reserved for this Pod. But, are those enough resources to run this Pod? Let's create a VPA to find out.
 
 First, we need to deploy the Vertical Pod Autoscaler (VPA), which is an optional component of a Kubernetes cluster, and not part of a default installation.
 

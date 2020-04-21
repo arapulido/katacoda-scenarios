@@ -8,7 +8,7 @@ As we discussed, the LETS (Latency, Errors, Traffic, Saturation) framework is a 
 
 ![Screenshot of Service Map Latency](autoscaling-k8s/assets/service_map_latency.png)
 
-We are experiencing a latency of around 7 seconds and we don't want it to grow a lot when the traffic increases. For that, we are going to create a HPA object that uses the `trace.rack.request.duration.by.resource_service.99p` and that will have 7 seconds as the limit to start scaling our deployment.
+We are experiencing a latency of around 7 seconds and we don't want it to grow a lot when the traffic increases. For that, we are going to create a HPA object that uses the `trace.rack.request.duration.by.service.99p` and that will have 7 seconds as the limit to start scaling our deployment.
 
 Create a file called `frontend-hpa-latency.yaml` by executing the following command: `touch k8s-manifests/frontend-hpa-latency.yaml`{{execute}} Open the newly created file in the editor (under the `k8s-manifests` folder) and copy the following contents:
 
@@ -28,7 +28,7 @@ spec:
   - type: External
     external:
       metric:
-        name: "trace.rack.request.duration.by.resource_service.99p"
+        name: "trace.rack.request.duration.by.service.99p"
         selector:
           matchLabels:
             service: store-frontend
@@ -53,7 +53,7 @@ In this section we are specifying the pods that will be the target for the horiz
   - type: External
     external:
       metric:
-        name: "trace.rack.request.duration.by.resource_service.99p"
+        name: "trace.rack.request.duration.by.service.99p"
         selector:
           matchLabels:
             service: store-frontend
@@ -102,7 +102,7 @@ External Metrics
   Valid: 1
 
 * horizontal pod autoscaler: default/frontendhpaduration
-  Metric name: trace.rack.request.duration.by.resource_service.99p
+  Metric name: trace.rack.request.duration.by.service.99p
   Labels:
   - service: store-frontend
   Value: 6.224347114562988

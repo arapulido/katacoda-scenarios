@@ -17,7 +17,7 @@ Open the `k8s-manifests/vertical-pod-autoscaler` folder in the editor and check 
 
 Once we have the VPA deployment up and running, we want to create a VPA object to track our Frontend deployment, so we get recommendations on the amount of CPU requests that we should apply to our Deployment.
 
-Create a new file called `frontend-vpa.yaml` by executing the following command: `touch frontend-vpa.yaml`{{execute}} Open the newly created file with the editor and paste the following contents:
+Create a new file called `frontend-vpa.yaml` by executing the following command: `touch k8s-manifests/frontend-vpa.yaml`{{execute}} Open the newly created file with the editor (under the `k8s-manifests` folder) and paste the following contents:
 
 ```
 apiVersion: autoscaling.k8s.io/v1beta2
@@ -33,7 +33,7 @@ spec:
     updateMode: "Off"
 ```
 
-Create the VPA object by applying the just created manifest: `kubectl apply -f frontend-vpa.yaml`{{execute}} You can check that the VPA object was created correctly by running the following command: `kubectl get vpa`{{execute}} You should get an output similar to:
+Create the VPA object by applying the just created manifest: `kubectl apply -f k8s-manifests/frontend-vpa.yaml`{{execute}} You can check that the VPA object was created correctly by running the following command: `kubectl get vpa`{{execute}} You should get an output similar to:
 
 ```
 NAME           AGE
@@ -61,3 +61,5 @@ This section specifies the mode in which VPA is operating. In our case, "Off" in
 Let's check the CPU and memory requests recommendations that the VPA provides for our deployment by examining our VPA object: `kubectl describe vpa frontend-vpa`{{execute}}
 
 What recommendations is the VPA giving? Tip: check the part of the output for the "Target" recommendation.
+
+To finish, let's remove the VPA object before moving to the next section by executing: `kubectl delete -f k8s-manifests/frontend-vpa.yaml`{{execute}}

@@ -10,7 +10,7 @@ As we discussed, the LETS (Latency, Errors, Traffic, Saturation) framework is a 
 
 We are experiencing a latency of around 7 seconds and we don't want it to grow a lot when the traffic increases. For that, we are going to create a HPA object that uses the `trace.rack.request.duration.by.resource_service.99p` and that will have 7 seconds as the limit to start scaling our deployment.
 
-Create a file called `frontend-hpa-latency.yaml` by executing the following command: `touch frontend-hpa-latency.yaml`{{execute}} Open the newly created file in the editor and copy the following contents:
+Create a file called `frontend-hpa-latency.yaml` by executing the following command: `touch k8s-manifests/frontend-hpa-latency.yaml`{{execute}} Open the newly created file in the editor (under the `k8s-manifests` folder) and copy the following contents:
 
 ```
 apiVersion: autoscaling/v2beta2
@@ -73,7 +73,7 @@ maxReplicas: 3
 
 In this section of the specification we are specifiying the minimum and maximum number of replicas for the target that we want. In this case we are telling the HPA controller that, even if the replicas are experiencing over 7 seconds of p99 latency, to not go above 3 replicas.
 
-Create the HPA object by applying the manifest: `kubectl apply -f frontend-hpa-latency.yaml`{{execute}}
+Create the HPA object by applying the manifest: `kubectl apply -f k8s-manifests/frontend-hpa-latency.yaml`{{execute}}
 
 Let's check that the object has been created correctly. Execute the following command: `kubectl get hpa frontendhpaduration`{{execute}} You should get an output similar to this:
 

@@ -19,7 +19,7 @@ Now, we will need to edit the Cluster Agent manifest to enable working with WPA 
 
 Edit the value to `true` and re-apply the manifest by executing `kubectl apply -f datadog/datadog-cluster-agent.yaml`{{execute}}
 
-Similar to the HPA example, we will create a WPA object that will scale our `frontend` deployment based on the p99 latency that the service experiences. Create a file called `frontend-wpa.yaml` by executing the following command: `touch frontend-wpa.yaml`{{execute}} Open the newly created file with the editor and copy the following content:
+Similar to the HPA example, we will create a WPA object that will scale our `frontend` deployment based on the p99 latency that the service experiences. Create a file called `frontend-wpa.yaml` by executing the following command: `touch k8s-manifests/frontend-wpa.yaml`{{execute}} Open the newly created file with the editor (under the `k8s-manifests` folder) and copy the following content:
 
 ```
 apiVersion: datadoghq.com/v1alpha1
@@ -84,7 +84,7 @@ Other options in our manifest:
  * `downscaleForbiddenWindowSeconds: 60`: Wait 60 seconds after a scaling event before scaling down
  * `upscaleForbiddenWindowSeconds: 30`: Wait 30 seconds after a scaling event before scaling up
 
-Create the HPA object by applying the manifest: `kubectl apply -f frontend-wpa.yaml`{{execute}}
+Create the HPA object by applying the manifest: `kubectl apply -f k8s-manifests/frontend-wpa.yaml`{{execute}}
 
 Let's generate more traffic to force the creation of several replicas. Create the traffic applying the following manifest: `kubectl apply -f k8s-manifests/autoscaling/spike-traffic.yaml`{{execute}}
 

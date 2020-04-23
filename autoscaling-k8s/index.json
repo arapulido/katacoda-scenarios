@@ -88,7 +88,7 @@
   ],
   "environment": {
     "uilayout": "editor-terminal-v1",
-    "exclusionPatterns": ["./go/*", "./Desktop/*"],
+    "exclusionPatterns": ["status.txt", "./go/*", "./Desktop/*"],
     "hideHiddenFiles": true,
     "showdashboard": true,
     "dashboards": [

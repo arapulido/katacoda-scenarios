@@ -96,4 +96,4 @@ Have the number of replicas increased? You can obtain more information about the
 
 Navigate in Datadog to the Autoscaling Workshop dashboard you created in a previous step of this course. Can you see the the correlation between the increase in CPU usage and the increase in number of replicas?
 
-Let's delete the extra traffic, the HPA and let's redeploy the `frontend` Deployment before doing the exercise by executing: `kubectl delete -f k8s-manifests/autoscaling/more-traffic.yaml && kubectl delete -f k8s-manifests/frontend-hpa-cpu.yaml && kubectl delete -f k8s-manifests/ecommerce-app/frontend.yaml && kubectl apply -f k8s-manifests/ecommerce-app/frontend.yaml`{{execute}}
+Let's delete the extra traffic, the HPA and let's redeploy the `frontend` Deployment before doing the next exercise by executing: `kubectl delete -f k8s-manifests/autoscaling/more-traffic.yaml && kubectl delete -f k8s-manifests/frontend-hpa-cpu.yaml && kubectl delete -f k8s-manifests/ecommerce-app/frontend.yaml && kubectl apply -f k8s-manifests/ecommerce-app/frontend.yaml`{{execute}}

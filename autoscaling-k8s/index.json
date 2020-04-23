@@ -81,7 +81,9 @@
     }
   },
   "environment": {
-    "uilayout": "editor-terminal",
+    "uilayout": "editor-terminal-v1",
+    "exclusionPatterns": ["*go", "*Desktop", "./go/*", "./Desktop/*"],
+    "hideHiddenFiles": true,
     "showdashboard": true,
     "dashboards": [
       {

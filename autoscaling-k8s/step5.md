@@ -21,11 +21,11 @@ datadog-app-key   Opaque    1         8s
 
 Before deploying the datadog cluster agent, we will delete the current Datadog agent DaemonSet, to avoid conflicts: `kubectl delete daemonset datadog-agent`{{execute}}
 
-We will now deploy the Datadog Cluster Agent. Open the file called `datadog/datadog-cluster-agent.yaml` in the editor and try to understand the different options that are set there. Can you spot which option enables the External Metrics Server for the HPA controller? Let's deploy it by executing `kubectl apply -f datadog/datadog-cluster-agent.yaml`{{execute}}
+We will now deploy the Datadog Cluster Agent. Open the file called `datadog/datadog-cluster-agent.yaml`{{open}} in the editor and try to understand the different options that are set there. Can you spot which option enables the External Metrics Server for the HPA controller? Let's deploy it by executing `kubectl apply -f datadog/datadog-cluster-agent.yaml`{{execute}}
 
 We will also need to give the cluster agent some permissions to act as an External Metrics server. Give those permissions executing the following command: `kubectl apply -f datadog/cluster-agent-external-metrics.yaml`{{execute}}
 
-We will now deploy a slightly different version of the Datadog host agent. Open the file called `datadog/datadog-agent-with-cluster-agent.yaml` and try to spot the differences. What are the differences between this manifest and the one we had deployed before? (`datadog/datadog-agent.yaml`). You can spot the differences running the following `diff` command: `diff -u datadog/datadog-agent.yaml datadog/datadog-agent-with-cluster-agent.yaml`{{execute}}
+We will now deploy a slightly different version of the Datadog host agent. Open the file called `datadog/datadog-agent-with-cluster-agent.yaml`{{open}} and try to spot the differences. What are the differences between this manifest and the one we had deployed before? (`datadog/datadog-agent.yaml`). You can spot the differences running the following `diff` command: `diff -u datadog/datadog-agent.yaml datadog/datadog-agent-with-cluster-agent.yaml`{{execute}}
 
 Let's deploy this new one by executing the following command: `kubectl apply -f datadog/datadog-agent-with-cluster-agent.yaml`{{execute}}
 

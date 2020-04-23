@@ -10,7 +10,7 @@ Let's apply now the manifests that deploy the WPA controller. This controller wi
 
 Check that the `watermarkpodautoscaler` is running correctly: `kubectl get pod $(kubectl get pods -l name=watermarkpodautoscaler -o jsonpath='{.items[0].metadata.name}')`{{execute}}
 
-Now, we will need to edit the Cluster Agent manifest to enable working with WPA objects. Open the file called `datadog/datadog-cluster-agent.yaml` with the editor and find the following section:
+Now, we will need to edit the Cluster Agent manifest to enable working with WPA objects. Open the file called `datadog/datadog-cluster-agent.yaml`{{open}} with the editor and find the following section:
 
 ```
 - name: DD_EXTERNAL_METRICS_PROVIDER_WPA_CONTROLLER

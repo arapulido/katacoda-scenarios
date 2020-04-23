@@ -1,6 +1,6 @@
 Horizontal Pod Autoscaling based on resource data will allow us to automatically increase or decrease the number of replicas of our Frontend service based on resource usage.
 
-Open the `k8s-manifests/ecommerce-app/frontend.yaml` file in the editor and check again the resources part of the specification:
+Open the `k8s-manifests/ecommerce-app/frontend.yaml`{{open}} file in the editor and check again the resources part of the specification:
 
 ```
 resources:

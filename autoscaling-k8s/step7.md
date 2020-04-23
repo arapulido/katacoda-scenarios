@@ -19,9 +19,11 @@ Now, we will need to edit the Cluster Agent manifest to enable working with WPA 
 
 Edit the value to `true` and re-apply the manifest by executing `kubectl apply -f datadog/datadog-cluster-agent.yaml`{{execute}}
 
-Similar to the HPA example, we will create a WPA object that will scale our `frontend` deployment based on the p99 latency that the service experiences. Create a file called `frontend-wpa.yaml` by executing the following command: `touch k8s-manifests/frontend-wpa.yaml`{{execute}} Open the newly created file with the editor (under the `k8s-manifests` folder) and copy the following content:
+Similar to the HPA example, we will create a WPA object that will scale our `frontend` deployment based on the p99 latency that the service experiences.
 
-```
+Create a new file called `frontend-wpa.yaml` by clicking below under "Copy to Editor":
+
+<pre class="file" data-filename="frontend-wpa.yaml" data-target="replace">
 apiVersion: datadoghq.com/v1alpha1
 kind: WatermarkPodAutoscaler
 metadata:
@@ -45,7 +47,7 @@ spec:
           service: store-frontend
     type: External
   tolerance: 0.01
-```
+</pre>
 
 Let's drilldown on each section to understand what's going on:
 
@@ -84,7 +86,7 @@ Other options in our manifest:
  * `downscaleForbiddenWindowSeconds: 60`: Wait 60 seconds after a scaling event before scaling down
  * `upscaleForbiddenWindowSeconds: 30`: Wait 30 seconds after a scaling event before scaling up
 
-Create the HPA object by applying the manifest: `kubectl apply -f k8s-manifests/frontend-wpa.yaml`{{execute}}
+Create the HPA object by applying the manifest: `kubectl apply -f frontend-wpa.yaml`{{execute}}
 
 Let's check that the Cluster Agent is getting the metric correctly by executing the agent status for the Cluster Agent: `kubectl exec -ti $(kubectl get pods -l app=datadog-cluster-agent -o jsonpath='{.items[0].metadata.name}') -- agent status`{{execute}} Browse the output and check that you get an output similar to this one:
 

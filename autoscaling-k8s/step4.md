@@ -13,11 +13,9 @@ Let's imagine that we want to keep the CPU resources to an average of 50% what w
 
 We will create a [Horizontal Pod Autoscaler (HPA)](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/) object that will create new replicas when CPU usage goes above 50% of the 100m requested, sharing the load between those replicas.
 
-Create a file called `frontend-hpa-cpu.yaml` by executing the following command: `touch k8s-manifests/frontend-hpa-cpu.yaml`{{execute}}
+Create a new file called `frontend-hpa-cpu.yaml` by clicking below under "Copy to Editor":
 
-Open the file with the editor (under the `k8s-manifests` folder) and paste the following contents:
-
-```
+<pre class="file" data-filename="frontend-hpa-cpu.yaml" data-target="replace">
 apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
 metadata:
@@ -36,7 +34,7 @@ spec:
       target:
         type: Utilization
         averageUtilization: 50
-```
+</pre>
 
 Let's drilldown on each section to understand what's going on:
 
@@ -69,7 +67,7 @@ maxReplicas: 3
 
 In this section of the specification we are specifiying the minimum and maximum number of replicas for the target that we want. In this case we are telling the HPA controller that, even if the replicas we have are consuming more than 50% of 100m cores on average, to not go above 3 replicas.
 
-Create the HPA object by applying the manifest: `kubectl apply -f k8s-manifests/frontend-hpa-cpu.yaml`{{execute}}
+Create the HPA object by applying the manifest: `kubectl apply -f frontend-hpa-cpu.yaml`{{execute}}
 
 You can check that it was created correctly by running the following command: `kubectl get hpa frontend-hpa-cpu`{{execute}} You should get an output similar to this one:
 
@@ -96,4 +94,4 @@ Have the number of replicas increased? You can obtain more information about the
 
 Navigate in Datadog to the Autoscaling Workshop dashboard you created in a previous step of this course. Can you see the the correlation between the increase in CPU usage and the increase in number of replicas?
 
-Let's delete the extra traffic, the HPA and let's redeploy the `frontend` Deployment before doing the next exercise by executing: `kubectl delete -f k8s-manifests/autoscaling/more-traffic.yaml && kubectl delete -f k8s-manifests/frontend-hpa-cpu.yaml && kubectl delete -f k8s-manifests/ecommerce-app/frontend.yaml && kubectl apply -f k8s-manifests/ecommerce-app/frontend.yaml`{{execute}}
+Let's delete the extra traffic, the HPA and let's redeploy the `frontend` Deployment before doing the next exercise by executing: `kubectl delete -f k8s-manifests/autoscaling/more-traffic.yaml && kubectl delete -f frontend-hpa-cpu.yaml && kubectl delete -f k8s-manifests/ecommerce-app/frontend.yaml && kubectl apply -f k8s-manifests/ecommerce-app/frontend.yaml`{{execute}}

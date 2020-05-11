@@ -15,8 +15,16 @@
         "text": "step1.md"
       },
       {
+        "title": "Interim",
+        "text": "interim.md"
+      },
+      {
         "title": "Setting up the Datadog agent",
         "text": "step2.md"
+      },
+      {
+        "title": "Interim",
+        "text": "interim.md"
       },
       {
         "title": "Browsing Datadog",

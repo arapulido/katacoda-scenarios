@@ -2,7 +2,7 @@ We are now going to deploy Datadog in our cluster to start monitoring our infras
 
 Log into [Datadog](https://app.datadoghq.com/) and navigate to the [API settings page](https://app.datadoghq.com/account/settings#api) to reveal your API key.
 
-![Screenshot of API Keys area](autoscaling-k8s/assets/api_key.png)
+![Screenshot of API Keys area](./assets/api_key.png)
 
 Then, add your Datadog API key to the secrets. You can do this by executing the following command in the terminal:
 

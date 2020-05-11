@@ -4,7 +4,7 @@ First, we will create a token that will be used to secure the communication betw
 
 Also, in order to be able to use the Cluster Agent as External Metrics Server, we will need to generate a Datadog Application Key (which is different from your API key). To do so, open the Datadog application and navigate to [Integrations -> APIs](https://app.datadoghq.com/account/settings#api). Click on Applications Keys and generate a new application key:
 
-![Screenshot of App Key](autoscaling-k8s/assets/app_key.png)
+![Screenshot of App Key](./assets/app_key.png)
 
 Once generated, copy the value and create a new secret with it:
 

@@ -4,7 +4,7 @@ Our Ecommerce application is already instrumented for distributed tracing and is
 
 Navigate to the [Host Map in Datadog](https://app.datadoghq.com/infrastructure/map). This visualization will show you all virtual and physical nodes where the Datadog agent is running. If everything went well, you should see a node called `node1` running some applications like the `datadog-agent`, `coredns`, etc:
 
-![Screenshot of Node01](autoscaling-k8s/assets/node01.png)
+![Screenshot of Node01](./assets/node01.png)
 
 Clicking on that host will show some system metrics from it, like CPU utilization.
 
@@ -12,14 +12,14 @@ Clicking on that host will show some system metrics from it, like CPU utilizatio
 
 From the Host Map, clicking on the dropdown in the upper left that reads `Hosts` you can select `Containers` and you will get a visualization of all the containers that are running in your infrastructure:
 
-![Screenshot of Drowpdown](autoscaling-k8s/assets/containers_dropdown.png)
-![Screenshot of Containers](autoscaling-k8s/assets/containers.png)
+![Screenshot of Drowpdown](./assets/containers_dropdown.png)
+![Screenshot of Containers](./assets/containers.png)
 
 ## Service Map
 
 As our application receives traffic and is instrumented for APM, we should start seeing some traces arriving within Datadog. Those traces are used to build a diagram of our application’s activity. You can view this diagram by navigating to the [Service Map](https://app.datadoghq.com/apm/map):
 
-![Screenshot of Service Map](autoscaling-k8s/assets/service_map.png)
+![Screenshot of Service Map](./assets/service_map.png)
 
 Hover over the map, what data are we getting from the different services?
 

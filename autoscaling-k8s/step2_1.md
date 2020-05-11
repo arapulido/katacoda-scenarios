@@ -10,10 +10,11 @@ Clicking on that host will show some system metrics from it, like CPU utilizatio
 
 ## Containers
 
-From the Host Map, clicking on the dropdown in the upper left that reads `Hosts` you can select `Containers` and you will get a visualization of all the containers that are running in your infrastructure:
+Navigate now to the [Containers List](https://app.datadoghq.com/containers) under Infrastructure and you will get a list of all the containers that are running in your Kubernetes cluster:
 
-![Screenshot of Drowpdown](./assets/containers_dropdown.png)
 ![Screenshot of Containers](./assets/containers.png)
+
+Can you figure out how to group those containers by namespace?
 
 ## Service Map
 

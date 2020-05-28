@@ -14,7 +14,7 @@ Save the graph and add another "Timeseries" graph to the dashboard. This time se
 
 Save the graph and add another "Timeseries" graph to the dashboard. This time select `kubernetes.memory.usage` as metric and `kube_deployment:frontend` as filter.
 
-Save the graph and add another "Timeseries" graph to the dashboard. This time select `trace.rack.request.duration.by.resource_service.99p` as metric and `service:store-frontend` as filter. Call it "p99 latency for the frontend service". Save this graph and click on "Finish Editing" to save the full Dashboard. You should get a Dashboard similar to this:
+Save the graph and add another "Timeseries" graph to the dashboard. This time select `trace.rack.request.duration.by.service.99p` as metric and `service:store-frontend` as filter. Call it "p99 latency for the frontend service". Save this graph and click on "Finish Editing" to save the full Dashboard. You should get a Dashboard similar to this:
 
 ![Screenshot of Dashboard](./assets/autoscaling_workshop_dashboard.png)
 

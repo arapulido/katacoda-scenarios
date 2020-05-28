@@ -2,7 +2,7 @@ Our Ecommerce application is already instrumented for distributed tracing and is
 
 ## Host Map
 
-Navigate to the [Host Map in Datadog](https://app.datadoghq.com/infrastructure/map). This visualization will show you all virtual and physical nodes where the Datadog agent is running. If everything went well, you should see a node called `node1` running some applications like the `datadog-agent`, `coredns`, etc:
+Navigate to the [Infrastructure List in Datadog](https://app.datadoghq.com/infrastructure). This list will show you all virtual and physical nodes where the Datadog agent is running. If everything went well, you should see a node called `node1` running some applications like the `datadog-agent`, `coredns`, etc:
 
 ![Screenshot of Node01](./assets/node01.png)
 

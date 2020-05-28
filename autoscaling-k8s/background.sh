@@ -1,4 +1,5 @@
 touch /root/status.txt
+sleep 1
 STATUS=$(cat /root/status.txt)
 
 if [ "$STATUS" != "complete" ]; then

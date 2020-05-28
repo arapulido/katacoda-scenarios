@@ -114,7 +114,7 @@ frontend-wpa-latency   65630m   7                4               11m   1        
 
 Let's generate more traffic to force the creation of several replicas. Create the traffic by applying the following manifest: `kubectl apply -f k8s-manifests/autoscaling/spike-traffic.yaml`{{execute}}
 
-Let's watch the frontend pods to see if they increase: `kubectl get pods -l service=frontend -w`{{execute}}
+Let's watch the frontend pods to see if they increase: `kubectl get pods -l service=frontend -w`{{execute}}. Remember to type `Ctrl+C` to go back to the terminal once you have seen the deployment scaling.
 
 Did the deployment scale? Navigate in Datadog to the Autoscaling Workshop dashboard you created in a previous step of this course. Can you see the the correlation between the increase in the p99 latency and the increase in number of replicas? Did you find any differences on how the deployment scaled with the regular HPA and how it is scaling with the WPA?
 

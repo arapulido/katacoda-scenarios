@@ -1,4 +1,4 @@
-# Welcome to the Dash 2019 workshop "Kubernetes Deep Dive: Catching & Preventing Failures"
+# Welcome to the workshop "Troubleshooting Outages in Kubernetes Applications"
 
 All that you need are a basic working knowledge of Kubernetes, a modern web browser (which you'll be seeing this in), and your Datadog credentials.
 

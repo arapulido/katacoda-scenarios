@@ -1,0 +1,11 @@
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: americano
+              resources:
+                requests:
+                  cpu: "50m"
+                  memory: "50Mi"

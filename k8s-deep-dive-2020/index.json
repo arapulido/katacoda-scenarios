@@ -149,10 +149,10 @@
     }
   },
   "environment": {
-    "uilayout": "terminal"
+    "uilayout": "editor-terminal-v1"
   },
   "backend": {
-    "imageid": "datadog-kubernetes-cluster-running",
+    "imageid": "datadog-kubernetes-cluster-running:1.16",
     "reuseConnection": true,
     "livetime": "4h"
   }

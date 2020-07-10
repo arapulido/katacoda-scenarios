@@ -1,23 +1,21 @@
 Live tail shows a realtime stream of all logs as they are ingested. In order to demonstrate live tail, we'll deploy a sample application that logs one message every second per replica.
 
 * Deploy the sample application:
-`kubectl apply -f assets/10-live-tail/log-a-lot.yaml`{{copy}}
+`kubectl apply -f assets/10-live-tail/log-a-lot.yaml`{{execute}}
 
 * Visit the live tail page by click from the left navigation pane: Logs > Live Tail.
 
+![Screenshot of Live Tail menu](./assets/img/livetail.png)
+
 * Filter logs shown in live tail to the `log-a-lot` application.
 
-<details>
-<summary>Hint</summary>
-Logs can be filtered by any facet or tag. <br/> <br/>
-
-Find the tags on the `log-a-lot` application using `kubectl describe pod`.
-</details>
+![Screenshot of filter by pod](./assets/img/add-facet.png)
+![Screenshot of filter by pod](./assets/img/filter-log-a-lot.png)
 
 To demonstrate live tail sampling and streaming, let's increase the replica count.
 
 * Increase the replica count:
-`kubectl scale deployment log-a-lot --replicas 30`{{copy}}
+`kubectl scale deployment log-a-lot --replicas 30`{{execute}}
 
 * Validate your new pods are running.
 
@@ -25,4 +23,4 @@ To demonstrate live tail sampling and streaming, let's increase the replica coun
 
 * Before moving to the next step, let's scale back this sample app to zero to
   get a clean environment again:
-`kubectl scale deployment log-a-lot --replicas 1`{{copy}}
+`kubectl scale deployment log-a-lot --replicas 1`{{execute}}

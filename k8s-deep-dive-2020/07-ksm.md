@@ -1,29 +1,23 @@
 Many widgets (including the workload metrics for DaemonSets, Deployments, ReplicaSets, Containers) on the [kubernetes dashboard](https://app.datadoghq.com/screen/integration/86) rely on the `kube-state-metrics` integration.
 
-This data is provided by [kube-state-metrics](https://github.com/kubernetes/kube-state-metrics). Also known as KSM, `kube-state-metrics` is a service that watches the Kubernetes API and generates metrics for the state of objects.
-
-<details>
-<summary>Additional Information</summary>
-You can find the official Datadog documentation [here](https://docs.datadoghq.com/integrations/kubernetes/#setup-kubernetes-state) for the check.
-</details>
+This data is provided by [kube-state-metrics](https://github.com/kubernetes/kube-state-metrics). Also known as KSM, `kube-state-metrics` is a service that watches the Kubernetes API and generates metrics for the state of objects. You can find the official Datadog documentation [here](https://docs.datadoghq.com/integrations/kubernetes/#setup-kubernetes-state) for the check.
 
 The agent will automatically discover `kube-state-metrics` pods and collect metrics from their OpenMetrics endpoint.
 
-* Install `kube-state-metrics` on your cluster: <br/>
-`kubectl apply -f assets/07-datadog-ksm`{{copy}}
+KSM is not deployed by default in most Kubernetes distributions, so the first thing we would need to do is to deploy it:
 
-* Validate that `kube-state-metrics` pods are running in the `kube-system` namespace.
+* Install `kube-state-metrics` on your cluster by executing `kubectl apply -f assets/07-datadog-ksm`{{execute}}
+* Validate that `kube-state-metrics` pods are running in the `kube-system` namespace, executing `kubectl get pods -n kube-system`{{execute}}.
 
 <details>
-<summary>Hint</summary>
+<summary>Explanation</summary>
 The `-n` flag to `kubectl` change the namespace of your query.
 </details>
 
-A dedicated service account for KSM is granting permissions to access the Kubernetes API. With RBAC enabled, the manifests include a `ClusterRole` and `ClusterRoleBinding` to grant permissons.
+A dedicated service account for KSM is granting permissions to access the Kubernetes API. With RBAC enabled, the manifests include a `ClusterRole` and `ClusterRoleBinding` to grant permissons. You can check the permissions granted to KSM describing its `ClusterRole` object: `kubectl describe clusterrole kube-state-metrics`{{execute}}
 
-* Find the `ClusterRole` that allows KSM to access the Kubernetes API.
 <details>
-<summary>Hint</summary>
+<summary>Details</summary>
 `kubectl get clusterrole` prints a list of `ClusterRole` objects in the cluster. <br/> <br/>
 
 `kubectl get clusterrolebinding` prints a list of `ClusterRoleBinding` objects in the cluster. <br/> <br/>
@@ -31,18 +25,17 @@ A dedicated service account for KSM is granting permissions to access the Kubern
 `kubectl describe clusterrolebinding` prints details about a `ClusterRoleBinding`, including the subjects it binds to.
 </details>
 
-* Verify that the agent is collecting KSM metrics by running the following command in a datadog-agent pod:
-`agent status`{{copy}}
+Agent checks are performed by the agent running on the same node as the target. Since it has no tolerations, `kube-state-metrics` will always be running on the worker node, `node01`. Let's verify that the agent is collecting KSM metrics by running the `status` command in datadog-agent pod that also runs in the `node01` node by executing the following commands:
+
+* `NODE01POD=kubectl get pod -l app=datadog-agent --field-selector spec.nodeName=node01 -o custom-columns=:metadata.name`{{execute}}
+* `kubectl exec -ti $NODE01POD -- agent status`{{execute}}
 
 <details>
-<summary>Hint</summary>
-Agent checks are performed by the agent running on the same node as the target. <br/> <br/>
+<summary>Explanation</summary>
 
-Since it has no tolerations, `kube-state-metrics` will always be running on the worker node, `node01`. <br/> <br/>
+The command `kubectl get pod -l app=datadog-agent --field-selector spec.nodeName=node01 -o custom-columns=:metadata.name` gets the name of the datadog-agent pod that is running in the `node01` worker node and assign this name to a variable.
 
-`kubectl get po -owide`{{copy}} prints information about all pods in the current namespace, including the target node. <br/> <br/>
-
-`kubectl exec -it <pod-name> <command>`{{copy}} executes a command in an interactive tty attached to the target pod.
+We command `kubectl exec -ti $NODE01POD -- agent status` runs the `agent status` command inside the datadog-agent container.
 </details>
 
 Look for:

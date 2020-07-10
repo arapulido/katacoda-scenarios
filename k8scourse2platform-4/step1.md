@@ -40,6 +40,5 @@
       ]
 ```
 
-1. Let's copy back the file to the static pods folder: `cp etcd.yaml /etc/kubernetes/manifests/`{{execute}}
-1. Finally, let's kill the ETCD pod, so it gets restarted by the Kubelet automatically based on our new configuration: `k delete po -n kube-system etcd-master`{{execute}}
+1. Let's copy back the file to the static pods folder: `cp etcd.yaml /etc/kubernetes/manifests/`{{execute}}. The Kubelet will pick the new configuration and will restart the `etcd-master` pod with the new configuration applied.
 1. Now check the agent status again and you should see that etcd data is being collected and there are no errors: `k exec $(k match-name datadogagent-[a-z0-9]{5}) agent status`{{execute}}

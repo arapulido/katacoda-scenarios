@@ -14,29 +14,32 @@
 1. Just below that in the volumeMounts update as shown: 
 
         volumeMounts:
-        - mountPath: /keys
-          name: etcd-keys
-          readOnly: true
+          - mountPath: /keys
+            name: etcd-keys
+            readOnly: true
 1. Now upgrade the helm chart: `helm upgrade datadogagent --set datadog.apiKey=$DD_API_KEY --set datadog.appKey=$DD_APP_KEY -f values.yaml stable/datadog`{{execute}}.
 1. The next thing that we will need to do is to change the check configuration. How do we do that if the check was automatically run with Autodiscovery? Datadog's Autodiscovery feature allows to change the check configuration adding annotations to the pod that is the target of the check, in our case, the `etcd-master` pod. You can learn more about adding the right annotations to your pods in our [official documentation](https://docs.datadoghq.com/agent/kubernetes/integrations/?tab=kubernetes#configuration).
 1. But, where is the `etcd-master` pod definition? The ETCD pod is defined as a [static pod in Kubernetes](https://kubernetes.io/docs/tasks/configure-pod-container/static-pod/#configuration-files). A folder in the file system can be watched by the Kubelet and start the pods that are described in that folder. In our environment this folder is `/etc/kubernetes/manifests`. Check the contents of that folder: `ls /etc/kubernetes/manifests`{{execute}}
 1. Our pod definition is on the `etcd.yaml` file. Let's copy that file to our home folder so we can easily edit it: `cp /etc/kubernetes/manifests/etcd.yaml $HOME/k8s-yaml-files`{{execute}}
 1. Open the `etcd.yaml` file in the editor by clicking the IDE tab to the right and choosing the file and add the following content under line 3:
 
-        annotations:
-          ad.datadoghq.com/etcd.check_names: '["etcd"]'
-          ad.datadoghq.com/etcd.init_configs: '[{}]'
-          ad.datadoghq.com/etcd.instances: |
-            [
-              {
-                "prometheus_url": "https://%%host%%:2379/metrics",
-                "ssl_verify": "false",
-                "use_preview": "true",
-                "ssl_ca_cert": "/keys/ca.crt",
-                "ssl_cert": "/keys/peer.crt",
-                "ssl_private_key": "/keys/peer.key"
-              }
-            ]
+```
+  annotations:
+    ad.datadoghq.com/etcd.check_names: '["etcd"]'
+    ad.datadoghq.com/etcd.init_configs: '[{}]'
+    ad.datadoghq.com/etcd.instances: |
+      [
+        {
+          "prometheus_url": "https://%%host%%:2379/metrics",
+          "ssl_verify": "false",
+          "use_preview": "true",
+          "ssl_ca_cert": "/keys/ca.crt",
+          "ssl_cert": "/keys/peer.crt",
+          "ssl_private_key": "/keys/peer.key"
+        }
+      ]
+```
+
 1. Let's copy back the file to the static pods folder: `cp etcd.yaml /etc/kubernetes/manifests/`{{execute}}
 1. Finally, let's kill the ETCD pod, so it gets restarted by the Kubelet automatically based on our new configuration: `k delete po -n kube-system etcd-master`{{execute}}
 1. Now check the agent status again and you should see that etcd data is being collected and there are no errors: `k exec $(k match-name datadogagent-[a-z0-9]{5}) agent status`{{execute}}

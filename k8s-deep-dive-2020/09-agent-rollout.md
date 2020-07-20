@@ -6,15 +6,17 @@ spec:
 ```
 
 * Patch the agent DaemonSet to add the RollingUpdate strategy:
-`kubectl patch daemonset datadog-agent --patch "$(cat assets/08-datadog-logs/rolling-update.patch.yaml)"`{{copy}}
+`kubectl patch daemonset datadog-agent --patch "$(cat assets/08-datadog-logs/rolling-update.patch.yaml)"`{{execute}}
 
 * Observe the changes to the agent Pods:
-`kubectl get pods -w -lapp=datadog-agent`{{copy}}
+`kubectl get pods -w -lapp=datadog-agent`{{execute}}
 
 * Track the rollout of your changes across replicas:
-`kubectl rollout status daemonset/datadog-agent`{{copy}}
+`kubectl rollout status daemonset/datadog-agent`{{execute}}
 
 * Visit the [Logs tab in Datadog](https://app.datadoghq.com/logs/onboarding/container) and select *Kubernetes*. At the bottom of the page, click to validate your choice.
+
+![Screenshot of Logs source selection](./assets/img/logsource.png)
 
 * Check that logs are flowing in Datadog.
 

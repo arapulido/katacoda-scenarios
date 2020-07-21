@@ -4,8 +4,9 @@ STATUS=$(cat /root/status.txt)
 
 if [ "$STATUS" != "complete" ]; then
   echo ""> /root/status.txt
-  
+
   wall -n "Preparing the environment..."
+
   curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
   chmod 700 get_helm.sh
   ./get_helm.sh
@@ -31,8 +32,8 @@ if [ "$STATUS" != "complete" ]; then
 
   # Deleting permissive rbac policy
   until curl -ksf https://localhost:6443/healthz ;
-  do 
-	sleep 5
+  do
+	  sleep 5
   done
   kubectl delete clusterrolebinding permissive-binding
 
@@ -60,7 +61,5 @@ if [ "$STATUS" != "complete" ]; then
 	sed -i '/volumeMounts:/a \ \ \ \ - {mountPath: /var/log/kubernetes, name: k8s-logs}' /etc/kubernetes/manifests/kube-apiserver.yaml
 
   echo "complete">>/root/status.txt
-
-  wall -n "Environment ready!"
 fi
 

@@ -1,10 +1,11 @@
-The Datadog agent runs as a `DaemonSet` with a replica on every node in the cluster that matches the selector.
+The Datadog agent runs as a `DaemonSet` with a replica on every node in the cluster that matches the selector. To ease its deployment we are going to use Helm.
 
-The workshop includes the manifests to install the agent. For more details, see the [official documentation](https://docs.datadoghq.com/agent/kubernetes/daemonset_setup/).
-You can check the Daemonset definition opening this file: `assets/02-datadog-agent/agent-daemonset.yaml`{{open}}.
+* Copy your API key from the Datadog agent configuration page and export it as an environment variable: <br/>
+`export DD_API_KEY=<your-api-key>`{{copy}}.
 
-* Install the agent in your cluster: <br/>
-`kubectl apply -f assets/02-datadog-agent`{{execute}}
+* Now run the helm install command: `helm install datadogagent --set datadog.apiKey=$DD_API_KEY -f assets/02-datadog-agent/values.yaml stable/datadog`{{execute}}
+
+For more details, see the [official documentation](https://docs.datadoghq.com/agent/kubernetes/?tab=helm). You can check the `values.yaml` that we are passing by opening this file: `assets/02-datadog-agent/values.yaml`{{open}}.
 
 * Verify the `DaemonsetSet` is deployed, and a replica is running on your worker node `node01`.
 

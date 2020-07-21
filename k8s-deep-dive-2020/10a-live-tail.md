@@ -5,12 +5,12 @@ Live tail shows a realtime stream of all logs as they are ingested. In order to 
 
 * Visit the live tail page by click from the left navigation pane: Logs > Live Tail.
 
-![Screenshot of Live Tail menu](./assets/img/livetail.png)
+![Screenshot of Live Tail menu](./assets/livetail.png)
 
 * Filter logs shown in live tail to the `log-a-lot` application.
 
-![Screenshot of filter by pod](./assets/img/add-facet.png)
-![Screenshot of filter by pod](./assets/img/filter-log-a-lot.png)
+![Screenshot of filter by pod](./assets/add-facet.png)
+![Screenshot of filter by pod](./assets/filter-log-a-lot.png)
 
 To demonstrate live tail sampling and streaming, let's increase the replica count.
 

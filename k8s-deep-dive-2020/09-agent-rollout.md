@@ -16,7 +16,7 @@ spec:
 
 * Visit the [Logs tab in Datadog](https://app.datadoghq.com/logs/onboarding/container) and select *Kubernetes*. At the bottom of the page, click to validate your choice.
 
-![Screenshot of Logs source selection](./assets/img/logsource.png)
+![Screenshot of Logs source selection](./assets/logsource.png)
 
 * Check that logs are flowing in Datadog.
 

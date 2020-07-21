@@ -25,5 +25,5 @@ Datadog Cluster Agent
 * You should now be getting metrics with cluster level metadata, which will come handy when troubleshooting traffic to the APIServer or to application services.
 
 For instance, go check out the CoreDNS metrics broken down by `kube_service`:
-![CoreDNS Requests](assets/img/coredns.png)
+![CoreDNS Requests](assets/coredns.png)
 We are able to identify how DNS requests are load balanced to the replicas from the service perspective.

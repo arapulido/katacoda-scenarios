@@ -1,0 +1,3 @@
+With the default configuration, the agent is only running on worker nodes. The master node has a taint applied preventing the `DaemonSet` from targeting it. To schedule a replica on a master node, a `toleration` matching the `taint` is required. You can read more about taints and tolerations in the [Kubernetes official documentation](https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/).
+
+Find the taints applied to the master node by executing `kubectl describe node master`{{execute}} and finding the *Taints* section.

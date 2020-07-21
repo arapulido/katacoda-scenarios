@@ -1,5 +1,5 @@
 {
-  "title": "Troubleshooting Outages in Kubernetes Applications",
+  "title": "Troubleshooting Outages in Kubernetes Applications - Ara's Scratchpad",
   "description": "Catching and preventing failures in Kubernetes using Datadog.",
   "details": {
     "steps": [
@@ -16,7 +16,7 @@
         "text": "01-datadog-account.md"
       },
       {
-        "title": "Install the Datadog agent in Kubernetes",
+        "title": "Install the Datadog agent in Kubernetes using Helm",
         "text": "02-agent.md"
       },
       {
@@ -142,10 +142,20 @@
     ],
     "intro": {
       "text": "intro.md",
-      "courseData": "background.sh"
+      "courseData": "background.sh",
+      "code": "foreground.sh"
     },
     "finish": {
       "text": "finish.md"
+    },
+    "assets": {
+      "host01": [
+        {
+          "file": "prepenvironment",
+          "target": "/usr/local/bin",
+          "chmod": "+x"
+        }
+      ]
     }
   },
   "environment": {

@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pod-lister
+  namespace: default
+  labels:
+    app: pod-lister
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pod-lister
+  template:
+    metadata:
+      labels:
+        app: pod-lister
+    spec:
+      serviceAccountName: pod-lister
+      containers:
+      - name: pod-lister
+        image: leocavaille/sample-pod-lister:v1
+
+---
+kind: ServiceAccount
+apiVersion: v1
+metadata:
+  name: pod-lister
+  namespace: default
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: pod-lister
+rules: []
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: pod-lister
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: pod-lister
+subjects:
+- kind: ServiceAccount
+  name: pod-lister
+  namespace: default

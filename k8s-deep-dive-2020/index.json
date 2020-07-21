@@ -1,5 +1,5 @@
 {
-  "title": "Troubleshooting Outages in Kubernetes Applications",
+  "title": "Troubleshooting Outages in Kubernetes Applications - Ara's Scratchpad",
   "description": "Catching and preventing failures in Kubernetes using Datadog.",
   "details": {
     "steps": [
@@ -146,6 +146,15 @@
     },
     "finish": {
       "text": "finish.md"
+    },
+    "assets": {
+      "host01": [
+        {
+          "file": "prepenvironment",
+          "target": "/usr/local/bin",
+          "chmod": "+x"
+        }
+      ]
     }
   },
   "environment": {

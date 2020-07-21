@@ -159,7 +159,14 @@
     }
   },
   "environment": {
-    "uilayout": "editor-terminal-v1"
+    "uilayout": "editor-terminal-v1",
+    "showdashboard": true,
+    "dashboards": [
+      {
+        "name": "Ecommerce App",
+        "port": 30001
+      }
+    ]    
   },
   "backend": {
     "imageid": "datadog-kubernetes-cluster-running:1.16",

@@ -24,7 +24,7 @@ You can view this new section opening this file: `assets/10c-deploy-cluster-agen
 `helm upgrade datadogagent --set datadog.apiKey=$DD_API_KEY -f assets/10c-deploy-cluster-agent/values.yaml stable/datadog`{{execute}}
 
 * Verify that the Cluster Agent is running: <br/>
-`kubectl get pod -lapp=datadog-cluster-agent`{{execute}}
+`kubectl get pod -lapp=datadogagent-cluster-agent`{{execute}}
 
 * Run the agent status command and check that the Node Agents can properly communicate with the Cluster Agent: `kubectl exec $(kubectl get pod -l app=datadogagent -ojsonpath="{.items[0].metadata.name}") agent status`{{execute}}
 

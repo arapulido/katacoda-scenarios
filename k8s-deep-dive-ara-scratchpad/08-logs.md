@@ -1,10 +1,24 @@
-Our current Datadog agent configuration doesn't have logs collection enabled. We will enable log collection by passing two environment variables to the Agent: `DD_LOGS_ENABLED=true` and `DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL=true`. You can read more on our [official documentation](https://docs.datadoghq.com/agent/kubernetes/daemonset_setup/?tab=k8sfile#log-collection).
+Our current Datadog agent configuration doesn't have logs collection enabled. We will enable log collection using this section of the Helm `values.yaml` file:
 
-We are going to patch our DaemonSet to add the required environment varibles. You can check the patch opening this file: `assets/08-datadog-logs/enable-logs.patch.yaml`{{open}}
+```
+  logs:
+    ## @param enabled - boolean - optional - default: false
+    ## Enables this to activate Datadog Agent log collection.
+    ## ref: https://docs.datadoghq.com/agent/basic_agent_usage/kubernetes/#log-collection-setup
+    #
+    enabled: true
 
-Patch the Daemonset executing the following command `kubectl patch daemonset datadog-agent --patch "$(cat assets/08-datadog-logs/enable-logs.patch.yaml)"`{{execute}}
+    ## @param containerCollectAll - boolean - optional - default: false
+    ## Enable this to allow log collection for all containers.
+    ## ref: https://docs.datadoghq.com/agent/basic_agent_usage/kubernetes/#log-collection-setup
+    #
+    containerCollectAll: true
+```
 
-* Check if your change has been rolled out:<br/>
-`kubectl get pods -lapp=datadog-agent`{{execute}}
+You can read more on our [official documentation](https://docs.datadoghq.com/agent/kubernetes/log/?tab=helm).
 
-**Even with the new manifest uploaded, pods are not updated. The default rollout strategy for the `DaemonSet` is `OnDelete` [which means according to the documentation](https://kubernetes.io/docs/tasks/manage-daemon/update-daemon-set/) a Pod must be deleted to be replaced. To automatically roll out changes, use the `RollingUpdate` strategy.**
+You can view this new section opening this file: `assets/04-datadog-logs/values.yaml`{{open}}. Navigate to line 208 to check the section.
+
+* Apply the new `values.yaml`: <br/>
+`helm upgrade datadogagent --set datadog.apiKey=$DD_API_KEY -f assets/08-datadog-logs/values.yaml stable/datadog`{{execute}}
+

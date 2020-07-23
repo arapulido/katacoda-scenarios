@@ -8,7 +8,7 @@ We have created a new Helm `values.yaml` file that includes this section:
       effect: NoSchedule
 ```
 
-You can view this new section opening this file: `assets/04-datadog-agent-everywhere/values.yaml`. Navigate to line 975 to check the section.
+You can view this new section opening this file: `assets/04-datadog-agent-everywhere/values.yaml`{{open}}. Navigate to line 975 to check the section.
 
 * Apply the new `values.yaml`: <br/>
 `helm upgrade datadogagent --set datadog.apiKey=$DD_API_KEY -f assets/04-datadog-agent-everywhere/values.yaml stable/datadog`{{execute}}

@@ -1,8 +1,16 @@
-The agent should run on all nodes in our cluster. To tolerate the master taint as well as any others that may be created, the agent should tolerate all taints. 
+The agent should run on all nodes in our cluster. To tolerate the master taint as well as any others that may be created, the agent should tolerate all taints.
 
-The workshop includes a patch to add the required toleration, you can review it opening this file: `assets/04-datadog-agent-everywhere/tolerate-all.patch.yaml`{{open}}.
+We have created a new Helm `values.yaml` file that includes this section:
 
-* Apply the patch: <br/>
-`kubectl patch daemonset datadog-agent --patch "$(cat assets/04-datadog-agent-everywhere/tolerate-all.patch.yaml)"`{{execute}}
+```
+  tolerations:
+    - key: node-role.kubernetes.io/master
+      effect: NoSchedule
+```
+
+You can view this new section opening this file: `assets/04-datadog-agent-everywhere/values.yaml`. Navigate to line 975 to check the section.
+
+* Apply the new `values.yaml`: <br/>
+`helm upgrade datadogagent --set datadog.apiKey=$DD_API_KEY -f assets/04-datadog-agent-everywhere/values.yaml stable/datadog`{{execute}}
 
 * Verify that the agent is running on the master and worker nodes by executing `kubectl get pods -owide`{{execute}}

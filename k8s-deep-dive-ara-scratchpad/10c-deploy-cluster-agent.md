@@ -16,8 +16,6 @@ clusterAgent:
   enabled: true
 ```
 
-You can read more on our [official documentation](https://docs.datadoghq.com/agent/kubernetes/log/?tab=helm).
-
 You can view this new section opening this file: `assets/10c-deploy-cluster-agent/values.yaml`{{open}}. Navigate to line 396 to check the section.
 
 * Apply the new `values.yaml`: <br/>

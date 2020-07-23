@@ -162,6 +162,6 @@
     "uilayout": "editor-terminal-v1"
   },
   "backend": {
-    "imageid": "datadog-kubernetes-cluster-running:1.16",
+    "imageid": "datadog-kubernetes-cluster-running:1.16"
   }
 }

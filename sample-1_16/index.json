@@ -1,0 +1,50 @@
+{
+  "title": "Reproducing the connection issue",
+  "description": "",
+  "difficulty": "Intermediate",
+  "time": "5 minutes",
+  "details": {
+    "intro": {
+      "courseData": "background.sh",
+      "code": "foreground.sh",
+      "text": "intro.md"
+    },
+    "steps": [
+      {
+        "title": "Reproducing the connection issue",
+        "text": "step1.md"
+      }
+    ],
+    "finish": {
+      "text": "finish.md"
+    },
+    "assets": {
+    "host01": [
+      {
+        "file": "prepenvironment",
+        "target": "/usr/local/bin",
+        "chmod": "+x"
+      },
+      {
+        "file": "datadog-agent.yaml",
+        "target": "/root/datadog/"
+      }
+    ]
+    }
+  },
+  "environment": {
+    "uilayout": "editor-terminal-v1",
+    "exclusionPatterns": ["./go/*", "./Desktop/*"],
+    "hideHiddenFiles": true,
+    "showdashboard": true,
+    "dashboards": [
+      {
+        "name": "Ecommerce App",
+        "port": 30001
+      }
+    ]
+  },
+  "backend": {
+    "imageid": "datadog-kubernetes-cluster-running:1.16"
+  }
+}

@@ -17,8 +17,18 @@ Our current Datadog agent configuration doesn't have logs collection enabled. We
 
 You can read more on our [official documentation](https://docs.datadoghq.com/agent/kubernetes/log/?tab=helm).
 
-You can view this new section opening this file: `assets/04-datadog-logs/values.yaml`{{open}}. Navigate to line 208 to check the section.
+You can view this new section opening this file: `assets/08-datadog-logs/values.yaml`{{open}}. Navigate to line 208 to check the section.
 
 * Apply the new `values.yaml`: <br/>
 `helm upgrade datadogagent --set datadog.apiKey=$DD_API_KEY -f assets/08-datadog-logs/values.yaml stable/datadog`{{execute}}
+
+* Run the agent status command and check that logging is enabled: `kubectl exec $(kubectl get pod -l app=datadogagent -ojsonpath="{.items[0].metadata.name}") agent status`{{execute}}
+
+```
+==========
+Logs Agent
+==========
+
+    Sending uncompressed logs in SSL encrypted TCP to agent-intake.logs.datadoghq.com on port 10516
+```
 

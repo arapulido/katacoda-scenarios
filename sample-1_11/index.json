@@ -1,5 +1,5 @@
 {
-  "title": "Reproducing the connection issue. Cluster 1.16",
+  "title": "Reproducing the connection issue. Cluster 1.11",
   "description": "",
   "difficulty": "Intermediate",
   "time": "5 minutes",
@@ -45,6 +45,6 @@
     ]
   },
   "backend": {
-    "imageid": "datadog-kubernetes-cluster-running:1.16"
+    "imageid": "datadog-kubernetes-cluster-running"
   }
 }

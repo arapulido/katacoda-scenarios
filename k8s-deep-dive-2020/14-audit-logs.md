@@ -8,7 +8,7 @@ request log.
 
 <details>
 <summary>Additional Information</summary>
-The apiserver is running on the master node as a [_static
+The apiserver is running on the controlplane node as a [_static
 pod_](https://kubernetes.io/docs/tasks/administer-cluster/static-pod/) so this
 application can be configured via a local file manifest located in:
 `/etc/kubernetes/manifests/kube-apiserver.yaml`. <br/> <br/>

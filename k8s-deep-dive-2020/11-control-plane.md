@@ -1,19 +1,19 @@
 The Kubernetes control plane integrations provide metrics tailored to the performance of each component.
 
 The control plane has several components that run in the `kube-system` namespace:
-`kubectl get pods -n kube-system -o custom-columns=NAME:.metadata.name,NODE:spec.nodeName`{{copy}}
+`kubectl get pods -n kube-system -o custom-columns=NAME:.metadata.name,NODE:spec.nodeName`{{execute}}
 
 ```
-NAME                             NODE
+NAME                                   NODE
 [...]
-etcd-master                      master
-kube-apiserver-master            master
-kube-controller-manager-master   master
-kube-scheduler-master            master
+etcd-controlplane                      controlplane
+kube-apiserver-controlplane            controlplane
+kube-controller-manager-controlplane   controlplane
+kube-scheduler-controlplane            controlplane
 [...]
 ```
 
-In this environment, the control plane pods (apiserver, controller-manager, scheduler) are deployed as [static pods](https://kubernetes.io/docs/tasks/administer-cluster/static-pod/) on the master node. 
+In this environment, the control plane pods (apiserver, controller-manager, scheduler) are deployed as [static pods](https://kubernetes.io/docs/tasks/administer-cluster/static-pod/) on the controlplane node.
 
 <details>
 <summary>Additional Information</summary>

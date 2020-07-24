@@ -15,26 +15,34 @@ kube-scheduler-controlplane            controlplane
 
 In this environment, the control plane pods (apiserver, controller-manager, scheduler) are deployed as [static pods](https://kubernetes.io/docs/tasks/administer-cluster/static-pod/) on the controlplane node.
 
-<details>
-<summary>Additional Information</summary>
-Support for auto-detecting and discovering the static pods (it required some [contributions upstream](https://github.com/DataDog/datadog-agent/issues/2803#issuecomment-494073838)) is in progress. Until upstream accepts these contributions, we offer a workaround to schedule checks against static pods. A placeholder pod is created, on which we can add annotations used to drive Agent Checks configuration.
+* Verify that the checks are running for `etcd`, `kube_apiserver`, `kube_scheduler`, and `kube_controller_manager`: `k exec $(k get pod -l app=datadog-agent --field-selector spec.nodeName=controlplane -ojsonpath="{.items[0].metadata.name}") agent status`{{execute}}
 
-The configuration in `assets/11-control-plane/static-pods-discovery.yaml` drives the static pod autodiscovery. See the ([official documetation](https://docs.datadoghq.com/agent/autodiscovery/integrations/?tab=kubernetespodannotations#configuration)).
-</details>
+The `etcd` check was automatically run thanks to [Datadog's Autodiscovery feature](https://docs.datadoghq.com/agent/kubernetes/integrations/?tab=kubernetes), but it seems that the default configuration didn't work. The reason our metrics call is failing is that we aren't making that secure connection. We need to change the check configuration to point to the right certificates. How do we do that if the check was automatically run with Autodiscovery? Datadog's Autodiscovery feature allows to change the check configuration adding annotations to the pod that is the target of the check, in our case, the `etcd-controlplane` pod. You can learn more about adding the right annotations to your pods in our [official documentation](https://docs.datadoghq.com/agent/kubernetes/integrations/?tab=kubernetes#configuration).
 
-* Deploy the control plane checks:
-`kubectl apply -f assets/11-control-plane/static-pods-discovery.yaml`{{copy}}
+But, where is the `etcd-controlplane` pod definition? The ETCD pod is defined as a [static pod in Kubernetes](https://kubernetes.io/docs/tasks/configure-pod-container/static-pod/#configuration-files). A folder in the file system can be watched by the Kubelet and start the pods that are described in that folder. In our environment this folder is `/etc/kubernetes/manifests`. Check the contents of that folder: `ls /etc/kubernetes/manifests`{{execute}}
 
-* Verify that the checks are running for `etcd`, `kube_apiserver`, `kube_scheduler`, and `kube_controller_manager`.
+Our pod definition is on the `etcd.yaml` file. We have created a new one that adds the following annotations to the pod:
 
-<details>
-<summary>Hint</summary>
-To verify a check is running, exec into the agent on the host and verify it's configuration. <br/> <br/>
+```
+  annotations:
+    ad.datadoghq.com/etcd.check_names: '["etcd"]'
+    ad.datadoghq.com/etcd.init_configs: '[{}]'
+    ad.datadoghq.com/etcd.instances: |
+      [
+        {
+          "prometheus_url": "https://%%host%%:2379/metrics",
+          "ssl_verify": "false",
+          "use_preview": "true",
+          "ssl_ca_cert": "/keys/ca.crt",
+          "ssl_cert": "/keys/peer.crt",
+          "ssl_private_key": "/keys/peer.key"
+        }
+      ]
+```
 
-`agent configcheck` in the agent pod prints the checks the agent has scheduled. <br/> <br/>
+* Copy the one with annotations back the file to the static pods folder: `cp assets/11-control-plane/etcd.yaml /etc/kubernetes/manifests/`{{execute}}. The Kubelet will pick the new configuration and will restart the `etcd-controlplane` pod with the new configuration applied.
 
-`agent status` in the agent pod prints information about the metrics and logs the agent has collected.
-</details>
+* Verify that the `etcd` check is now running correctly: `k exec $(k get pod -l app=datadog-agent --field-selector spec.nodeName=controlplane -ojsonpath="{.items[0].metadata.name}") agent status`{{execute}}
 
 Each control plane integration comes with a default dashboard: [etcd](https://app.datadoghq.com/screen/integration/75/etcd), [kube-scheduler](https://app.datadoghq.com/screen/integration/30270/kubernetes-scheduler), [kube-controller-manager](https://app.datadoghq.com/screen/integration/30271/kubernetes-controller-manager), and the kube-apiserver.
 
@@ -44,7 +52,6 @@ As an example for how to create custom dashboards in Datadog, we are going to cr
 ![APP Key](./assets/dashboard.png)
 
 * Run the following API call using the JSON description of the dashboard located in assets/11-control-plane/control_plane_json.json
-
 
 `export DD_APP_KEY=<YOUR_APP_KEY>`{{copy}}
 

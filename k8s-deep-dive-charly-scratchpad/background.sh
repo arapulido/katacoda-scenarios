@@ -71,7 +71,7 @@ if [ "$STATUS" != "complete" ]; then
   wall -n "Creating frontend service"
   kubectl apply -f assets/ecommerce-app/frontend.yaml
   wall -n "Creating traffic generator service"
-  kubectl apply -f assets/ecommerce-app/gor_traffic.yaml
+  #kubectl apply -f assets/ecommerce-app/gor_traffic.yaml
 
   NPODS=$(kubectl get pods --field-selector=status.phase=Running | grep -v NAME | wc -l)
 

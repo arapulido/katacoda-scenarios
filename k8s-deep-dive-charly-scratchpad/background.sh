@@ -37,7 +37,7 @@ if [ "$STATUS" != "complete" ]; then
 
   # add audit logs to the apiserver
   mkdir -p /etc/kubernetes/audit-policies
-  cp assets/00-env-prep/policy.yaml /etc/kubernetes/audit-policies/policy.yaml
+  cp assets/workshop-assets/00-env-prep/policy.yaml /etc/kubernetes/audit-policies/policy.yaml
 
   # update apiserver config
   grep "audit-policy-file" /etc/kubernetes/manifests/kube-apiserver.yaml || \

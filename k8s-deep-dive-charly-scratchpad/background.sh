@@ -58,6 +58,12 @@ if [ "$STATUS" != "complete" ]; then
   grep "mountPath: /var/log/kubernetes" /etc/kubernetes/manifests/kube-apiserver.yaml || \
 	sed -i '/volumeMounts:/a \ \ \ \ - {mountPath: /var/log/kubernetes, name: k8s-logs}' /etc/kubernetes/manifests/kube-apiserver.yaml
 
+  # Wait until the API server has restarted with the new conf and is available
+  NPODS=$(kubectl get pods -n kube-system -l component=kube-apiserver --field-selector=status.phase=Running | grep -v NAME | wc -l)
+  while [ "$NPODS" != "1" ]; do
+    sleep 0.3
+    NPODS=$(kubectl get pods -n kube-system -l component=kube-apiserver --field-selector=status.phase=Running | grep -v NAME | wc -l)
+  done
 
   wall -n "-- Applying commerce app --"
   wall -n "Creating DB"
@@ -66,8 +72,6 @@ if [ "$STATUS" != "complete" ]; then
   kubectl apply -f assets/ecommerce-app/advertisements.yaml
   wall -n "Creating discounts microservice"
   kubectl apply -f assets/ecommerce-app/discounts.yaml
-  wall -n "Creating frontend service"
-  kubectl apply -f assets/ecommerce-app/frontend.yaml
   wall -n "Creating frontend service"
   kubectl apply -f assets/ecommerce-app/frontend.yaml
   wall -n "Creating traffic generator service"
@@ -80,6 +84,8 @@ if [ "$STATUS" != "complete" ]; then
     NPODS=$(kubectl get pods --field-selector=status.phase=Running | grep -v NAME | wc -l)
   done
   wall -n "-- Commerce app ready --"
+
+  
 
   echo "complete">>/root/status.txt
 fi

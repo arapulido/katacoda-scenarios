@@ -1,26 +1,44 @@
 The Datadog agent runs as a `DaemonSet` with a replica on every node in the cluster that matches the selector. To ease its deployment we are going to use Helm.
 
-* Copy your API key from the Datadog agent configuration page and export it as an environment variable: <br/>
-`export DD_API_KEY=<your-api-key>`{{copy}}.
 
-* Now run the helm install command: `helm install datadogagent --set datadog.apiKey=$DD_API_KEY -f assets/02-datadog-agent/values.yaml stable/datadog`{{execute}}
+* The Datadog agent uses an API key to report data to your account, yours was injected as an environment variable ($DD_API_KEY) when you logged into the lab. Verify that the key is correctly injected: <br/>
 
-For more details, see the [official documentation](https://docs.datadoghq.com/agent/kubernetes/?tab=helm). You can check the `values.yaml` that we are passing by opening this file: `assets/02-datadog-agent/values.yaml`{{open}}.
+`echo $DD_API_KEY`
+
+* Now run the helm install command: `helm install datadogagent --set datadog.apiKey=$DD_API_KEY -f assets/workshop-assets/02-datadog-agent/values.yaml stable/datadog`{{execute}}
+
+For more details, see the [official documentation](https://docs.datadoghq.com/agent/kubernetes/?tab=helm). You can check the `values.yaml` that we are passing by opening this file: `assets/workshop-assets/02-datadog-agent/values.yaml`{{open}}.
 
 * Verify the `DaemonsetSet` is deployed, and a replica is running on your worker node `node01`.
 
-* Notice that the datadog agent pod is restarting: Investigate
+* Notice that the datadog agent pod has 3 containers, but only 2 are Ready, and the pod is restarting:
+
+```
+datadogagent-wns85                               2/3     Running   1          2m21s
+```
+
+Investigate why the 3 containers are not all in a Ready state, use the "Hint" if you need help and make sure you run the command in "Solution".
 
 <details>
 <summary>Hint</summary>
-The health port is 5555 but in values we specified 1234, the file
-assets/02-datadog-agent/healthport_fix.yaml contains the right configuration.
-Use helm upgrade to just apply this path:
- * `helm upgrade datadogagent -f assets/02-datadog-agent/values.yaml stable/datadog --reuse-values`
+Describe the pod running the Datadog agent:
 
+`kubectl describe pod -lapp=datadog-agent`
+The events should be self explanatory, but you will see that the probes are failing, so look into their configurations and compare them to the health port the agent is configured to use.
 </details>
 
-Once fixed wait for the datadog-agent pod to enter `Running` state.
+<details>
+<summary>Solution</summary>
+The health port the agent uses is 5555 but in the probes are specified on 1234 and 5678, the file
+assets/02-datadog-agent/value_fix.yaml contains the right configuration.
+
+Use helm upgrade to just apply this path:
+ * `helm upgrade datadogagent --set datadog.apiKey=$DD_API_KEY -f assets/02-datadog-agent/values_fix.yaml stable/datadog`
+</details>
+
+Once fixed wait for all of the containers in the datadog-agent pod to enter a `Running` state.
+
+Tips and tricks:
 
   * `kubectl get ds`{{execute}} to get a list of all DaemonSets in the current namespace.
   * `kubectl get pods`{{execute}} prints a list of all pods in the current namespace. <br/> <br/>

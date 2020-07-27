@@ -16,40 +16,12 @@
         "text": "02-agent.md"
       },
       {
-        "title": "Taints, tolerations, and the agent",
-        "text": "03-agent-master.md"
-      },
-      {
-        "title": "Run the agent everywhere",
-        "text": "04-agent-everywhere.md"
-      },
-      {
         "title": "Understanding Kubernetes observability data",
         "text": "06-k8s-dashboard.md"
       },
       {
-        "title": "Integration: kube-state-metrics",
-        "text": "07-ksm.md"
-      },
-      {
         "title": "Integration: Logs",
         "text": "08-logs.md"
-      },
-      {
-        "title": "Update the agent rollout strategy",
-        "text": "09-agent-rollout.md"
-      },
-      {
-        "title": "Real time logs in live tail",
-        "text": "10a-live-tail.md"
-      },
-      {
-        "title": "Visualize the cluster in Datadog",
-        "text": "10b-container-map.md"
-      },
-      {
-        "title": "Deploy the Cluster Agent",
-        "text": "10c-deploy-cluster-agent.md"
       },
       {
         "title": "Part 2: Complete",
@@ -156,6 +128,8 @@
   },
   "environment": {
     "uilayout": "editor-terminal-v1",
+    "exclusionPatterns": ["./go/*", "./Desktop/*"],
+    "hideHiddenFiles": true,
     "showdashboard": true,
     "dashboards": [
       {

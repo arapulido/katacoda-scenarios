@@ -59,18 +59,18 @@ if [ "$STATUS" != "complete" ]; then
 	sed -i '/volumeMounts:/a \ \ \ \ - {mountPath: /var/log/kubernetes, name: k8s-logs}' /etc/kubernetes/manifests/kube-apiserver.yaml
 
 
-  echo "-- Applying commerce app --"
-  echo "Creating DB"
+  wall -n "-- Applying commerce app --"
+  wall -n "Creating DB"
   kubectl apply -f assets/ecommerce-app/db.yaml
-  echo "Creating advertisements microservice"
+  wall -n "Creating advertisements microservice"
   kubectl apply -f assets/ecommerce-app/advertisements.yaml
-  echo "Creating discounts microservice"
+  wall -n "Creating discounts microservice"
   kubectl apply -f assets/ecommerce-app/discounts.yaml
-  echo "Creating frontend service"
+  wall -n "Creating frontend service"
   kubectl apply -f assets/ecommerce-app/frontend.yaml
-  echo "Creating frontend service"
+  wall -n "Creating frontend service"
   kubectl apply -f assets/ecommerce-app/frontend.yaml
-  echo "Creating traffic generator service"
+  wall -n "Creating traffic generator service"
   kubectl apply -f assets/ecommerce-app/gor_traffic.yaml
 
   NPODS=$(kubectl get pods --field-selector=status.phase=Running | grep -v NAME | wc -l)
@@ -79,7 +79,7 @@ if [ "$STATUS" != "complete" ]; then
     sleep 0.3
     NPODS=$(kubectl get pods --field-selector=status.phase=Running | grep -v NAME | wc -l)
   done
-  echo "-- Commerce app ready --"
+  wall -n "-- Commerce app ready --"
 
   echo "complete">>/root/status.txt
 fi

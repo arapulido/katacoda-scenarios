@@ -12,10 +12,6 @@
         "text": "00b-part2-begin.md"
       },
       {
-        "title": "Datadog credentials setup",
-        "text": "01-datadog-account.md"
-      },
-      {
         "title": "Install the Datadog agent in Kubernetes using Helm",
         "text": "02-agent.md"
       },
@@ -169,8 +165,6 @@
     ]    
   },
   "backend": {
-    "imageid": "datadog-kubernetes-cluster-running:1.16",
-    "reuseConnection": true,
-    "livetime": "4h"
+    "imageid": "datadog-kubernetes-cluster-running:1.16"
   }
 }

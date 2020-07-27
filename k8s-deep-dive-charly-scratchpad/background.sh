@@ -10,7 +10,7 @@ if [ "$STATUS" != "complete" ]; then
   ./get_helm.sh
   helm repo add stable https://kubernetes-charts.storage.googleapis.com
 
-  git clone https://github.com/arapulido/dash20-k8s-workshop.git assets
+  git clone https://github.com/CharlyF/k8s-workshop.git assets
 
   echo "Waiting for kubernetes to start" >>/root/status.txt
 
@@ -59,23 +59,27 @@ if [ "$STATUS" != "complete" ]; then
 	sed -i '/volumeMounts:/a \ \ \ \ - {mountPath: /var/log/kubernetes, name: k8s-logs}' /etc/kubernetes/manifests/kube-apiserver.yaml
 
 
-  echo "-- Applying commerce app --"
-  echo "Creating DB"
-  kubectl apply -f https://raw.githubusercontent.com/DataDog/ecommerce-workshop/master/k8s-manifests/ecommerce-app/db.yaml
-  echo "Creating advertisements microservice"
-  kubectl apply -f https://raw.githubusercontent.com/DataDog/ecommerce-workshop/master/k8s-manifests/ecommerce-app/advertisements.yaml
-  echo "Creating discounts microservice"
-  kubectl apply -f https://raw.githubusercontent.com/DataDog/ecommerce-workshop/master/k8s-manifests/ecommerce-app/discounts.yaml
-  echo "Creating frontend service"
-  kubectl apply -f https://raw.githubusercontent.com/DataDog/ecommerce-workshop/master/k8s-manifests/ecommerce-app/frontend.yaml
- 
+  wall -n "-- Applying commerce app --"
+  wall -n "Creating DB"
+  kubectl apply -f assets/ecommerce-app/db.yaml
+  wall -n "Creating advertisements microservice"
+  kubectl apply -f assets/ecommerce-app/advertisements.yaml
+  wall -n "Creating discounts microservice"
+  kubectl apply -f assets/ecommerce-app/discounts.yaml
+  wall -n "Creating frontend service"
+  kubectl apply -f assets/ecommerce-app/frontend.yaml
+  wall -n "Creating frontend service"
+  kubectl apply -f assets/ecommerce-app/frontend.yaml
+  wall -n "Creating traffic generator service"
+  kubectl apply -f assets/ecommerce-app/gor_traffic.yaml
+
   NPODS=$(kubectl get pods --field-selector=status.phase=Running | grep -v NAME | wc -l)
 
   while [ "$NPODS" != "4" ]; do
     sleep 0.3
     NPODS=$(kubectl get pods --field-selector=status.phase=Running | grep -v NAME | wc -l)
   done
-  echo "-- Commerce app ready --"
+  wall -n "-- Commerce app ready --"
 
   echo "complete">>/root/status.txt
 fi

@@ -1,18 +1,32 @@
-Now is time to deploy the Cluster Agent.
+Now is time to deploy the Cluster Agent. Again, this is very easy to do using the Datadog's Helm chart.
 
-* We are going to patch the Agent to enable the Cluster Agent's client and to configure the token for the communication to be secure.<br/>
-`kubectl apply -f assets/10c-deploy-cluster-agent/cluster-agent-manifests`{{execute}}
-
-* Patch the agent DaemonSet: <br/>
-`kubectl patch daemonset datadog-agent --patch "$(cat assets/10c-deploy-cluster-agent/enable-dca.patch.yaml)"`{{execute}}
-
-* Verify that the Cluster Agent is running: <br/>
-`kubectl get pod -lapp=datadog-cluster-agent`{{execute}}
-
-* Verify that the agent can properly communicate with it. Exec into an agent and use the `agent status` command.
+We will enable deploy the Cluster Agent using this section of the Helm `values.yaml` file:
 
 ```
-kubectl exec -ti datadog-agent-XXX agent status
+## @param clusterAgent - object - required
+## This is the Datadog Cluster Agent implementation that handles cluster-wide
+## metrics more cleanly, separates concerns for better rbac, and implements
+## the external metrics API so you can autoscale HPAs based on datadog metrics
+## ref: https://docs.datadoghq.com/agent/kubernetes/cluster/
+#
+clusterAgent:
+  ## @param enabled - boolean - required
+  ## Set this to true to enable Datadog Cluster Agent
+  #
+  enabled: true
+```
+
+You can view this new section opening this file: `assets/10c-deploy-cluster-agent/values.yaml`{{open}}. Navigate to line 396 to check the section.
+
+* Apply the new `values.yaml`: <br/>
+`helm upgrade datadogagent --set datadog.apiKey=$DD_API_KEY -f assets/10c-deploy-cluster-agent/values.yaml stable/datadog`{{execute}}
+
+* Verify that the Cluster Agent is running: <br/>
+`kubectl get pod -lapp=datadogagent-cluster-agent`{{execute}}
+
+* Run the agent status command and check that the Node Agents can properly communicate with the Cluster Agent: `kubectl exec $(kubectl get pod -l app=datadogagent -ojsonpath="{.items[0].metadata.name}") agent status`{{execute}}
+
+```
 [...] 
 =====================
 Datadog Cluster Agent

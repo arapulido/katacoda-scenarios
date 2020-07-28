@@ -6,7 +6,7 @@ Here they should use the kubernetes pod dashboard to identify that one pod is in
 We don't tell them where it is, we just mention that they should use the dahsboard to see where it is
 Then they describe it to see what is wrong
 They path the command
-`kubectl patch deploy load-balancer-traffic -n external --patch "$(cat assets/workshop-assets/apps/fixes/gor_pod.yaml)"`{{copy}}
+`kubectl patch deploy load-balancer-traffic -n external --type json -p='[{"op": "remove", "path": "/spec/template/spec/containers/0/command"}]'`{{copy}}
 
 
 Then the image is not pulling

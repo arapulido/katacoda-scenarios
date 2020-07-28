@@ -66,7 +66,9 @@ if [ "$STATUS" != "complete" ]; then
   done
 
   # Patching etcd's annotations for the check to run without errors
-  mv assets/workshop-assets/00-env-prep/etcd.yaml /etc/kubernetes/manifests/etcd.yaml
+  sed -i -e '/metadata:/r assets/workshop-assets/00-env-prep/etcd.patch.yaml' /etc/kubernetes/manifests/etcd.yaml
+  # make sure the static pod is updated
+  sleep 0.5
   NETCD=$(kubectl get pods -n kube-system -l component=etcd --field-selector=status.phase=Running| grep -v NAME | wc -l)
   while [ "$NETCD" != "1" ]; do
     sleep 0.3

@@ -1,0 +1,2 @@
+Here are a set of urls that were reported to us: (/discounts, /advertisements …), try to see if you can click yourself in the website to reproduce the traces)
+# have htem click on the one that is non functionning (discount I think) and link the massive trace that has problems

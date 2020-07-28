@@ -1,0 +1,1 @@
+End of the warm up section, CTO is asking for everybody to get back to the meeting to announce the GA!

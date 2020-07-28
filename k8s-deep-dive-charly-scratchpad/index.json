@@ -8,7 +8,7 @@
         "text": "00a-explore.md"
       },
       {
-        "title": "Part 2: Monitoring Kubernetes",
+        "title": "Warm up: getting familiar with the app",
         "text": "00b-part2-begin.md"
       },
       {
@@ -20,11 +20,15 @@
         "text": "06-k8s-dashboard.md"
       },
       {
+        "title": "End of Warm up",
+        "text": "06a-end-warmup.md"
+      },
+      {
         "title": "Part 1: Fixing a bad push",
         "text": "07-bad-push.md"
       },
       {
-        "title": "Part 1: Fixing a bad push",
+        "title": "Part 1: End",
         "text": "07a-bad-push-end.md"
       },
       {
@@ -50,6 +54,26 @@
       {
         "title": "Part 3: Complete",
         "text": "17a-part3-end.md"
+      },
+      {
+        "title": "Part 4: The Outage",
+        "text": "18-part4-begin.md"
+      },
+      {
+        "title": "The Outage: Customers reports",
+        "text": "18a-outage1.md"
+      },
+      {
+        "title": "The Outage: Reproducing the issue",
+        "text": "18b-outage2.md"
+      },
+      {
+        "title": "The Outage: The Database calls",
+        "text": "18c-outage3.md"
+      },
+      {
+        "title": "Part 4: Complete",
+        "text": "18d-outage4.md"
       },
       {
         "title": "Advanced Content",

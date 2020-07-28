@@ -34,7 +34,7 @@ if [ "$STATUS" != "complete" ]; then
 	  sleep 5
   done
   kubectl delete clusterrolebinding permissive-binding
-
+  wall -n "Patching APIServer"
   # add audit logs to the apiserver
   mkdir -p /etc/kubernetes/audit-policies
   cp assets/workshop-assets/00-env-prep/policy.yaml /etc/kubernetes/audit-policies/policy.yaml
@@ -65,9 +65,11 @@ if [ "$STATUS" != "complete" ]; then
     NPODS=$(kubectl get pods -n kube-system -l component=kube-apiserver --field-selector=status.phase=Running | grep -v NAME | wc -l)
   done
 
+  wall -n "Patching ETCD"
   # Patching etcd's annotations for the check to run without errors
   sed -i -e '/metadata:/r assets/workshop-assets/00-env-prep/etcd.patch.yaml' /etc/kubernetes/manifests/etcd.yaml
   # make sure the static pod is updated
+  cat /etc/kubernetes/manifests/etcd.yaml | grep "ad.datadoghq"
   sleep 0.5
   NETCD=$(kubectl get pods -n kube-system -l component=etcd --field-selector=status.phase=Running| grep -v NAME | wc -l)
   while [ "$NETCD" != "1" ]; do

@@ -9,8 +9,7 @@ be spamming and overloading the apiserver on the `pods` endpoint.
 
 <details>
 <summary>Hints</summary>
-# TODO update url
-The [Kubernetes audit logs](https://app.datadoghq.com/logs?cols=core_host%2Ccore_service&event&index=main&live=true&query=source%3Akubernetes.audit&stream_sort=desc) that we added earlier can be helpful to audit
+The [Kubernetes audit logs](https://app.datadoghq.com/logs/analytics?agg_m=&agg_q=%40usr.name&agg_t=count&analyticsOptions=%5B%22bars%22%5D&cols=core_host%2Ccore_service&index=main&live=true&messageDisplay=expanded-md&panel=%22%22&query=source%3Akubernetes.audit+%40usr.name%3A%22system%3Aserviceaccount%3Adefault%3Apod-lister%22&stream_sort=desc) that we added earlier can be helpful to audit
 whoever is making calls to the apiserver. You can use facets to filter on a
 specific resources, URI or requester.<br/><br/>
 

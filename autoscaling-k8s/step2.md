@@ -6,9 +6,7 @@ Log into [Datadog](https://app.datadoghq.com/) and navigate to the [API settings
 
 Then, add your Datadog API key to the secrets. You can do this by executing the following command in the terminal:
 
-```
-$ kubectl create secret generic datadog-secret --from-literal api-key=<YOUR_DATADOG_API_KEY>
-```
+`kubectl create secret generic datadog-secret --from-literal api-key=<YOUR_DATADOG_API_KEY>`{{copy}}
 
 This will create a Kubernetes secret to make sure the Datadog agent is able to send data to your Datadog account.
 

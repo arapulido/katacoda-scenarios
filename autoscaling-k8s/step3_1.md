@@ -6,7 +6,7 @@ Click on Dashboards -> New Dashboard in the menu. Provide a name and select New 
 
 Click on "Add Graph" and select "Timeseries" as the type of graph.
 
-For the first graph we are going to visualize the number of pod replicas we have for the `store-frontend` service. Select `kubernetes_state.deployment.replicas` as metric and filter by `deployment:frontend`:
+For the first graph we are going to visualize the number of pod replicas we have for the `store-frontend` service. Select `kubernetes_state.deployment.replicas` as metric and filter by `kube_deployment:frontend`:
 
 ![Screenshot of replicas metric](./assets/frontend_replicas.png)
 

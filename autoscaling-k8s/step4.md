@@ -13,7 +13,7 @@ Let's imagine that we want to keep the CPU resources to an average of 50% what w
 
 We will create a [Horizontal Pod Autoscaler (HPA)](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/) object that will create new replicas when CPU usage goes above 50% of the 100m requested, sharing the load between those replicas.
 
-Create a new file called `frontend-hpa-cpu.yaml` by clicking below under "Copy to Editor":
+We are going to create a new file called `frontend-hpa-cpu.yaml` (file creation happens automatically by clicking below under "Copy to Editor"):
 
 <pre class="file" data-filename="frontend-hpa-cpu.yaml" data-target="replace">
 apiVersion: autoscaling/v2beta2
@@ -78,14 +78,12 @@ frontend-hpa-cpu   Deployment/frontend   <unknown>/50%   1         3         1  
 
 We are going to increase the traffic to our application to force the scaling event: `kubectl apply -f k8s-manifests/autoscaling/more-traffic.yaml`{{execute}}That manifest creates a pod that will send more regular traffic to our `frontend` Deployment.
 
-After some seconds, this object will be updated with the CPU usage of the pods that are part of the `frontend` Deployment. Check it running the following command: `kubectl get hpa frontend-hpa-cpu`{{execute}}
+After some seconds, this object will be updated with the CPU usage of the pods that are part of the `frontend` Deployment. Check it running the following command: `kubectl get hpa frontend-hpa-cpu -w`{{execute}} Have the number of replicas increased? Type `Ctrl+C` to return to the terminal once you are done.
 
 ```
 NAME               REFERENCE             TARGETS   MINPODS   MAXPODS   REPLICAS   AGE
 frontend-hpa-cpu   Deployment/frontend   102%/50%   1         3         2          45m
 ```
-
-Have the number of replicas increased? (If the number of replicas hasn't increased yet keep running the `kubectl get hpa frontend-hpa-cpu`{{execute}} command until the CPU goes beyond the target).
 
 You can obtain more information about the different scaling events by describing the HPA object: `kubectl describe hpa frontend-hpa-cpu`{{execute}}
 

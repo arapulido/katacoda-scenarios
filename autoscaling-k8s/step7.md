@@ -6,6 +6,8 @@ Let's create the CRDs first. Execute the following command: `kubectl apply -f k8
 No resources found in default namespace.
 ```
 
+Note: you may need to rerun the command to take effect: `kubectl get wpa`{{execute}}
+
 Let's apply now the manifests that deploy the WPA controller. This controller will watch for new WPA objects created and create scaling events based on the metrics. Execute the following command: `kubectl apply -f k8s-manifests/watermarkpodautoscaler/`{{execute}}
 
 Check that the `watermarkpodautoscaler` is running correctly: `kubectl get pod $(kubectl get pods -l name=watermarkpodautoscaler -o jsonpath='{.items[0].metadata.name}')`{{execute}}
@@ -79,14 +81,14 @@ minReplicas: 1
 maxReplicas: 5
 ```
 
-In this section of the specification we are specifiying the minimum and maximum number of replicas for the target that we want. In this case we are telling the HPA controller that, even if the replicas are experiencing over 7 seconds of p99 latency, to not go above 5 replicas.
+In this section of the specification we are specifiying the minimum and maximum number of replicas for the target that we want. In this case we are telling the WPA controller that, even if the replicas are experiencing over 7 seconds of p99 latency, to not go above 5 replicas.
 
 Other options in our manifest:
 
  * `downscaleForbiddenWindowSeconds: 60`: Wait 60 seconds after a scaling event before scaling down
  * `upscaleForbiddenWindowSeconds: 30`: Wait 30 seconds after a scaling event before scaling up
 
-Create the HPA object by applying the manifest: `kubectl apply -f frontend-wpa.yaml`{{execute}}
+Create the WPA object by applying the manifest: `kubectl apply -f frontend-wpa.yaml`{{execute}}
 
 Let's check that the Cluster Agent is getting the metric correctly by executing the agent status for the Cluster Agent: `kubectl exec -ti $(kubectl get pods -l app=datadog-cluster-agent -o jsonpath='{.items[0].metadata.name}') -- agent status`{{execute}} Browse the output and check that you get an output similar to this one:
 
@@ -104,6 +106,8 @@ External Metrics
   Timestamp: 2020-04-21 14:46:30.000000 UTC
   Valid: true
 ```
+
+This may take some time, until we have a metric value. Keep running the latest command until you get the metric value correctly.
 
 That states that the Cluster Agent is correctly getting the value of the metric requested by our WPA object. Let's get the WPA object again to see if the metric is being reflected there. Execute the following command: `kubectl get wpa frontend-wpa-latency`{{execute}}:
 

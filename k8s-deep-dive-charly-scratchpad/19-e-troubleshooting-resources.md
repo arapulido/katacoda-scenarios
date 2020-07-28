@@ -1,3 +1,8 @@
+
+
+In this section, decide what to do.
+We can simply do the following:
+
 ## What's broken
 
 There are pods that are `Pending` and as a result they are not running.

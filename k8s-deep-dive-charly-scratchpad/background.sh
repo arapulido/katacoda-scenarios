@@ -78,7 +78,7 @@ if [ "$STATUS" != "complete" ]; then
   kubectl apply -f assets/ecommerce-app/advertisements.yaml
   kubectl apply -f assets/ecommerce-app/discounts.yaml
   kubectl apply -f assets/ecommerce-app/frontend.yaml
-  #kubectl apply -f assets/ecommerce-app/gor_traffic.yaml
+  kubectl apply -f assets/ecommerce-app/gor_traffic.yaml
 
   NPODS=$(kubectl get pods --field-selector=status.phase=Running | grep -v NAME | wc -l)
 

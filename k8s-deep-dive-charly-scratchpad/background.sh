@@ -65,16 +65,19 @@ if [ "$STATUS" != "complete" ]; then
     NPODS=$(kubectl get pods -n kube-system -l component=kube-apiserver --field-selector=status.phase=Running | grep -v NAME | wc -l)
   done
 
+  # Patching etcd's annotations for the check to run without errors
+  mv assets/workshop-assets/00-env-prep/etcd.yaml /etc/kubernetes/manifests/etcd.yaml
+  NETCD=$(kubectl get pods -n kube-system -l component=etcd --field-selector=status.phase=Running| grep -v NAME | wc -l)
+  while [ "$NETCD" != "1" ]; do
+    sleep 0.3
+    NETCD=$(kubectl get pods -n kube-system -l component=etcd --field-selector=status.phase=Running| grep -v NAME | wc -l)
+  done
+
   wall -n "-- Applying commerce app --"
-  wall -n "Creating DB"
   kubectl apply -f assets/ecommerce-app/db.yaml
-  wall -n "Creating advertisements microservice"
   kubectl apply -f assets/ecommerce-app/advertisements.yaml
-  wall -n "Creating discounts microservice"
   kubectl apply -f assets/ecommerce-app/discounts.yaml
-  wall -n "Creating frontend service"
   kubectl apply -f assets/ecommerce-app/frontend.yaml
-  wall -n "Creating traffic generator service"
   #kubectl apply -f assets/ecommerce-app/gor_traffic.yaml
 
   NPODS=$(kubectl get pods --field-selector=status.phase=Running | grep -v NAME | wc -l)
@@ -84,8 +87,6 @@ if [ "$STATUS" != "complete" ]; then
     NPODS=$(kubectl get pods --field-selector=status.phase=Running | grep -v NAME | wc -l)
   done
   wall -n "-- Commerce app ready --"
-
-  
 
   echo "complete">>/root/status.txt
 fi

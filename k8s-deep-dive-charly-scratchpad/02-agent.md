@@ -3,7 +3,7 @@ The Datadog agent runs as a `DaemonSet` with a replica on every node in the clus
 
 * The Datadog agent uses an API key to report data to your account, yours was injected as an environment variable ($DD_API_KEY) when you logged into the lab. Verify that the key is correctly injected: <br/>
 
-`echo $DD_API_KEY`
+`echo $DD_API_KEY`{{execute}}
 
 * Now run the helm install command: `helm install datadogagent --set datadog.apiKey=$DD_API_KEY -f assets/workshop-assets/02-datadog-agent/values.yaml stable/datadog`{{execute}}
 
@@ -15,6 +15,7 @@ For more details, see the [official documentation](https://docs.datadoghq.com/ag
 
 ```
 datadogagent-wns85                               2/3     Running   1          2m21s
+datadogagent-cctcn                               2/3     CrashLoopBackOff   4          2m37s
 ```
 
 Investigate why the 3 containers are not all in a Ready state, use the "Hint" if you need help and make sure you run the command in "Solution".
@@ -23,7 +24,7 @@ Investigate why the 3 containers are not all in a Ready state, use the "Hint" if
 <summary>Hint</summary>
 Describe the pod running the Datadog agent:
 
-`kubectl describe pod -lapp=datadog-agent`
+`kubectl describe pod -lapp=datadogagent`{{execute}}
 The events should be self explanatory, but you will see that the probes are failing, so look into their configurations and compare them to the health port the agent is configured to use.
 </details>
 
@@ -33,7 +34,7 @@ The health port the agent uses is 5555 but in the probes are specified on 1234 a
 assets/02-datadog-agent/value_fix.yaml contains the right configuration.
 
 Use helm upgrade to just apply this path:
- * `helm upgrade datadogagent --set datadog.apiKey=$DD_API_KEY -f assets/02-datadog-agent/values_fix.yaml stable/datadog`
+ * `helm upgrade datadogagent --set datadog.apiKey=$DD_API_KEY -f assets/workshop-assets/02-datadog-agent/values_fix.yaml stable/datadog`{{execute}}
 </details>
 
 Once fixed wait for all of the containers in the datadog-agent pod to enter a `Running` state.

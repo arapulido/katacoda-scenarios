@@ -26,11 +26,21 @@ To the following:
 discounts = Discount.query.options(joinedload('*')).all()
 ```
 
-We eager load the discount_type relation on the discount, and can grab all information without multiple trips to the database:
+We eager load the `discount_type` relation on the `discount`, and can grab all information without multiple trips to the database. 
 
 </details>
 
-Let's deploy the fixed version by running `kubectl deploy -f ...`. After the deployment is done, go back to the [Service Overview](https://app.datadoghq.com/apm/service/store-frontend/rack.request) page and look how the latency of the app is going down. 
+Let's deploy the fixed version by running `kubectl deploy -f ...`. 
+
+Can you verify that the latency issue is no longer happening?
+
+<summary>Hints</summary>
+
+Go back to the [Service Overview](https://app.datadoghq.com/apm/service/store-frontend/rack.request) page and look how the latency of the app is going down. 
+
+Go back to the [Traces page](https://app.datadoghq.com/apm/traces) and look at one of the traces from the fixed service, they should look like this:
+![solved-nplus](./assets/solved-nplus.png)
+
 
 ## Your mission: create a Datadog Monitor to alert on high application latency
 
@@ -45,7 +55,7 @@ Follow these steps to create the monitor that alerts if the service latency is a
 
 <details>
 <summary>Hints</summary>
-To quickly create the monitor, you can go to the [New Monitor](https://app.datadoghq.com/monitors#/create), and choose "Import Monitor from JSON".</br></br>Then, copy the content of the monitor from [link to assets] and paste it in Datadog.
+To quickly create the monitor, you can go to the [New Monitor](https://app.datadoghq.com/monitors#/create), and choose "Import Monitor from JSON".</br></br>Then, copy the content of the monitor from [TBD!! link to assets](./) and paste it in Datadog.
 </details>
 
 Since your company and SRE team established clear Service Level Objectives (SLOs). Let's make sure that we can track and achieve the defined target around application latency -- 

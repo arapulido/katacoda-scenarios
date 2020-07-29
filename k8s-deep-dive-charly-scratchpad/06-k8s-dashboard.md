@@ -22,18 +22,22 @@ The agent will automatically discover `kube-state-metrics` pods and collect metr
 
 Let's verify that the agent is collecting KSM metrics by running the `status` command in datadog-agent pod that also runs in the `node01` node by executing the following commands:
 
-* `NODE01POD=kubectl get pod -l app=datadog-agent --field-selector spec.nodeName=node01 -o custom-columns=:metadata.name`{{execute}}
+* `NODE01POD=$(kubectl get pod -l app=datadogagent --field-selector spec.nodeName=node01 -o custom-columns=:metadata.name)`{{execute}}
+
 * `kubectl exec -ti $NODE01POD -- agent status`{{execute}}
 
 Look for:
 
 ```
-    kubernetes_state (1.0.0)
-    ------------------------------
-      Instance ID: kubernetes_state:822c2bebb015713 [OK]
-      Total Runs: 10
-      Metric Samples: Last Run: 1,251, Total: 12,510
+    kubernetes_state (5.4.1)
+    ------------------------
+      Instance ID: kubernetes_state:9e3b5144d45748a3 [OK]
+      Configuration Source: file:/etc/datadog-agent/conf.d/kubernetes_state.d/auto_conf.yaml
+      Total Runs: 20
+      Metric Samples: Last Run: 576, Total: 10,944
       Events: Last Run: 0, Total: 0
-      Service Checks: Last Run: 1, Total: 10
-      Average Execution Time : 1.102s
+      Service Checks: Last Run: 8, Total: 152
+      Average Execution Time : 82ms
+      Last Execution Date : 2020-07-29 16:07:02.000000 UTC
+      Last Successful Execution Date : 2020-07-29 16:07:02.000000 UTC
 ```

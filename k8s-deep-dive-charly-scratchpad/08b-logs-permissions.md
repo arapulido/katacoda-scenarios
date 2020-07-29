@@ -3,7 +3,7 @@ Now that you have learned about the audit logs and rbac, let's see what they loo
 First of all, in order to generate some interesting logs, we have built a small app that will query the APIServer to give us useful insight.
 create the audit-log-generator deployment:
 
-`kubectl apply -f assets/workshop-assets/apps/manifests/pod-lister.yaml`
+`kubectl apply -f assets/workshop-assets/apps/manifests/pod-lister.yaml`{{execute}}
 
 As the pod is deployed, you will notice that it is not Running correctly.
 Try to use the logs in Datadog to spot the issue.
@@ -16,6 +16,16 @@ specific resources, URI or requester.<br/><br/>
 
 In this case we are looking for `403` HTTP response status codes.
 </details>
+
+If you are digging through the audit logs, and can't figure out how to identify the ones that we are specifically interested in, maybe this hint will help:
+
+<details>
+<summary>Hints</summary>
+Try to use the following query in the log search: 
+
+`index:main source:kubernetes.audit @http.status_code:403`
+</details>
+
 
 Find a way to fix the issue and implement it!
 
@@ -40,6 +50,8 @@ pod-lister-b754c75db-rsz9s                       0/1     CrashLoopBackOff   5   
 ```
 
 Feel free to delete it, the deployment controller will create a new pod using the new RBAC that will be in a running state.
+
+`kubectl delete po $(kubectl get pods -lapp=pod-lister -o custom-columns=:metadata.name)`{{execute}}
 
 </details>
 

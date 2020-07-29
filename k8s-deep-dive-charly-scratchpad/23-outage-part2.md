@@ -1,7 +1,4 @@
-PLACEHOLDER - show an image of a slack conversation between two people
-John: Ok this is good progress. We identified that there is an issue with our front end app. 
-Sarah: Yeah, let's try to get to the bottom of this so we can fix this before Europe is getting back to work.
-John: This is going to be a long night.. Coffee?
+![Slack](./assets/slack2.png)
 
 ## Your mission: understand the root cause for the high latency in `store-frontend`
 
@@ -24,7 +21,7 @@ Investigate the flame graph, container metrics, application logs, and processes 
 
 Can you spot the issue? 
 </details>
-
+<br/><br/>
 <details>
 <summary>Hints</summary>
 

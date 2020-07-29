@@ -1,7 +1,4 @@
-PLACEHOLDER - show an image of a slack conversation between two people
-Sarah: We're almost there, let's get someone from the application team to fix this
-John: Great. I just reached out to their backup engineer and we're starting a Zoom call in a minute
-Sarah: Ok perfect, see you there!
+![Slack](./assets/slack3.png)
 
 ## Your mission: deploy a fix to the issue in the `discount-service` and reduce the latency to an healthy level
 

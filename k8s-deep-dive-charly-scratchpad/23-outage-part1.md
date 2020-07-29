@@ -1,9 +1,6 @@
 ... 24 days later ...
 
-PLACEHOLDER - show an image of a slack conversation between two people
-John: We are getting many support tickets recently
-Sarah: What's going on?
-John: It seems like many users are complaining that the application is super slow
+![Slack](./assets/slack1.png)
 
 ## Your mission: identify which part of the application is slow
 
@@ -14,11 +11,11 @@ Should you start looking at infrastructure metrics, application logs, or maybe s
 <details>
 <summary>Hints</summary>
 
-An high application latency is usually a good indicator for a performance issue. Since we received complaints from end-users, we know that the issue lies in one of the services that users interact with (directly or indirectly). Hover mouse over each of the services to find the service with a problematic latency. 
+An high application latency is usually a good indicator for a performance issue. Since we received complaints from end-users, we know that the issue involves at least one service that end-users interact with (directly or indirectly).
 
-The [Service Map page](https://app.datadoghq.com/apm/map) can give you a clear picture of each application service performance. Hover 
+The [Service Map page](https://app.datadoghq.com/apm/map) can give you a clear picture of each application service performance. Hover your mouse over each of the services to find the service with a problematic latency. 
 </details>
-
+<br/><br/>
 <details>
 <summary>Hints</summary>
 

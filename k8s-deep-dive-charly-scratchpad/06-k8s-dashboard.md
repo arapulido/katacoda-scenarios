@@ -26,12 +26,8 @@ Let's verify that the agent is collecting KSM metrics by running the `status` co
 * `kubectl exec -ti $NODE01POD -- agent status`{{execute}}
 
 Look for:
+
 ```
-=========
-Collector
-=========
-  Running Checks
-  ==============
     kubernetes_state (1.0.0)
     ------------------------------
       Instance ID: kubernetes_state:822c2bebb015713 [OK]

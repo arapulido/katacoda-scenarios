@@ -3,7 +3,7 @@ Now that you have learned about the audit logs and rbac, let's see what they loo
 First of all, in order to generate some interesting logs, we have built a small app that will query the APIServer to give us useful insight.
 create the audit-log-generator deployment:
 
-`kubectl apply -f assets/workshop-assets/apps/manifests/pod-lister.yaml`
+`kubectl apply -f assets/workshop-assets/apps/manifests/pod-lister.yaml`{{execute}}
 
 As the pod is deployed, you will notice that it is not Running correctly.
 Try to use the logs in Datadog to spot the issue.
@@ -31,15 +31,21 @@ service account permissions are.<br/><br/>
 In this case you will need to add permissions for the `list` verb to the `/pods`
 resource.<br/><br/>
 
-We included a sample patch as a solution:<br/><br/>
+We included a sample patch as a solution. Run the following to use it:<br/><br/>
 `kubectl patch clusterroles pod-lister --patch="$(cat assets/workshop-assets/apps/fixes/rbac-fix.yaml)"`{{execute}}
 
-NB: If the pod is in a CrashloopBackoff State:
+Check if `pod-lister` Pod is still in now running:<br/><br/>
+`kubectl get pods`{{execute}}
+
+If it is still in a CrashloopBackoff State, such as:
 ```
 pod-lister-b754c75db-rsz9s                       0/1     CrashLoopBackOff   5          4m33s
 ```
 
-Feel free to delete it, the deployment controller will create a new pod using the new RBAC that will be in a running state.
+Feel free to delete it by running the following (update the pod name based on your environment):<br/><br/>
+`kubectl delete pod pod-lister-b754c75db-rsz9s`{{copy}} 
+
+The deployment controller will create a new pod using the new RBAC that will be in a running state.
 
 </details>
 

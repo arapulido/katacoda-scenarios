@@ -13,15 +13,26 @@ The [Kubernetes audit logs](https://app.datadoghq.com/logs/analytics?agg_m=&agg_
 whoever is making calls to the apiserver. You can use facets to filter on a
 specific resources, URI or requester.<br/><br/>
 
-Then click on "Analytics" in the logs view to display the log query as a metric.
+Then click on "Analytics" in the logs view to display the log query as a metric:
+![switch to Analytics button](./assets/logs_analytics.png)
+
 </details>
+
+<details>
+<summary>Hint</summary>
+
+[Click here](https://app.datadoghq.com/logs/analytics?agg_m=&agg_q=%40usr.name&agg_t=count&analyticsOptions=%5B%22bars%22%5D&event&index=&live=true&query=%40http.url_details.path%3A%22%2Fapi%2Fv1%2Fpods%22&stream_sort=desc&viz=timeseries) to view all the requests on the `/api/v1/pods` endpoint grouped by the user. 
+
+Can you identify now the spammer who is overlading the apiserver?
+
+![Group logs by user](./assets/logs_analytics_query.png)
+</summary>
 
 ## Your mission: fix the problem
 
 Find a way to fix the issue and implement it! For this one you will have to find
 the source code of this application in the `assets/workshop-assets/apps` directory, and look at
 a way to fix and replace this spammy call by something else.
-
 
 <details>
 <summary>Fix/Explanation</summary>

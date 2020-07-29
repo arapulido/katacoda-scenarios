@@ -4,6 +4,8 @@ In order to get a good grasp at how traces are correlated to the activity on the
 
 Take note of the Load Balancer's url:
 
+![Load Balancer URL](./assets/load_balancer_url.png)
+
 Then go to the [Trace page](https://app.datadoghq.com/apm/traces) and use the following query:
 
 `env:ruby-shop @http.base_url:"https://XXX-XXX-XXX.environments.katacoda.com"`

@@ -90,6 +90,18 @@
       {
         "title": "Tracing",
         "text": "22-tracing-pod-lister.md"
+      },
+      {
+        "title": "Outage: Part 1",
+        "text": "23-outage-part1.md"
+      },
+      {
+        "title": "Outage: Part 2",
+        "text": "23-outage-part2.md"
+      },
+      {
+        "title": "Outage: Part 3",
+        "text": "23-outage-part3.md"
       }
     ],
     "intro": {

@@ -32,9 +32,6 @@ You can execute the following command to remove it:
 </details>
 
 Once the situation is solved, you should start seeing traces reporting into your Datadog account, 
-Go to the [APM page ](https://app.datadoghq.com/apm/app-analytics/analytics?query=env%3Aruby-shop)
+Go to the [APM page ](https://app.datadoghq.com/apm/traces?query=env%3Aruby-shop)
 
 ![Traces](./assets/traces_coming.png)
-
-
-

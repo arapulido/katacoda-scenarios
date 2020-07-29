@@ -17,6 +17,16 @@ specific resources, URI or requester.<br/><br/>
 In this case we are looking for `403` HTTP response status codes.
 </details>
 
+If you are digging through the audit logs, and can't figure out how to identify the ones that we are specifically interested in, maybe this hint will help:
+
+<details>
+<summary>Hints</summary>
+Try to use the following query in the log search: 
+
+`index:main source:kubernetes.audit @http.status_code:403`
+</details>
+
+
 Find a way to fix the issue and implement it!
 
 <details>
@@ -46,6 +56,8 @@ Feel free to delete it by running the following (update the pod name based on yo
 `kubectl delete pod pod-lister-b754c75db-rsz9s`{{copy}} 
 
 The deployment controller will create a new pod using the new RBAC that will be in a running state.
+
+`kubectl delete po $(kubectl get pods -lapp=pod-lister -o custom-columns=:metadata.name)`{{execute}}
 
 </details>
 

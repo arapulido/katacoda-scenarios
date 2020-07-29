@@ -25,7 +25,9 @@ discounts = Discount.query.all()
 
 To the following:
 
+```
 discounts = Discount.query.options(joinedload('*')).all()
+```
 
 We eager load the discount_type relation on the discount, and can grab all information without multiple trips to the database:
 

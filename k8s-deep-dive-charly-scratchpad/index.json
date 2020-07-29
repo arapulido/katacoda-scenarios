@@ -65,15 +65,15 @@
       },
       {
         "title": "The Outage: Customers reports",
-        "text": "18a-outage1.md"
+        "text": "23-outage-part1.md"
       },
       {
         "title": "The Outage: Reproducing the issue",
-        "text": "18b-outage2.md"
+        "text": "23-outage-part2.md"
       },
       {
         "title": "The Outage: The Database calls",
-        "text": "18c-outage3.md"
+        "text": "23-outage-part3.md"
       },
       {
         "title": "Part 4: Complete",
@@ -90,18 +90,6 @@
       {
         "title": "Tracing",
         "text": "22-tracing-pod-lister.md"
-      },
-      {
-        "title": "Outage: Part 1",
-        "text": "23-outage-part1.md"
-      },
-      {
-        "title": "Outage: Part 2",
-        "text": "23-outage-part2.md"
-      },
-      {
-        "title": "Outage: Part 3",
-        "text": "23-outage-part3.md"
       }
     ],
     "intro": {

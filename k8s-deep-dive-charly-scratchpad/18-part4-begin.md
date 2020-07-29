@@ -1,2 +1,2 @@
-The Outage!  ![](./assets/fear.png)
+The Outage!
 

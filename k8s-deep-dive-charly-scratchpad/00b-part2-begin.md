@@ -1,6 +1,4 @@
-Wait a few minutes until your environment is setup. Once it is setup, you will see the following message in your terminal:`OK, the training environment is installed and ready to go.`
-
-The ecommerce application will already be provisioned for you. You can check the different deployments that are part of the application by running the following command: `kubectl get deployment --selector=app=ecommerce`{{execute}} 
+The ecommerce application has already been provisioned for you. You can check the different deployments that are part of the application by running the following command: `kubectl get deployment --selector=app=ecommerce`{{execute}} 
 
 You should get an output similar to this:
 
@@ -17,3 +15,5 @@ The ecommerce application consists of a big monolith application called `fronten
 Check that all the pods are running correctly by running the following command: `kubectl get pods --selector=app=ecommerce`{{execute}}
 
 At this point you can visit the ecommerce application by clicking on the Ecommerce App tab in the terminal. Can you tell what areas of web page are served by the `advertisements` and `discounts` microservices?
+
+![Ecommerce Website](./assets/ecommerce_sections.png)

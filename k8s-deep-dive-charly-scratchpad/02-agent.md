@@ -9,7 +9,7 @@ The Datadog agent runs as a `DaemonSet` with a replica on every node in the clus
 
 For more details, see the [official documentation](https://docs.datadoghq.com/agent/kubernetes/?tab=helm). You can check the `values.yaml` that we are passing by opening this file: `assets/workshop-assets/02-datadog-agent/values.yaml`{{open}}.
 
-* Verify the `DaemonsetSet` is deployed, and a replica is running on your worker node `node01`.
+* Verify the `DaemonsetSet` is deployed, and a replica is running on your worker node `node01` and on your master node `controlplane`.
 
 * Notice that the datadog agent pod has 3 containers, but only 2 are Ready, and the pod is restarting:
 
@@ -30,7 +30,7 @@ The events should be self explanatory, but you will see that the probes are fail
 
 <details>
 <summary>Solution</summary>
-The health port the agent uses is 5555 but in the probes are specified on 1234 and 5678, the file
+The health port the agent uses is 5555 but the probes are specified on 1234 and 5678, the file
 assets/02-datadog-agent/value_fix.yaml contains the right configuration.
 
 Use helm upgrade to just apply this path:

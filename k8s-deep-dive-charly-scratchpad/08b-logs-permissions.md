@@ -52,8 +52,8 @@ If it is still in a CrashloopBackoff State, such as:
 pod-lister-b754c75db-rsz9s                       0/1     CrashLoopBackOff   5          4m33s
 ```
 
-Feel free to delete it by running the following (update the pod name based on your environment):<br/><br/>
-`kubectl delete pod pod-lister-b754c75db-rsz9s`{{copy}} 
+Feel free to delete it by running the following:<br/><br/>
+`kubectl delete po $(kubectl get pods -lapp=pod-lister -o custom-columns=:metadata.name)`{{execute}}
 
 The deployment controller will create a new pod using the new RBAC that will be in a running state.
 

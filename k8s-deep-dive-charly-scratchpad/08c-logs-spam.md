@@ -16,24 +16,26 @@ whoever is making calls to the apiserver. You can use facets to filter on a spec
 If you can't figure out which facets to use to pinpoint the offender, maybe the next hint will help:
 <details>
 <summary>Hints</summary>
-Try to edit the logs query to specifically look at the calls made by the pod lister:
+[Click here](https://app.datadoghq.com/logs/analytics?agg_m=&agg_q=%40usr.name&agg_t=count&analyticsOptions=%5B%22bars%22%5D&event&index=&live=true&query=%40http.url_details.path%3A%22%2Fapi%2Fv1%2Fpods%22&stream_sort=desc&viz=timeseries) to view all the requests on the `/api/v1/pods` endpoint grouped by the user. 
+
+Can you identify now the spammer who is overlading the apiserver?
+
+<br/><br/>
+</details>
+
+
+<details>
+<summary>Hint</summary>
+Try to edit the logs query to specifically look at the calls made by the pod lister: <br/>
 
 `index:main source:kubernetes.audit @usr.name:"system:serviceaccount:default:pod-lister"`{{copy}}
 
 Then click on "Analytics" in the logs view to display the log query as a metric:
 ![switch to Analytics button](./assets/logs_analytics.png)
 
-</details>
-
-<details>
-<summary>Hint</summary>
-
-[Click here](https://app.datadoghq.com/logs/analytics?agg_m=&agg_q=%40usr.name&agg_t=count&analyticsOptions=%5B%22bars%22%5D&event&index=&live=true&query=%40http.url_details.path%3A%22%2Fapi%2Fv1%2Fpods%22&stream_sort=desc&viz=timeseries) to view all the requests on the `/api/v1/pods` endpoint grouped by the user. 
-
-Can you identify now the spammer who is overlading the apiserver?
-
+Your query should look like this:
 ![Group logs by user](./assets/logs_analytics_query.png)
-</summary>
+</details>
 
 ## Your mission: fix the problem
 

@@ -1,4 +1,4 @@
-Datadog's Kubernetes integration comes with multiple out-of-the-box dashboards to help you understand the data being collected, and to help you monitor your applicaions and clusters.
+Datadog's Kubernetes integration comes with multiple out-of-the-box dashboards to help you understand the data being collected, and to help you monitor your applications and clusters.
 ![Screenshot of Kubernetes Dashboard](./assets/k8sdashboard.png)
 
 
@@ -16,7 +16,7 @@ You can also monitor the different components of the Control Plane:
 * [Kubernetes Controller Manager](https://app.datadoghq.com/screen/integration/30271/kubernetes-controller-manager)
 * [ETCD](https://app.datadoghq.com/screen/integration/30289/etcd-overview)
 
-Most of these dashboards display data from metrics available on `/metrics` endpoints of the HTTP server running in these applications (e.g. apiserver, kubelet, etcd). In addition, Datadog Agent uses [kube-state-metrics](https://github.com/kubernetes/kube-state-metrics), also known as KSM. `kube-state-metrics` is a service that watches the Kubernetes API and generates metrics for the state of objects. You can find the official Datadog documentation [here](https://docs.datadoghq.com/integrations/kubernetes/#setup-kubernetes-state) for the check.
+Most of these dashboards display data from metrics available on the Prometheus `/metrics` endpoints of the HTTP server running in these applications (e.g. apiserver, kubelet, etcd). In addition, Datadog Agent uses [kube-state-metrics](https://github.com/kubernetes/kube-state-metrics), also known as KSM. `kube-state-metrics` is a service that watches the Kubernetes API and generates metrics for the state of objects. You can find the official Datadog documentation [here](https://docs.datadoghq.com/integrations/kubernetes/#setup-kubernetes-state) for the check.
 
 Datadog Agent will automatically discover the `kube-state-metrics` pods and collect metrics from their `/metrics` endpoint.
 

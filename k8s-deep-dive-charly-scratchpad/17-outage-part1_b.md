@@ -1,6 +1,6 @@
 ## Your mission: create a Datadog Monitor to alert on high application latency
 
-An important part of a good monitoring framework is alerting.  In order to get notify next time if the application latency goes above the accepted range, let's create a Datadog Monitor to automatically alert us if our service latency is unexpectedly high and causing a bad experience to our end-users.
+An important part of a good monitoring framework is alerting.  In order to get notified next time when the application latency goes above the accepted range, let's create a Datadog Monitor to automatically alert us if our service latency is unexpectedly high and causing a bad experience to our end-users.
 
 In the previous step, you found out that `service:store-frontend` has a high latency and the reason why some users have started complaining that the application is slow.
 

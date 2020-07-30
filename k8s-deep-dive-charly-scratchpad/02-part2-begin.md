@@ -1,3 +1,5 @@
+## Get familiar with the E-commerce app.
+
 The ecommerce application has already been provisioned for you. You can check the different deployments that are part of the application by running the following command: `kubectl get deployment --selector=app=ecommerce`{{execute}} 
 
 You should get an output similar to this:

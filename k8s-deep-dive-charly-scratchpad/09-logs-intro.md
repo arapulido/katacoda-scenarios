@@ -1,3 +1,5 @@
+## Audit Logs & RBAC: Hands-on intro
+
 Whenever an API request is made to the Kubernetes apiserver, we can emit an
 audit log line describing the request.
 

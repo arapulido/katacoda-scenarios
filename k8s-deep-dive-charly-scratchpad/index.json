@@ -4,92 +4,96 @@
   "details": {
     "steps": [
       {
-        "title": "Explore the environment",
-        "text": "00a-explore.md"
+        "title": "Discover the environment",
+        "text": "01-explore.md"
       },
       {
-        "title": "Warm up: getting familiar with the app",
-        "text": "00b-part2-begin.md"
+        "title": "Warm-up: Preparing the Big Launch",
+        "text": "02-part2-begin.md"
       },
       {
-        "title": "Install the Datadog agent in Kubernetes using Helm",
-        "text": "02-agent.md"
+        "title": "Warm-up: Install the Datadog Agent",
+        "text": "03-agent.md"
       },
       {
-        "title": "Understanding Kubernetes observability data",
-        "text": "06-k8s-dashboard.md"
+        "title": "Warm-up: Observability in Kubernetes",
+        "text": "04-k8s-dashboard.md"
       },
       {
-        "title": "End of Warm up",
-        "text": "06a-end-warmup.md"
+        "title": "Warm-up: End",
+        "text": "05-end-warmup.md"
       },
       {
         "title": "Part 1: Fixing a bad push",
-        "text": "07-bad-push.md"
+        "text": "06-bad-push.md"
+      },
+      {
+        "title": "Part 1: Wrap up",
+        "text": "07-bad-push-wrapup.md"
       },
       {
         "title": "Part 1: End",
-        "text": "07a-bad-push-end.md"
+        "text": "08-bad-push-end.md"
       },
       {
-        "title": "Audit Logs & RBAC: Hands-on intro",
-        "text": "08a-logs-intro.md"
+        "title": "Part 2: Auditing",
+        "text": "09-logs-intro.md"
       },
       {
-        "title": "Audit Logs & RBAC: Hands-on permission",
-        "text": "08b-logs-permissions.md"
+        "title": "Part 2: Auditing permissions",
+        "text": "10-logs-permissions.md"
       },
       {
-        "title": "Audit Logs & RBAC: Hands-on spam",
-        "text": "08c-logs-spam.md"
+        "title": "Part 2: Auditing spam",
+        "text": "11-logs-spam.md"
       },
       {
         "title": "Part 2: Complete",
-        "text": "10d-part2-end.md"
+        "text": "12-part2-end.md"
       },
       {
         "title": "Part 3: Resource Management",
-        "text": "10e-part3-begin.md"
+        "text": "13-part3-begin.md"
       },
       {
-        "title": "Resource Management",
-        "text": "11-resource-mgmt.md"
+        "title": "Part 3: Resource Management",
+        "text": "14-resource-mgmt.md"
       },
       {
         "title": "Part 3: Complete",
-        "text": "17a-part3-end.md"
+        "text": "15-part3-end.md"
       },
       {
         "title": "Part 4: The Outage",
-        "text": "18-part4-begin.md"
+        "text": "16-part4-begin.md"
       },
       {
         "title": "The Outage: Customers reports",
-        "text": "23-outage-part1.md"
+        "text": "17-outage-part1.md"
       },
       {
         "title": "The Outage: Reproducing the issue",
-        "text": "23-outage-part2.md"
+        "text": "18-outage-part2.md"
       },
       {
         "title": "The Outage: The Database calls",
-        "text": "23-outage-part3.md"
+        "text": "19-outage-part3.md"
       },
       {
         "title": "Part 4: Complete",
-        "text": "18d-outage4.md"
+        "text": "20-outage4.md"
       },
       {
         "title": "Advanced Content",
-        "text": "20-advanced-content.md"
+        "text": "21-advanced-content.md"
       },
       {
         "title": "DNS",
-        "text": "21-dns.md"
+        "text": "22-dns.md"
       },
       {
         "title": "Tracing",
-        "text": "22-tracing-pod-lister.md"
+        "text": "23-tracing-pod-lister.md"
       },
       {
         "title": "Monitoring the APIServer",

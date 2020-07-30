@@ -1,3 +1,5 @@
+## Use Helm to easily deploy the Datadog Agent
+
 The Datadog agent runs as a `DaemonSet` with a replica on every node in the cluster that matches the selector. To ease its deployment we are going to use Helm.
 
 

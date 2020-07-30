@@ -1,4 +1,6 @@
-## Welcome to this workshop on troubleshooting outages in Kubernetes.
+##Welcome! 
+
+This workshop is on troubleshooting outages in Kubernetes.
 
 Wait a few minutes until your environment is setup. Once it is setup, you will see the following message in your terminal:`OK, the training environment is installed and ready to go.`
 

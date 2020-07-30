@@ -1,3 +1,5 @@
+## Investigating suspicious activity
+
 At this point, the application pod-lister is running. But ...
 
 ![Screenshot of Kubernetes Dashboard](./assets/apiserver_spam.png)
@@ -16,28 +18,14 @@ whoever is making calls to the apiserver. You can use facets to filter on a spec
 If you can't figure out which facets to use to pinpoint the offender, maybe the next hint will help:
 <details>
 <summary>Hints</summary>
-[Click here](https://app.datadoghq.com/logs/analytics?agg_m=&agg_q=%40usr.name&agg_t=count&analyticsOptions=%5B%22bars%22%5D&event&index=&live=true&query=%40http.url_details.path%3A%22%2Fapi%2Fv1%2Fpods%22&stream_sort=desc&viz=timeseries) to view all the requests on the `/api/v1/pods` endpoint grouped by the user. 
-
-Can you identify now the spammer who is overlading the apiserver?
-
-<br/><br/>
-</details>
-
-
-<details>
-<summary>Hint</summary>
-Try to edit the logs query to specifically look at the calls made by the pod lister: <br/>
+Try to edit the logs query to specifically look at the calls made by the pod lister:
 
 `index:main source:kubernetes.audit @usr.name:"system:serviceaccount:default:pod-lister"`{{copy}}
 
-Then click on "Analytics" in the logs view to display the log query as a metric:
-![switch to Analytics button](./assets/logs_analytics.png)
-
-Your query should look like this:
-![Group logs by user](./assets/logs_analytics_query.png)
+Then click on "Analytics" in the logs view to display the log query as a metric.<br/><br/>
 </details>
 
-## Your mission: fix the problem
+## Fix the problem
 
 Find a way to fix the issue and implement it! For this one you will have to find
 the source code of this application in the `assets/workshop-assets/apps/sample-pod-lister` directory, and look at

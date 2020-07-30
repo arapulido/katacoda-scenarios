@@ -1,4 +1,4 @@
-Part 2 is complete - Great job!
+## Part 2 is complete - Great job!
 
 We can now use audit logs to make sure we know who is doing what in the cluster.
 

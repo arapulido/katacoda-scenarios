@@ -19,5 +19,3 @@ Once entered you should see the traces, through the different stack of the ecomm
 ![Trace UX](./assets/trace_bags_ux.png)
 
 This _could_ be a useful tool to leverage later on...
-
-The CTO requested that we have a better understanding of how the differet applications request information about Kubernetes objects and that we have tooling in place to audit everything. Let's get back to the presentation.

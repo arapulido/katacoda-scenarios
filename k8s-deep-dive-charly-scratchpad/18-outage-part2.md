@@ -12,8 +12,10 @@ Maybe we need to scale up the deployment?
 
 Or maybe our developers rolled out a new version which has a bug of some sort?
 
+### Complete this step by finding out the other microservice that is causing `store-frontend` latency, and by finding out what the microservice is doing that takes so much time. Continue to the next step afterwards, in which you will find a way to fix the issue.
+
 <details>
-<summary>Hints</summary>
+<summary>Hint 1</summary>
 
 Analyzing a distributed trace in Datadog can show you where your application spend the most time, and can help you understand how to solve performance issues.
 
@@ -31,7 +33,7 @@ Can you spot the issue?
 </details>
 <br/><br/>
 <details>
-<summary>Hints</summary>
+<summary>Hint 2</summary>
 
 It seems like there is a problem in how `discounts-service` is accessing the database:
 ![Date remapper](./assets/db-query.png)

@@ -28,7 +28,7 @@ Try to spend some time on each page while keeping in mind that your goal is to i
 
 A high application latency is usually a good indicator for a performance issue. Since we received complaints from end-users, we know that the issue involves at least one service that end-users interact with (directly or indirectly).
 
-The [Service Map page](https://app.datadoghq.com/apm/map) can give you a clear picture of each application service performance. Hover your mouse over each of the services to find the service with a problematic latency, correlate that with the # of requests each service receives and emits to identify the bottleneck.
+The [Service Map page](https://app.datadoghq.com/apm/map) can give you a clear picture of each application service performance. Hover your mouse over each of the services to find the service with a problematic latency, and correlate that with the # of requests each service receives and emits to identify the bottleneck.
 </details>
 <br/><br/>
 

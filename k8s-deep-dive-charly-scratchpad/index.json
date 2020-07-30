@@ -72,6 +72,10 @@
         "text": "17-outage-part1.md"
       },
       {
+        "title": "The Outage: Improving our monitoring coverage",
+        "text": "17-outage-part1_b.md"
+      },
+      {
         "title": "The Outage: Reproducing the issue",
         "text": "18-outage-part2.md"
       },

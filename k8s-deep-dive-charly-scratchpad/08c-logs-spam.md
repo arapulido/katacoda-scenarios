@@ -5,7 +5,7 @@ At this point, the application pod-lister is running. But ...
 ## Your mission: use Datadog to find the issue
 
 We are looking to graph the top requester, or whatever seems to
-be spamming and overloading the apiserver on the `pods` endpoint.
+be spamming and overloading the apiserver seemingly hitting the `pods` endpoint.
 
 <details>
 <summary>Hints</summary>

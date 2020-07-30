@@ -28,7 +28,7 @@ Let's verify that the agent is collecting KSM metrics by running the `status` co
 
 Look for:
 
-```
+
     kubernetes_state (5.4.1)
     ------------------------
       Instance ID: kubernetes_state:9e3b5144d45748a3 [OK]
@@ -40,4 +40,3 @@ Look for:
       Average Execution Time : 82ms
       Last Execution Date : 2020-07-29 16:07:02.000000 UTC
       Last Successful Execution Date : 2020-07-29 16:07:02.000000 UTC
-```

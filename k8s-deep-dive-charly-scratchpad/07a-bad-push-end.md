@@ -1,8 +1,10 @@
 Now that the load balancer pod is fixed, you should see the traces coming in - Congrats, you are receiving traffic from the world!
 
-In order to get a good grasp at how traces are correlated to the activity on the ecommerce website, open the Ecommerce tab and click on items (to simulate a user's journey).
+In order to get a good grasp at how traces are correlated to the activity on the ecommerce website, open the Ecommerce App tab and click on items (to simulate a user's journey).
 
 Take note of the Load Balancer's url:
+
+![Load Balancer URL](./assets/load_balancer_url.png)
 
 Then go to the [Trace page](https://app.datadoghq.com/apm/traces) and use the following query:
 

@@ -5,7 +5,7 @@ At this point, the application pod-lister is running. But ...
 ## Your mission: use Datadog to find the issue
 
 We are looking to graph the top requester, or whatever seems to
-be spamming and overloading the apiserver on the `pods` endpoint.
+be spamming and overloading the apiserver seemingly hitting the `pods` endpoint.
 
 <details>
 <summary>Hints</summary>
@@ -20,8 +20,9 @@ Try to edit the logs query to specifically look at the calls made by the pod lis
 
 `index:main source:kubernetes.audit @usr.name:"system:serviceaccount:default:pod-lister"`{{copy}}
 
-Then click on "Analytics" in the logs view to display the log query as a metric.
+Then click on "Analytics" in the logs view to display the log query as a metric.<br/><br/>
 </details>
+
 
 ## Fix the problem
 

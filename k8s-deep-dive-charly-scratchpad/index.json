@@ -90,6 +90,10 @@
       {
         "title": "Tracing",
         "text": "22-tracing-pod-lister.md"
+      },
+      {
+        "title": "Monitoring the APIServer",
+        "text": "24-apiserver-dashboard.md"
       }
     ],
     "intro": {

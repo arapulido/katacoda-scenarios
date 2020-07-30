@@ -1,1 +1,2 @@
-For those who have time remaining, this section contains advanced content.
+This last section contains advanced content, each part is independent and self guided. Feel free to ask for help if you are stuck.
+You can learn about Network Troubleshooting, Tracing calls to the APIServer or implementing a dashboard to monitor the APIServer.

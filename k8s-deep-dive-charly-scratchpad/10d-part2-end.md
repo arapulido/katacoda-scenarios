@@ -1,3 +1,5 @@
-Part 2 is complete!
+Part 2 is complete - Great job!
 
-Wait for the workshop guides to introduce Part 3 before moving on.
+We can now use audit logs to make sure we know who is doing what in the cluster.
+
+It seems like we just hired a Cloud Analyst to help us reduce our infratructure costs, go back to the presentation to hear about resource management!

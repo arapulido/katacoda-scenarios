@@ -11,6 +11,13 @@ For more details, see the [official documentation](https://docs.datadoghq.com/ag
 
 * Verify the `DaemonsetSet` is deployed, and a replica is running on your worker node `node01` and on your master node `controlplane`.
 
+<details>
+<summary>Hint</summary>
+Print a list of all pods running in the default namespace
+
+`kubectl get pods -o wide`{{execute}}
+</details>
+
 * Notice that the datadog agent pod has 3 containers, but only 2 are Ready, and the pod is restarting:
 
 ```

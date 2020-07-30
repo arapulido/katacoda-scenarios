@@ -4,7 +4,7 @@ audit log line describing the request.
 In this environment, the apiserver is configured to send the audit logs to
 `/var/log/kubernetes/apiserver/audit.log`, go ahead and have a look at one
 request log.
-`tail -n1 /var/log/kubernetes/apiserver/audit.log | jq .`{{copy}}
+`tail -n1 /var/log/kubernetes/apiserver/audit.log | jq .`{{execute}}
 
 <details>
 <summary>Additional Information</summary>

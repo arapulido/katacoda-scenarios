@@ -1,4 +1,4 @@
-##Welcome! 
+## Welcome! 
 
 This workshop is on troubleshooting outages in Kubernetes.
 

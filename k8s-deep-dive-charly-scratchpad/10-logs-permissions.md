@@ -59,7 +59,5 @@ Feel free to delete it by running the following:<br/><br/>
 
 The deployment controller will create a new pod using the new RBAC that will be in a running state.
 
-`kubectl delete po $(kubectl get pods -lapp=pod-lister -o custom-columns=:metadata.name)`{{execute}}
-
 </details>
 

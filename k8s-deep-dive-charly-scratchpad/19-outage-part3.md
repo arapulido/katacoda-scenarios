@@ -1,6 +1,8 @@
 ![Slack](./assets/slack3.png)
 
-## Your mission: deploy a fix to the issue in the `discount-service` and reduce the latency to an healthy level
+## Your mission 
+
+deploy a fix to the issue in the `discount-service` and reduce the latency to an healthy level.
 
 Can you interpret the pattern in the flame graph to classify the type of problem with the database query?
 
@@ -30,7 +32,9 @@ We eager load the `discount_type` relation on the `discount`, and can grab all i
 
 </details>
 
-Let's deploy the fixed version by running `kubectl deploy -f ...`. 
+![Image Fixed](./assets/image_fixed.png)
+
+Let's deploy the fixed version by running `kubectl patch deploy discounts --patch="$(cat assets/workshop-assets/apps/fixes/discounts.yaml)"`. 
 
 Can you verify that the latency issue is no longer happening?
 
@@ -39,10 +43,14 @@ Can you verify that the latency issue is no longer happening?
 
 Try the following:
 
-* Go to the [Service Overview](https://app.datadoghq.com/apm/service/store-frontend/rack.request) page and look how the latency of the app is going down. 
+* Go to the [Service Overview](https://app.datadoghq.com/apm/service/store-frontend/rack.request) page and look how the latency of the app is going down.
+Example of the P50:
+
+![latency_improvement](./assets/better_latency.png)
+
 * Go to the [Traces page](https://app.datadoghq.com/apm/traces) and look at one of the traces from the fixed service, they should look like this:
 ![solved-nplus](./assets/solved-nplus.png)
 * Go to the [SLO status page](https://app.datadoghq.com/slo) and look for the current status of the service SLO you previously created.
 </details>
 
-### Complete this step by verifying that the latency of the service `store-frontend` went down significally. Continue to the next step afterwards.
+* Complete this step by verifying that the latency of the service `store-frontend` went down significally. Continue to the next step afterwards.

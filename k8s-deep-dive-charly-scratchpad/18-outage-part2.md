@@ -12,7 +12,7 @@ Maybe we need to scale up the deployment?
 
 Or maybe our developers rolled out a new version which has a bug of some sort?
 
-### Complete this step by finding out the other microservice that is causing `store-frontend` latency, and by finding out what the microservice is doing that takes so much time. Continue to the next step afterwards, in which you will find a way to fix the issue.
+* Complete this step by finding out the other microservice that is causing `store-frontend` latency, and by finding out what the microservice is doing that takes so much time. Continue to the next step afterwards, in which you will find a way to fix the issue.
 
 <details>
 <summary>Hint 1</summary>

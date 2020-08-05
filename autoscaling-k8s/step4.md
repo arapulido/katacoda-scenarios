@@ -13,7 +13,7 @@ Let's imagine that we want to keep the CPU resources to an average of 50% what w
 
 We will create a [Horizontal Pod Autoscaler (HPA)](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/) object that will create new replicas when CPU usage goes above 50% of the 100m requested, sharing the load between those replicas.
 
-We are going to create a new file called `frontend-hpa-cpu.yaml` (file creation happens automatically by clicking below under "Copy to Editor"):
+We are going to create a new file called `frontend-hpa-cpu.yaml` (file creation happens automatically by clicking below on "Copy to Editor"):
 
 <pre class="file" data-filename="frontend-hpa-cpu.yaml" data-target="replace">
 apiVersion: autoscaling/v2beta2

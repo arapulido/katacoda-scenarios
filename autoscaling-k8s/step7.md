@@ -23,7 +23,7 @@ Edit the value to `true` and re-apply the manifest by executing `kubectl apply -
 
 Similar to the HPA example, we will create a WPA object that will scale our `frontend` deployment based on the p99 latency that the service experiences.
 
-Create a new file called `frontend-wpa.yaml` by clicking below under "Copy to Editor":
+We are going to create a new file called `frontend-wpa.yaml` (file creation happens automatically by clicking below on "Copy to Editor"):
 
 <pre class="file" data-filename="frontend-wpa.yaml" data-target="replace">
 apiVersion: datadoghq.com/v1alpha1

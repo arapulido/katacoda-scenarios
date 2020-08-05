@@ -17,7 +17,7 @@ Open the `k8s-manifests/vertical-pod-autoscaler` folder in the editor and check 
 
 Once we have the VPA deployment up and running, we want to create a VPA object to track our Frontend deployment, so we get recommendations on the amount of CPU requests that we should apply to our Deployment.
 
-Create a new file called `frontend-vpa.yaml` by clicking below under "Copy to Editor":
+We are going to create a new file called `frontend-vpa.yaml` (file creation happens automatically by clicking below on "Copy to Editor"):
 
 <pre class="file" data-filename="frontend-vpa.yaml" data-target="replace">
 apiVersion: autoscaling.k8s.io/v1beta2

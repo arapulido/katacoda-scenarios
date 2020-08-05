@@ -30,3 +30,5 @@ Deploy the Datadog agent DaemonSet applying the `datadog/datadog-agent.yaml` man
 Wait until the Datadog agent is running by executing this command: `wait-datadog.sh`{{execute}}
 
 Once the `datadog-agent` pod is running, let's check its status by running the following command: `kubectl exec -ti $(kubectl get pods -l app=datadog-agent -o jsonpath='{.items[0].metadata.name}') -- agent status`{{execute}} Browse the output. What checks is the Datadog agent running? If the `docker` check is not yet running, rerun the command above until you see the `docker` check running before moving to the next step.
+
+Note: if you get the following output: `Error: unable to read authentication token file: open /etc/datadog-agent/auth_token`, just rerun the command, as this is a transient error.

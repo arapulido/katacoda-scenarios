@@ -10,7 +10,7 @@ As we discussed, the LETS (Latency, Errors, Traffic, Saturation) framework is a 
 
 We are experiencing a latency of around 7 seconds and we don't want it to grow a lot when the traffic increases. For that, we are going to create a HPA object that uses the `trace.rack.request.duration.by.service.99p` and that will have 7 seconds as the limit to start scaling our deployment.
 
-Create a new file called `frontend-hpa-latency.yaml` by clicking below under "Copy to Editor":
+We are going to create a new file called `frontend-hpa-latency.yaml` (file creation happens automatically by clicking below on "Copy to Editor"):
 
 <pre class="file" data-filename="frontend-hpa-latency.yaml" data-target="replace">
 apiVersion: autoscaling/v2beta2

@@ -51,6 +51,8 @@ spec:
   tolerance: 0.01
 </pre>
 
+Create the WPA object by applying the manifest: `kubectl apply -f frontend-wpa.yaml`{{execute}}
+
 Let's drilldown on each section to understand what's going on:
 
 ```
@@ -88,9 +90,7 @@ Other options in our manifest:
  * `downscaleForbiddenWindowSeconds: 60`: Wait 60 seconds after a scaling event before scaling down
  * `upscaleForbiddenWindowSeconds: 30`: Wait 30 seconds after a scaling event before scaling up
 
-Create the WPA object by applying the manifest: `kubectl apply -f frontend-wpa.yaml`{{execute}}
-
-Let's check that the Cluster Agent is getting the metric correctly by executing the agent status for the Cluster Agent: `kubectl exec -ti $(kubectl get pods -l app=datadog-cluster-agent -o jsonpath='{.items[0].metadata.name}') -- agent status`{{execute}} Browse the output and check that you get an output similar to this one:
+Let's check that the Cluster Agent is getting the metric correctly by executing the agent status for the Cluster Agent: `kubectl exec -ti $(kubectl get pods -l app=datadog-cluster-agent -o jsonpath='{.items[0].metadata.name}') -- agent status | grep -A11 "External Metrics"`{{execute}} Browse the output and check that you get an output similar to this one:
 
 ```
 External Metrics
@@ -120,7 +120,9 @@ Let's generate more traffic to force the creation of several replicas. Create th
 
 Let's watch the frontend pods to see if they increase: `kubectl get pods -l service=frontend -w`{{execute}}. Remember to type `Ctrl+C` to go back to the terminal once you have seen the deployment scaling.
 
-Did the deployment scale? Navigate in Datadog to the Autoscaling Workshop dashboard you created in a previous step of this course. Can you see the the correlation between the increase in the p99 latency and the increase in number of replicas? Did you find any differences on how the deployment scaled with the regular HPA and how it is scaling with the WPA?
+Did the deployment scale? Navigate in Datadog to the Autoscaling Workshop dashboard you created in a previous step of this course. Can you see the the correlation between the increase in the p99 latency and the increase in number of replicas? Did you find any differences on how the deployment scaled with the regular HPA and how it is scaling with the WPA? (Hint: you can see those steps related to scaling velocity, for example)
+
+![Screenshot of WPA Dashboard](./assets/dashboard-wpa.png)
 
 Remove the spike in traffic by executing: `kubectl delete -f k8s-manifests/autoscaling/spike-traffic.yaml`{{execute}}
 

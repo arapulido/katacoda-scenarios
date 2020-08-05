@@ -93,7 +93,7 @@ Events:
   Normal   Autoscaler is now handle by the Cluster-Agent  23s   datadog-cluster-agent
 ```
 
-Finally, let's check that the Cluster Agent is getting the metric correctly by executing the agent status for the Cluster Agent: `kubectl exec -ti $(kubectl get pods -l app=datadog-cluster-agent -o jsonpath='{.items[0].metadata.name}') -- agent status`{{execute}} Browse the output and check that you get an output similar to this one:
+Finally, let's check that the Cluster Agent is getting the metric correctly by executing the agent status for the Cluster Agent: `kubectl exec -ti $(kubectl get pods -l app=datadog-cluster-agent -o jsonpath='{.items[0].metadata.name}') -- agent status | grep -A11 "External Metrics"`{{execute}} Browse the output and check that you get an output similar to this one (you may need to run the command several times until we get the metric value from Datadog):
 
 ```
 External Metrics
@@ -122,5 +122,7 @@ Let's generate some more fake traffic to force the p99 latency to go beyond 7 se
 Let's watch the HPA object to check when something changes: `kubectl get hpa frontendhpaduration -w`{{execute}}. Once you are done watching the object, type `Ctrl+C` to go back to the terminal.
 
 Did the deployment scale? Navigate in Datadog to the Autoscaling Workshop dashboard you created in a previous step of this course. Can you see the the correlation between the increase in the p99 latency and the increase in number of replicas?
+
+![Screenshot of HPA External Dashboard](./assets/dashboard-hpa-external.png)
 
 Before moving to the next step, let's clean up our HPA and let's redeploy the Ecommerce application, so we go back to 1 replica. Execute the following command: `kubectl delete -f k8s-manifests/autoscaling/spike-traffic.yaml && kubectl delete hpa frontendhpaduration && kubectl apply -f k8s-manifests/ecommerce-app`{{execute}}

@@ -1,1 +1,0 @@
-Scenario to reproduce connection issue

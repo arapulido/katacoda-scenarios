@@ -1,5 +1,5 @@
 {
-  "title": "Troubleshooting Outages in Kubernetes Applications - Charly's Scratchpad",
+  "title": "Troubleshooting Outages in Kubernetes Applications",
   "description": "Catching and preventing failures in Kubernetes using Datadog.",
   "details": {
     "steps": [
@@ -70,10 +70,6 @@
       {
         "title": "The Outage: Customers reports",
         "text": "17-outage-part1.md"
-      },
-      {
-        "title": "The Outage: Improving our monitoring coverage",
-        "text": "17-outage-part1_b.md"
       },
       {
         "title": "The Outage: Reproducing the issue",

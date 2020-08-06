@@ -1,4 +1,4 @@
-Good dashboards can be extremely valuable to monitor the health and performance of our applications and infrastucture. 
+Good dashboards can be extremely valuable to monitor the health and performance of our applications and infrastructure. 
 
 Can you make a great Kubernetes dashboard that everyone would like to use? We have a challenge for you!
 
@@ -31,6 +31,3 @@ Now, with all this knowledge, let's have some fun:
 1. If your dashboard wins, ... *TBD*
 
 Good luck!
-
-
-

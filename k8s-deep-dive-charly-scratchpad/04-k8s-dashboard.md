@@ -2,9 +2,9 @@ Datadog's Kubernetes integration comes with multiple out-of-the-box dashboards t
 ![Screenshot of Kubernetes Dashboard](./assets/k8sdashboard.png)
 
 
-At the highest level, you can use the [Kubernetes Overview dashoard](https://app.datadoghq.com/screen/integration/86/kubernetes---overview)
+At the highest level, you can use the [Kubernetes Overview dashboard](https://app.datadoghq.com/screen/integration/86/kubernetes---overview)
 
-Note that this dasboard gives a good overview, but you can dig deeper into the different parts of Kubernetes.
+Note that this dashboard gives a good overview, but you can dig deeper into the different parts of Kubernetes.
 
 At the node level for instance, you can see the high overview of how your applications are reporting with the [Kubernetes Node Overview dashboard](https://app.datadoghq.com/screen/integration/30340/kubernetes-nodes-overview)
 

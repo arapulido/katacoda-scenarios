@@ -1,6 +1,6 @@
 # Welcome to the workshop "Troubleshooting Outages in Kubernetes Applications"
 
-We have the big launch of our App today! If all gos well, we should start receiving traffic.
+We have the big launch of our App today! If all goes well, we should start receiving traffic.
 Your mission is to make sure that this all goes well!
 
 All that you need are a basic working knowledge of Kubernetes, a modern web browser (which you'll be seeing this in), and your Datadog credentials.

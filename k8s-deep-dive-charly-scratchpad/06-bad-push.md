@@ -31,7 +31,7 @@ You can execute the following command to remove it:
 `kubectl patch deploy load-balancer-traffic -n external --type json -p='[{"op": "remove", "path": "/spec/template/spec/containers/0/command"}]'`{{execute}}
 </details>
 
-Once the situation is solved, you should start seeing traces reporting into your Datadog account, 
+Once the situation is solved, you should start seeing traces reporting into your Datadog account. 
 Go to the [APM page ](https://app.datadoghq.com/apm/traces?query=env%3Aruby-shop)
 
 ![Traces](./assets/traces_coming.png)

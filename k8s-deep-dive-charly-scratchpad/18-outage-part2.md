@@ -6,7 +6,7 @@ In order to fix the problem, you would need to understand where the issue is and
 
 You already know the service and the endpoint. Where would you look next? 
 
-Is there an issue with the infrasructure such as low available resources? 
+Is there an issue with the infrastructure such as low available resources? 
 
 Maybe we need to scale up the deployment? 
 

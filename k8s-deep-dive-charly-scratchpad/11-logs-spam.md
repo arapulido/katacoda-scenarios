@@ -12,7 +12,7 @@ be spamming and overloading the apiserver seemingly hitting the `pods` endpoint.
 <details>
 <summary>Hints</summary>
 The [Kubernetes audit logs](https://app.datadoghq.com/logs/analytics?agg_m=&agg_q=%40usr.name&agg_t=count&analyticsOptions=%5B%22bars%22%5D&cols=core_host%2Ccore_service&index=main&live=true&messageDisplay=expanded-md&panel=%22%22&query=source%3Akubernetes.audit+%40usr.name%3A%22system%3Aserviceaccount%3Adefault%3Apod-lister%22&stream_sort=desc) that we added earlier can be helpful to audit
-whoever is making calls to the apiserver. You can use facets to filter on a specific resources, URI or requester.<br/><br/>
+whoever is making calls to the apiserver. You can use facets to filter on a specific resource, URI or requester.<br/><br/>
 </details>
 
 If you can't figure out which facets to use to pinpoint the offender, maybe the next hint will help:
@@ -29,7 +29,7 @@ Then click on "Analytics" in the logs view to display the log query as a metric.
 
 Find a way to fix the issue and implement it! For this one you will have to find
 the source code of this application in the `assets/workshop-assets/apps/sample-pod-lister` directory, and look at
-a way to fix and replace this spammy call by something else.
+a way to fix and replace this spammy call with something else.
 
 NB: If you figure out the solution, no need to bother rebuilding the app - Check out the solution.
 

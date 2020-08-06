@@ -1,8 +1,8 @@
 ![Slack](./assets/slack3.png)
 
-## Your mission 
+## Your mission
 
-deploy a fix to the issue in the `discount-service` and reduce the latency to an healthy level.
+Deploy a fix to the issue in the `discount-service` and reduce the latency to an healthy level.
 
 Can you interpret the pattern in the flame graph to classify the type of problem with the database query?
 
@@ -51,6 +51,7 @@ Example of the P50:
 * Go to the [Traces page](https://app.datadoghq.com/apm/traces) and look at one of the traces from the fixed service, they should look like this:
 ![solved-nplus](./assets/solved-nplus.png)
 * Go to the [SLO status page](https://app.datadoghq.com/slo) and look for the current status of the service SLO you previously created.
+
 </details>
 
-* Complete this step by verifying that the latency of the service `store-frontend` went down significally. Continue to the next step afterwards.
+* Complete this step by verifying that the latency of the service `store-frontend` went down significantly. Continue to the next step afterwards.

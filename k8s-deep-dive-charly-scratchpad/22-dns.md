@@ -28,7 +28,7 @@ Metrics don't tell the whole story - we're missing information about individual 
 
 * Enable per-request logging in CoreDNS.
 * Configure your log pipeline to extract the client IP into a facet.
-* Use logs analytics to find the top DNS client by request count.
+* Use log analytics to find the top DNS client by request count.
 * Use logs to understand the DNs behavior of your heaviest DNS client.
 
 <details>
@@ -40,4 +40,4 @@ The CoreDNS log plugin is documented [here](https://github.com/coredns/coredns/t
 
 With metrics and logs enabled for CoreDNS, you'll need a dashboard to bring a high level view of it's behavior.
 
-* Build a dashboard incorporating logs and metrics to provide an overview of CoreDNS and it's clients.
+* Build a dashboard incorporating logs and metrics to provide an overview of CoreDNS and its clients.

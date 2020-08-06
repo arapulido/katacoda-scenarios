@@ -11,7 +11,7 @@ The Datadog agent runs as a `DaemonSet` with a replica on every node in the clus
 
 For more details, see the [official documentation](https://docs.datadoghq.com/agent/kubernetes/?tab=helm). You can check the `values.yaml` that we are passing by opening this file: `assets/workshop-assets/02-datadog-agent/values.yaml`{{open}}.
 
-* Verify the `DaemonsetSet` is deployed, and a replica is running on your worker node `node01` and on your master node `controlplane`.
+* Verify the `DaemonSet` is deployed, and a replica is running on your worker node `node01` and on your master node `controlplane`.
 
 <details>
 <summary>Hint</summary>

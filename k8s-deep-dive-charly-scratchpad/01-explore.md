@@ -4,7 +4,7 @@ This workshop is on troubleshooting outages in Kubernetes.
 
 Wait a few minutes until your environment is setup. Once it is setup, you will see the following message in your terminal:`OK, the training environment is installed and ready to go.`
 
-This is your development environment. A 2 nodes Kubernetes cluster was created and configured for you. You can access the Kubernetes API using the command line client, `kubectl`. 
+This is your development environment. A 2-node Kubernetes cluster was created and configured for you. You can access the Kubernetes API using the command line client, `kubectl`. 
 
 You may explore the functionality provided by `kubectl` using `kubectl --help`{{execute}}.
 

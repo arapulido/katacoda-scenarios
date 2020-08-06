@@ -51,7 +51,7 @@ The [notebook](https://app.datadoghq.com/notebook) is a great way to conduct inv
 - The number of pods that cannot be scheduled.
 - The memory limits/request per pods.
 - The cpu limits/request per pods.
-- The cpu anbd memory usage per pod.
+- The cpu and memory usage per pod.
 
 Then compare to the node CPU and memory to see if there is enough headroom for the `americano` app.
 </details>

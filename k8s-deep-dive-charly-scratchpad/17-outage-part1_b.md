@@ -48,7 +48,7 @@ Since your company and SRE team established clear Service Level Objectives (SLOs
 
 ## Your mission: create a Datadog SLO to track your application latency target
 
-Create a SLO that tracks your target for application latency. You can follow these steps:
+Create an SLO that tracks your target for application latency. You can follow these steps:
 
 * On the Datadog [SLO status page](https://app.datadoghq.com/slo), click on "New SLO +"
 * Define the source as "Monitor based" and choose from the list the name of the monitor you created in the previous part
@@ -56,4 +56,4 @@ Create a SLO that tracks your target for application latency. You can follow the
 * Click save, which will take you to your SLO page. Review that the status and error budget are looking good, now that we fixed the performance issue in the database query.
 
 
-### Complete this step by creating a Datadog Monitor and Datadog SLO that track the latency of the service `store-frontend`. Continue to the next step afterwards.
+* Complete this step by creating a Datadog Monitor and Datadog SLO that track the latency of the service `store-frontend`. Continue to the next step afterwards.

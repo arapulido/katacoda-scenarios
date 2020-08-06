@@ -1,4 +1,4 @@
-Now that the load balancer pod is fixed, you should see the traces coming in - Congrats, you are receiving traffic from the world!
+Now that the load balancer pod is fixed, you should see the traces coming in. Congrats, you are receiving traffic from the world!
 
 In order to get a good grasp at how traces are correlated to the activity on the ecommerce website, open the Ecommerce App tab and click on items (to simulate a user's journey).
 

@@ -46,5 +46,5 @@ Once you have identified which data path is taking the longest time, move on to 
 We can see a high latency on the `store-frontend` service, but the service that stands up is the advertisement one.
 Indeed, looking at a trace for the `store-frontend`, we spend more than 30% of the time in the advertisement service.
 
-![Discount Service](./assets/outage1_discount.png)
+![Discount Service](./assets/outage1_ads.png)
 </details>

@@ -42,7 +42,9 @@ Note: If you use the metrics server, you could use commands such as `kubectl top
 
 <details>
 <summary>Hints</summary>
+
 The [notebook](https://app.datadoghq.com/notebook) is a great way to conduct investigations or create postmortems. Create one to represent:
+
 - The number of pods that cannot be scheduled.
 - The memory limits/request per pods.
 - The cpu limits/request per pods.

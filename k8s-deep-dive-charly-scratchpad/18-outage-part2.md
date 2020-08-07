@@ -1,43 +1,59 @@
-![Slack](./assets/slack2.png)
+## Your mission: create a Datadog Monitor to alert on high application latency
 
-## Your mission: understand the root cause for the high latency in `store-frontend`
+An important part of a good monitoring framework is alerting.  In order to get notified next time when the application latency goes above the accepted range, let's create a Datadog Monitor to automatically alert us if our service latency is unexpectedly high and causing a bad experience to our end-users.
 
-In order to fix the problem, you would need to understand where the issue is and propose a solution. Use Datadog to find the root cause for the high latency.
+In the previous step, you found out that `service:store-frontend` has a high latency and the reason why some users have started complaining that the application is slow.
 
-You already know the service and the endpoint. Where would you look next? 
+Follow these steps to create the monitor that automatically trigger alerts if the latency of `store-frontend` service is higher than three seconds:
 
-Is there an issue with the infrastructure such as low available resources? 
+(note: in a real production environment, we would like latency to be much lower)
 
-Maybe we need to scale up the deployment? 
-
-Or maybe our developers rolled out a new version which has a bug of some sort?
-
-* Complete this step by finding out the other microservice that is causing `store-frontend` latency, and by finding out what the microservice is doing that takes so much time. Continue to the next step afterwards, in which you will find a way to fix the issue.
+* In Datadog, click on Monitors (in the left-hand menu) and choose [New Monitor](https://app.datadoghq.com/monitors#/create)
+* Click on "APM Monitor" to choose this monitor type
+* Next, edit the monitor scope: choose "APM Metrics", and choose the service `store-frontend`
+* For the alert conditions, choose the "Threshold Alert" and select to Alert when `p95 latency` is `above` 3 seconds over the last `5 minutes`.
+* Quickly review the timeseries graph with the monitor threshold, and save the monitor
 
 <details>
-<summary>Hint 1</summary>
+<summary>Hints</summary>
+To quickly create the monitor, you can go to the [New Monitor](https://app.datadoghq.com/monitors#/create), and choose "Import Monitor from JSON".</br></br>Then, copy-paste the following JSON into Datadog:
 
-Analyzing a distributed trace in Datadog can show you where your application spend the most time, and can help you understand how to solve performance issues.
+```
+{
+	"name": "Service store-frontend has a high p95 latency on env:ruby-shop",
+	"type": "metric alert",
+	"query": "avg(last_5m):avg:trace.rack.request.duration.by.service.95p{env:ruby-shop,service:store-frontend} > 3",
+	"message": "`ruby-shop` 95th percentile latency is too high.\n\n@store-frontend",
+	"tags": [
+		"service:store-frontend",
+		"env:ruby-shop"
+	],
+	"options": {
+		"renotify_interval": 0,
+		"timeout_h": 0,
+		"thresholds": {
+			"critical": 3
+		},
+		"notify_no_data": false,
+		"no_data_timeframe": 2,
+		"notify_audit": false,
+		"evaluation_delay": null
+	}
+}
+```
 
-Let's try to analyze an application request that took a long time to return a response to the user.
-
-Go to the [Traces page](https://app.datadoghq.com/apm/traces) and use the left-hand facets to filter on:
-** Duration larger than 5s
-** Service: store-frontend
-
-You should now see a list of all the traces that meet this search criteria. Click on one of the traces to get more details.
-
-Investigate the flame graph, container metrics, application logs, and processes from each of the services involved in the request.
-
-Can you spot the issue? 
 </details>
-<br/><br/>
-<details>
-<summary>Hint 2</summary>
 
-It seems like there is a problem in how `discounts-service` is accessing the database:
-![Date remapper](./assets/db-query.png)
+Since your company and SRE team established clear Service Level Objectives (SLOs). Let's make sure that we can track and achieve the defined target around application latency -- 
 
-It doesn't look an efficient way to query the database, can you find out why?
+## Your mission: create a Datadog SLO to track your application latency target
 
-</details>
+Create an SLO that tracks your target for application latency. You can follow these steps:
+
+* On the Datadog [SLO status page](https://app.datadoghq.com/slo), click on "New SLO +"
+* Define the source as "Monitor based" and choose from the list the name of the monitor you created in the previous part
+* Click on "New Target" and choose 99% as the Target, in a 7 days time window. 
+* Click save, which will take you to your SLO page. Review that the status and error budget are looking good, now that we fixed the performance issue in the database query.
+
+
+* Complete this step by creating a Datadog Monitor and Datadog SLO that track the latency of the service `store-frontend`. Continue to the next step afterwards.

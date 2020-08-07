@@ -6,7 +6,7 @@ Good news -- by now, all your application services are fully monitored with Data
 
 ## Your mission: identify which part of the application is slow
 
-Start by trying to reproduce, navigate to the E-commerce app and try to see if some pages or requests are slower than other and if you spot latency in critical spots.
+Start by trying to reproduce. Navigate to the E-commerce app and try to see if some pages or requests are slower than other and if you spot latency in critical spots.
 
 Then, try to find the relevant pages in Datadog that will give you a clue of where the slowness issue may be.
 
@@ -43,8 +43,8 @@ Once you have identified which data path is taking the longest time, move on to 
 
 <details>
 <summary>Answer</summary>
-We can see a high latency on the `store-frontend` service, but the service that stands up is the discount one.
-Indeed, looking at a trace for the `store-frontend`, we spend more than 30% of the time in the discount service.
+We can see a high latency on the `store-frontend` service, but the service that stands up is the advertisement one.
+Indeed, looking at a trace for the `store-frontend`, we spend more than 30% of the time in the advertisement service.
 
 ![Discount Service](./assets/outage1_discount.png)
 </details>

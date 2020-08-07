@@ -1,57 +1,42 @@
-![Slack](./assets/slack3.png)
+![Slack](./assets/slack2.png)
 
-## Your mission
+## Your mission: understand the root cause for the high latency in `store-frontend`
 
-Deploy a fix to the issue in the `discount-service` and reduce the latency to an healthy level.
+In order to fix the problem, you would need to understand where the issue is and propose a solution. Use Datadog to find the root cause for the high latency.
 
-Can you interpret the pattern in the flame graph to classify the type of problem with the database query?
+You already know the service and the endpoint. Where would you look next? 
+
+Is there an issue with the infrastructure such as low available resources? 
+
+Maybe we need to scale up the deployment? 
+
+Or maybe our developers rolled out a new version which has a bug of some sort?
+
+* Complete this step by finding out the other microservice that is causing `store-frontend` latency, and by finding out what the microservice is doing that takes so much time. Continue to the next step afterwards, in which you will find a way to fix the issue.
 
 <details>
 <summary>Hint 1</summary>
 
-The problem is a lazy lookup on a relational database. 
+Analyzing a distributed trace in Datadog can show you where your application spend the most time, and can help you understand how to solve performance issues.
 
+Let's try to analyze an application request that took a long time to return a response to the user.
+
+Go to the [Traces page](https://app.datadoghq.com/apm/traces) and use the left-hand facets to filter on:
+** Duration larger than 5s
+** Service: store-frontend
+
+You should now see a list of all the traces that meet this search criteria. Click on one of the traces to get more details.
+
+Investigate the flame graph, container metrics, application logs, and processes from each of the services involved in the request.
+
+Can you spot the issue? 
 </details>
-
-Can you identify the code changes needed in `\assets\discounts.py` to fix the latency issue?
-
+<br/><br/>
 <details>
 <summary>Hint 2</summary>
 
-By changing the line:
+It seems like we consistently spend over 2 seconds in the advertisements service.
 
-discounts = Discount.query.all()
-
-To the following:
-
-```
-discounts = Discount.query.options(joinedload('*')).all()
-```
-
-We eager load the `discount_type` relation on the `discount`, and can grab all information without multiple trips to the database. 
+Take a look at the code of the advertisements microservice in `assets/workshop-assets/ads.py` and try to find why so much time is spent in the service.
 
 </details>
-
-![Image Fixed](./assets/image_fixed.png)
-
-Let's deploy the fixed version by running `kubectl patch deploy discounts --patch="$(cat assets/workshop-assets/apps/fixes/discounts.yaml)"`{{execute}}.
-
-Can you verify that the latency issue is no longer happening?
-
-<details>
-<summary>Hint 3</summary>
-
-Try the following:
-
-* Go to the [Service Overview](https://app.datadoghq.com/apm/service/store-frontend/rack.request) page and look how the latency of the app is going down.
-Example of the P50:
-
-![latency_improvement](./assets/better_latency.png)
-
-* Go to the [Traces page](https://app.datadoghq.com/apm/traces) and look at one of the traces from the fixed service, they should look like this:
-![solved-nplus](./assets/solved-nplus.png)
-* Go to the [SLO status page](https://app.datadoghq.com/slo) and look for the current status of the service SLO you previously created.
-
-</details>
-
-* Complete this step by verifying that the latency of the service `store-frontend` went down significantly. Continue to the next step afterwards.

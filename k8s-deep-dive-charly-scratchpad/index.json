@@ -72,32 +72,40 @@
         "text": "17-outage-part1.md"
       },
       {
-        "title": "The Outage: Reproducing the issue",
+        "title": "The Outage: Monitoring and SLOs",
         "text": "18-outage-part2.md"
       },
       {
-        "title": "The Outage: The Database calls",
+        "title": "The Outage: Pinpointing the issue",
         "text": "19-outage-part3.md"
       },
       {
+        "title": "The Outage: Fixing the issue",
+        "text": "20-outage-part4.md"
+      },
+      {
+        "title": "The Outage: The Database calls",
+        "text": "21-outage-part5.md"
+      },
+      {
         "title": "Part 4: Complete",
-        "text": "20-outage4.md"
+        "text": "22-outage-part6.md"
       },
       {
         "title": "Advanced Content",
-        "text": "21-advanced-content.md"
-      },
-      {
-        "title": "DNS",
-        "text": "22-dns.md"
-      },
-      {
-        "title": "Tracing",
-        "text": "23-tracing-pod-lister.md"
+        "text": "23-advanced-content.md"
       },
       {
         "title": "Monitoring the APIServer",
         "text": "24-apiserver-dashboard.md"
+      },
+      {
+        "title": "Tracing",
+        "text": "25-tracing-pod-lister.md"
+      },
+      {
+        "title": "DNS",
+        "text": "26-dns.md"
       }
     ],
     "intro": {

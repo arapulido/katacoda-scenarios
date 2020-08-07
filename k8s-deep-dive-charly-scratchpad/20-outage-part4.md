@@ -9,6 +9,6 @@ Let's apply the patch and make sure it works.
 
 Once this is running, see if the app is faster and then confirm with the traces that the time spent in the advertisements micro service is much better.
 
-![Ads trace fixed](./assets/ads_fixed.png)]
+![Ads trace fixed](./assets/ads_fixed.png)
 
 Well, sounds like we are all good on the customers side ?

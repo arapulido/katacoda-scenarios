@@ -65,3 +65,6 @@ Feel free to apply the following patch:
 </details>
 
 Once you have it, you should be seeing the round trip calls made to the APIServer!
+Look for the service `kubernetes`
+
+![kubernetes tracing](./assets/kubernetes_tracing.png)

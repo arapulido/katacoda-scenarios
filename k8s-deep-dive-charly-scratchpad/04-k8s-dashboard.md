@@ -1,6 +1,8 @@
 Datadog's Kubernetes integration comes with multiple out-of-the-box dashboards to help you understand the data being collected, and to help you monitor your applications and clusters.
 ![Screenshot of Kubernetes Dashboard](./assets/k8sdashboard.png)
 
+In this step we will be taking a look at the Kubernetes specific data that the agent collects.
+As we just deployed the agent, the dashboards might not show data just yet, make sure you wait a few minutes to get all widgets to populate data correctly.
 
 At the highest level, you can use the [Kubernetes Overview dashboard](https://app.datadoghq.com/screen/integration/86/kubernetes---overview)
 

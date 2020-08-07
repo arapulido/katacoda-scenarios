@@ -34,7 +34,7 @@ We eager load the `discount_type` relation on the `discount`, and can grab all i
 
 ![Image Fixed](./assets/image_fixed.png)
 
-Let's deploy the fixed version by running `kubectl patch deploy discounts --patch="$(cat assets/workshop-assets/apps/fixes/discounts.yaml)"`. 
+Let's deploy the fixed version by running `kubectl patch deploy discounts --patch="$(cat assets/workshop-assets/apps/fixes/discounts.yaml)"`{{execute}}.
 
 Can you verify that the latency issue is no longer happening?
 

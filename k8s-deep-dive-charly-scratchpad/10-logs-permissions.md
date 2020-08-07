@@ -37,8 +37,8 @@ The `pod-lister` application is making calls to the apiserver to ... list the
 pods. However its service account is missing permissions to perform the `list
 pods` API call.<br/><br/>
 
-If you run `kubectl get clusterroles pod-lister -oyaml`{{execute}} you will see what the
-service account permissions are.<br/><br/>
+If you run `kubectl get clusterroles pod-lister -oyaml`{{execute}} you will see that the
+service account is bound to an empty set of permissions!<br/><br/>
 
 In this case you will need to add permissions for the `list` verb to the `/pods`
 resource.<br/><br/>

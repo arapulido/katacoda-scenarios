@@ -29,11 +29,6 @@ When pods are stuck in a pending state because of resource allocation, 2 good in
 
 You only have a few minutes to solve this - Because of the current issue, the number of pods created will grow unbounded...
 
-```
-kubectl get pods -lapp=americano | wc -l
-6
-```
-
 <details>
 <summary>Hints</summary>
 

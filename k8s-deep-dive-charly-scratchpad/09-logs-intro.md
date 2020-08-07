@@ -23,7 +23,7 @@ You can also read [the Kubernetes reference
 on auditing. <br/> <br/>
 
 *Attention: as static pods manifests are automatically reloaded, if you
-introduce a breaking in change in the apiserver manifest, it might break your
+introduce a breaking change in the apiserver manifest, it might break your
 Kubernetes environment. If `kubectl` commands are failing, try to fix the
 manifest, reach out if you are blocked.*
 </details>

@@ -48,6 +48,8 @@ Use helm upgrade to just apply this path:
 
 Once fixed wait for all of the containers in the datadog-agent pod to enter a `Running` state.
 
+Make sure that running `kubectl get pods -lapp=datadogagent`{{execute}} shows 3/3 for both pods.
+
 Note that the Datadog agent is configured to add the tags `cluster:dash-conf` and `workshop:k8s-outages` to the data it collects (metrics, logs, traces ...). This could be helpful later on as you investigate issues.
 
 

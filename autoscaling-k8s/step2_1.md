@@ -1,4 +1,4 @@
-Our Ecommerce application is already instrumented for distributed tracing and is receiving regular traffic through the `regular-traffic` deployment. Let's browse a bit what data we are getting in Datadog already.
+Our Ecommerce application is already instrumented for distributed tracing and is receiving regular traffic through the `regular-traffic` deployment (inside the `fake-traffic` namespace). Let's browse a bit what data we are getting in Datadog already.
 
 Note: Some of the data (particularly container data) may take up to 5-10 minutes to show up
 

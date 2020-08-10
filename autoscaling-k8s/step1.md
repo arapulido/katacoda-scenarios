@@ -17,3 +17,9 @@ The ecommerce application consists of a big monolith application called `fronten
 Check that all the pods are running correctly by running the following command: `kubectl get pods --selector=app=ecommerce`{{execute}}
 
 At this point you can visit the ecommerce application by clicking on the Ecommerce App tab in the terminal. Browse around to familiarize yourself with the application. Can you tell what areas of web page are served by the `advertisements` and `discounts` microservices?
+
+![Screenshot of Ecommerce app](./assets/app.png)
+
+Note: if you get an error like the one shown below, please refresh the page. It happens when the database is still initializing:
+
+![Screenshot of DB error](./assets/db_error.png)

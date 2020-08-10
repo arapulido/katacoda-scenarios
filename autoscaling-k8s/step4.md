@@ -78,14 +78,14 @@ frontend-hpa-cpu   Deployment/frontend   <unknown>/50%   1         3         1  
 
 We are going to increase the traffic to our application to force the scaling event: `kubectl apply -f k8s-manifests/autoscaling/more-traffic.yaml`{{execute}}That manifest creates a pod that will send more regular traffic to our `frontend` Deployment.
 
-After some seconds, this object will be updated with the CPU usage of the pods that are part of the `frontend` Deployment. Check it running the following command: `kubectl get hpa frontend-hpa-cpu -w`{{execute}} Have the number of replicas increased? Type `Ctrl+C` to return to the terminal once you are done.
+After some seconds, the HPA object will be updated with the CPU usage of the pods that are part of the `frontend` Deployment. Check it running the following command: `kubectl get hpa frontend-hpa-cpu -w`{{execute}} This command will watch the HPA object for changes. Wait until you see the number of replicas increasing (it may take a couple of minutes). Type `Ctrl+C` to return to the terminal once you are done.
 
 ```
 NAME               REFERENCE             TARGETS   MINPODS   MAXPODS   REPLICAS   AGE
 frontend-hpa-cpu   Deployment/frontend   102%/50%   1         3         2          45m
 ```
 
-You can obtain more information about the different scaling events by describing the HPA object: `kubectl describe hpa frontend-hpa-cpu`{{execute}}
+You can obtain more information about the different scaling events that happened by describing the HPA object: `kubectl describe hpa frontend-hpa-cpu`{{execute}}
 
 Navigate in Datadog to the Autoscaling Workshop dashboard you created in a previous step of this course. Can you see the the correlation between the increase in CPU usage and the increase in number of replicas?
 

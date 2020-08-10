@@ -1,12 +1,20 @@
-We are now going to deploy Datadog in our cluster to start monitoring our infrastructure and applications.
+We are now going to deploy Datadog in our cluster to start monitoring our infrastructure and applications. For that we need to retrieve the API key for our Datadog organization. To make things easier we have already injected your Datadog API key in an environment variable. Check that it has a value by executing `echo $DD_API_KEY`{{execute}}
+
+<details>
+<summary>If $DD_API_KEY didn't have a value, click here for an alternative step</summary>
 
 Log into [Datadog](https://app.datadoghq.com/) and navigate to the [API settings page](https://app.datadoghq.com/account/settings#api) to reveal your API key.
 
 ![Screenshot of API Keys area](./assets/api_key.png)
 
+Export your API key in an environment variable:
+
+`export DD_API_KEY=<YOUR_DATADOG_API_KEY>`{{copy}}
+</details>
+
 Then, add your Datadog API key to the secrets. You can do this by executing the following command in the terminal:
 
-`kubectl create secret generic datadog-secret --from-literal api-key=<YOUR_DATADOG_API_KEY>`{{copy}}
+`kubectl create secret generic datadog-secret --from-literal api-key=$DD_API_KEY`{{execute}}
 
 This will create a Kubernetes secret to make sure the Datadog agent is able to send data to your Datadog account.
 
@@ -30,5 +38,7 @@ Deploy the Datadog agent DaemonSet applying the `datadog/datadog-agent.yaml` man
 Wait until the Datadog agent is running by executing this command: `wait-datadog.sh`{{execute}}
 
 Once the `datadog-agent` pod is running, let's check its status by running the following command: `kubectl exec -ti $(kubectl get pods -l app=datadog-agent -o jsonpath='{.items[0].metadata.name}') -- agent status`{{execute}} Browse the output. What checks is the Datadog agent running? If the `docker` check is not yet running, rerun the command above until you see the `docker` check running before moving to the next step.
+
+![Screenshot of Docker check](./assets/docker_check.png)
 
 Note: if you get the following output: `Error: unable to read authentication token file: open /etc/datadog-agent/auth_token`, just rerun the command, as this is a transient error.

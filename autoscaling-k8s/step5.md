@@ -2,13 +2,25 @@ We will deploy now the [Datadog Cluster Agent that will work as External Metrics
 
 First, we will create a secret with a random token that will be used to secure the communication between the cluster agent and the host agents. Create the secret with the token by running the following command: `kubectl create secret generic datadog-auth-token --from-literal=token=$(openssl rand -hex 16)`{{execute}}
 
-Also, in order to be able to use the Cluster Agent as External Metrics Server, we will need to generate a Datadog Application Key (which is different from your API key). To do so, open the Datadog application and navigate to [Integrations -> APIs](https://app.datadoghq.com/account/settings#api). Click on Applications Keys and generate a new application key:
+Also, in order to be able to use the Cluster Agent as External Metrics Server, we need to retrieve the APP key (different from the API key) for our Datadog organization. To make things easier we have already injected your Datadog APP key in an environment variable. Check that it has a value by executing `echo $DD_APP_KEY`{{execute}}
+
+<details>
+<summary>If $DD_APP_KEY didn't have a value, click here for an alternative step</summary>
+
+Log into [Datadog](https://app.datadoghq.com/) and navigate to the [API settings page](https://app.datadoghq.com/account/settings#api) to reveal your API key.
+
+To do so, open the Datadog application and navigate to [Integrations -> APIs](https://app.datadoghq.com/account/settings#api). Click on Applications Keys and generate a new application key:
 
 ![Screenshot of App Key](./assets/app_key.png)
 
-Once generated, copy the value and create a new secret with it:
+Once generated, export it as an environment variable:
 
-`kubectl create secret generic datadog-app-key --from-literal app-key=<YOUR_NEWLY_GENERATED_DATADOG_APP_KEY>`{{copy}}
+`export DD_APP_KEY=<YOUR_DATADOG_APP_KEY>`{{copy}}
+</details>
+
+Create a new secret with the APP key by executing:
+
+`kubectl create secret generic datadog-app-key --from-literal app-key=$DD_APP_KEY`{{execute}}
 
 Check that the secret has been correctly created by running the following command: `kubectl get secret datadog-app-key`{{execute}} You should get an output similar to the following:
 
@@ -38,5 +50,5 @@ Datadog Cluster Agent
 
   - Datadog Cluster Agent endpoint detected: https://10.106.157.238:5005
   Successfully connected to the Datadog Cluster Agent.
-  - Running: 1.5.2+commit.60ee741
+  - Running: 1.7.0+commit.4568d4d
 ```

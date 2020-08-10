@@ -119,10 +119,12 @@ frontendhpaduration   Deployment/frontend   6099m/7 (avg)   1         3         
 
 Let's generate some more fake traffic to force the p99 latency to go beyond 7 seconds. Execute the following command: `kubectl apply -f k8s-manifests/autoscaling/spike-traffic.yaml`{{execute}}
 
-Let's watch the HPA object to check when something changes: `kubectl get hpa frontendhpaduration -w`{{execute}}. Once you are done watching the object, type `Ctrl+C` to go back to the terminal.
+Let's watch the HPA object to check when something changes: `kubectl get hpa frontendhpaduration -w`{{execute}}. Wait some minutes to see the replicas number going up. Once you are done watching the object, type `Ctrl+C` to go back to the terminal.
 
 Did the deployment scale? Navigate in Datadog to the Autoscaling Workshop dashboard you created in a previous step of this course. Can you see the the correlation between the increase in the p99 latency and the increase in number of replicas?
 
 ![Screenshot of HPA External Dashboard](./assets/dashboard-hpa-external.png)
+
+You can obtain more information about the different scaling events that happened by describing the HPA object: `kubectl describe hpa frontendhpaduration`{{execute}}
 
 Before moving to the next step, let's clean up our HPA and let's redeploy the Ecommerce application, so we go back to 1 replica. Execute the following command: `kubectl delete -f k8s-manifests/autoscaling/spike-traffic.yaml && kubectl delete hpa frontendhpaduration && kubectl apply -f k8s-manifests/ecommerce-app`{{execute}}

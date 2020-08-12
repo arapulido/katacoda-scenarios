@@ -2,11 +2,11 @@
 
 ![Slack](./assets/slack1.png)
 
-Good news -- by now, all your application services are fully monitored with Datadog, so we should be able to investigate and fix the issue.
+Good news! By now, all your application services are fully monitored with Datadog, so we should be able to investigate and fix the issue.
 
 ## Your mission: identify which part of the application is slow
 
-Start by trying to reproduce. Navigate to the E-commerce app and try to see if some pages or requests are slower than other and if you spot latency in critical spots.
+Start by trying to reproduce. Navigate to the ecommerce app and try to see if some pages or requests are slower than others, and if you spot latency in critical spots.
 
 Then, try to find the relevant pages in Datadog that will give you a clue of where the slowness issue may be.
 
@@ -28,7 +28,7 @@ Try to spend some time on each page while keeping in mind that your goal is to i
 
 A high application latency is usually a good indicator for a performance issue. Since we received complaints from end-users, we know that the issue involves at least one service that end-users interact with (directly or indirectly).
 
-The [Service Map page](https://app.datadoghq.com/apm/map) can give you a clear picture of each application service performance. Hover your mouse over each of the services to find the service with a problematic latency, and correlate that with the # of requests each service receives and emits to identify the bottleneck.
+The [Service Map page](https://app.datadoghq.com/apm/map) can give you a clear picture of each application service performance. Hover your mouse over each of the services to find the service with a problematic latency, and correlate that with the number of requests each service receives and emits to identify the bottleneck.
 </details>
 <br/><br/>
 
@@ -45,6 +45,6 @@ Once you have identified which data path is taking the longest time, move on to 
 <summary>Answer</summary>
 We can see a high latency on the `store-frontend` service, but the service that stands up is the advertisement one.
 Indeed, looking at a trace for the `store-frontend`, we spend more than 30% of the time in the advertisement service.
-
+<br/><br/>
 ![Discount Service](./assets/outage1_ads.png)
 </details>

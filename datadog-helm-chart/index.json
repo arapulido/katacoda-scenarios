@@ -1,0 +1,89 @@
+{
+  "title": "Understanding Datadog's Helm Chart",
+  "description": "",
+  "difficulty": "Beginner",
+  "time": "60 minutes",
+  "details": {
+    "intro": {
+      "courseData": "background.sh",
+      "code": "foreground.sh",
+      "text": "intro.md"
+    },
+    "steps": [
+      {
+        "title": "Setting up your Datadog account",
+        "text": "step1.md"
+      },
+      {
+        "title": "Deploying the agent: default options",
+        "text": "step2.md"
+      },
+      {
+        "title": "Browsing Datadog",
+        "text": "step3.md"
+      },
+      {
+        "title": "Deploying the agent to the Control Plane node",
+        "text": "step4.md"
+      }
+    ],
+    "finish": {
+      "text": "finish.md"
+    },
+    "assets": {
+    "host01": [
+      {
+        "file": "prepenvironment",
+        "target": "/usr/local/bin",
+        "chmod": "+x"
+      },
+      {
+        "file": "wait-datadog.sh",
+        "target": "/usr/local/bin",
+        "chmod": "+x"
+      },
+      {
+        "file": "datadog-agent.yaml",
+        "target": "/root/datadog/"
+      },
+      {
+        "file": "serviceaccount.yaml",
+        "target": "/root/datadog/"
+      },
+      {
+        "file": "datadog-agent-with-cluster-agent.yaml",
+        "target": "/root/datadog/"
+      },
+      {
+        "file": "datadog-cluster-agent.yaml",
+        "target": "/root/datadog/"
+      },
+      {
+        "file": "cluster-agent-external-metrics.yaml",
+        "target": "/root/datadog/"
+      }
+    ]
+    }
+  },
+  "files": [
+    "frontend-vpa.yaml",
+    "frontend-hpa-cpu.yaml",
+    "frontend-hpa-latency.yaml",
+    "frontend-wpa.yaml"
+  ],
+  "environment": {
+    "uilayout": "editor-terminal-v1",
+    "exclusionPatterns": ["./go/*", "./Desktop/*"],
+    "hideHiddenFiles": true,
+    "showdashboard": true,
+    "dashboards": [
+      {
+        "name": "Ecommerce App",
+        "port": 30001
+      }
+    ]
+  },
+  "backend": {
+    "imageid": "datadog-kubernetes-cluster-running:1.16"
+  }
+}

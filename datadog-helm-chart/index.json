@@ -41,10 +41,6 @@
     }
   },
   "files": [
-    "frontend-vpa.yaml",
-    "frontend-hpa-cpu.yaml",
-    "frontend-hpa-latency.yaml",
-    "frontend-wpa.yaml"
   ],
   "environment": {
     "uilayout": "editor-terminal-v1",

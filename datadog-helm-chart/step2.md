@@ -2,7 +2,7 @@ The first thing we are going to do is to deploy the Datadog Helm chart without a
 
 Let's deploy the chart passing our API key:
 
-`helm install --name datadog --set datadog.apiKey=$DD_API_KEY datadog/datadog`{{execute}}
+`helm install datadog --set datadog.apiKey=$DD_API_KEY datadog/datadog`{{execute}}
 
 Let's see what wew got from the default configuration.
 
@@ -23,6 +23,15 @@ The other two `token` secrets are the ones used by the service accounts to commu
 
 Let's check the workloads that have been deployed:
 
+`kubectl get deployments`{{execute}}
+
+```
+NAME                         READY   UP-TO-DATE   AVAILABLE   AGE
+datadog-kube-state-metrics   1/1     1            1           15h
+```
+
+The Datadog Helm chart, by default, aside from the Datadog agent, deploys [Kube State Metrics](https://github.com/kubernetes/kube-state-metrics) by default. Kube State Metrics is a service that listens to the Kubernetes API and generates metrics about the state of the objects. Datadog uses some of these metrics to populate its Kubernetes default dashboard.
+
 `kubectl get daemonset`{{execute}}
 
 ```
@@ -38,7 +47,7 @@ You should get an output similar to this one:
 
 ```
 NAME            NODE
-datadog-mhv58   two-nodes-worker
+datadog-mhv58   node01
 ```
 
 The Datadog node agent was deployed to the worker node, but not the control plane node. Why? There is a taint in the control plane node that prevents pods without the corresponding toleration being scheduled in that node:
@@ -47,4 +56,8 @@ The Datadog node agent was deployed to the worker node, but not the control plan
 
 If we want to monitor the control plane nodes, we will need to add a toleration for the control-plane nodes. We will explain how to do this in the next step.
 
-Let's check the status 
+Let's check the status of the Datadog agent:
+
+`kubectl exec -ti $(kubectl get pods -l app=datadog -o custom-columns=:metadata.name) -- agent status`{{execute}}
+
+Check the different checks that are running by default. You can see that the Docker check and the Kubelet check are failing. We will fix the configuration in a later step to fix this.

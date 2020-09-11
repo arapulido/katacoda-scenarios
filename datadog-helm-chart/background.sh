@@ -4,7 +4,6 @@ STATUS=$(cat /root/status.txt)
 
 if [ "$STATUS" != "complete" ]; then
   echo ""> /root/status.txt
-  wall -n "Creating ecommerce deployment"
 
   # Add Helm 3
   curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3

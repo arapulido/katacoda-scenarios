@@ -22,7 +22,7 @@ tolerations:
 
 We have a `values-tolerations.yaml` file ready with that section. Let's apply it:
 
-`helm upgrade --name datadog --set datadog.apiKey=$DD_API_KEY datadog/datadog -f helm-values/values-tolerations.yaml`
+`helm upgrade datadog --set datadog.apiKey=$DD_API_KEY datadog/datadog -f helm-values/values-tolerations.yaml`{{execute}}
 
 Let's check now the number of pods we have for the Datadog agent and the nodes they are deployed to:
 

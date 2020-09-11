@@ -36,31 +36,6 @@
         "file": "prepenvironment",
         "target": "/usr/local/bin",
         "chmod": "+x"
-      },
-      {
-        "file": "wait-datadog.sh",
-        "target": "/usr/local/bin",
-        "chmod": "+x"
-      },
-      {
-        "file": "datadog-agent.yaml",
-        "target": "/root/datadog/"
-      },
-      {
-        "file": "serviceaccount.yaml",
-        "target": "/root/datadog/"
-      },
-      {
-        "file": "datadog-agent-with-cluster-agent.yaml",
-        "target": "/root/datadog/"
-      },
-      {
-        "file": "datadog-cluster-agent.yaml",
-        "target": "/root/datadog/"
-      },
-      {
-        "file": "cluster-agent-external-metrics.yaml",
-        "target": "/root/datadog/"
       }
     ]
     }

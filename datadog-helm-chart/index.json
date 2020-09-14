@@ -29,6 +29,14 @@
       {
         "title": "Enabling log collection",
         "text": "step5.md"
+      },
+      {
+        "title": "Enabling the APM agent",
+        "text": "step6.md"
+      },
+      {
+        "title": "Enabling the Cluster Agent",
+        "text": "step7.md"
       }
     ],
     "finish": {

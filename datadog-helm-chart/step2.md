@@ -60,4 +60,4 @@ Let's check the status of the Datadog agent:
 
 `kubectl exec -ti $(kubectl get pods -l app=datadog -o custom-columns=:metadata.name) -- agent status`{{execute}}
 
-Check the different checks that are running by default. You can see that the Docker check and the Kubelet check are failing. We will fix the configuration in a later step to fix this.
+Check the different checks that are running by default. You can see that the Kubelet check is failing. We will fix the configuration in a later step to fix this.

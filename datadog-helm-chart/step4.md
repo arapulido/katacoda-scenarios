@@ -28,4 +28,10 @@ Let's check now the number of pods we have for the Datadog agent and the nodes t
 
 `kubectl get pods -l app=datadog -o custom-columns=NAME:.metadata.name,NODE:.spec.nodeName`{{execute}}
 
+```
+NAME            NODE
+datadog-qglsd   controlplane
+datadog-vz26z   node01
+```
+
 We now have correctly one Datadog agent deployed to the control plane node.

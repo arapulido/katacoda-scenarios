@@ -1,1 +1,1 @@
-Congratulations! You have completed all the labs of the Autoscaling Workloads in Kubernetes workshop.
+Congratulations! You have completed all the labs of the Understanding Datadog's Helm Chart workshop.

@@ -2,7 +2,7 @@ The first thing we are going to do is to deploy the Datadog Helm chart without a
 
 Let's deploy the chart passing our API key:
 
-`helm install datadog --set datadog.apiKey=$DD_API_KEY datadog/datadog`{{execute}}
+`helm install datadog --set datadog.apiKey=$DD_API_KEY datadog/datadog -f helm-values/values.yaml`{{execute}}
 
 Let's see what wew got from the default configuration.
 

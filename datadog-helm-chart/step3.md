@@ -1,29 +1,41 @@
-Our Ecommerce application is already instrumented for distributed tracing and is receiving regular traffic through the `regular-traffic` deployment (inside the `fake-traffic` namespace). Let's browse a bit what data we are getting in Datadog already.
+As we said, our cluster has two nodes, one worker and one control plane node, but the agent only deployed to the worker node. We are going to add a toleration to our deployment definition to match the control plane node.
 
-Note: Some of the data (particularly container data) may take up to 5-10 minutes to show up
+This is fairly easy to do using the Datadog Helm chart, as there is a specific section in the `values.yaml` file to add tolerations:
 
-## Host Map
+```
+## @param tolerations - array - optional
+## Allow the DaemonSet to schedule on tainted nodes (requires Kubernetes >= 1.6)
+#
+tolerations: []
+```
 
-Navigate to the [Infrastructure List in Datadog](https://app.datadoghq.com/infrastructure). This list will show you all virtual and physical nodes where the Datadog agent is running. If everything went well, you should see a node called `node01` running some applications like the `datadog-agent`, `coredns`, etc:
+We are going to edit that section to look like the following:
 
-![Screenshot of Node01](./assets/node01.png)
+```
+## @param tolerations - array - optional
+## Allow the DaemonSet to schedule on tainted nodes (requires Kubernetes >= 1.6)
+#
+tolerations:
+  - key: node-role.kubernetes.io/master
+    effect: NoSchedule
+```
 
-Clicking on that host will show some system metrics from it, like CPU utilization.
+We have a `values-tolerations.yaml` file ready with that section. You can check the diff between the two values files:
 
-## Service Map
+`diff helm-values/values.yaml helm-values/values-tolerations.yaml`{{execute}}
 
-As our application receives traffic and is instrumented for APM, we should start seeing some traces arriving within Datadog. Those traces are used to build a diagram of our application’s activity. You can view this diagram by navigating to the [Service Map](https://app.datadoghq.com/apm/map):
+Let's apply it:
 
-![Screenshot of Service Map](./assets/service_map.png)
+`helm upgrade datadog --set datadog.apiKey=$DD_API_KEY datadog/datadog -f helm-values/values-tolerations.yaml`{{execute}}
 
-Hover over the map, what data are we getting from the different services?
+Let's check now the number of pods we have for the Datadog agent and the nodes they are deployed to:
 
-Click on one of the services and select "View service overview" from the contextual menu. What type of information do we have available in the Service Overview page?
+`kubectl get pods -l app=datadog -o custom-columns=NAME:.metadata.name,NODE:.spec.nodeName`{{execute}}
 
-## Containers
+```
+NAME            NODE
+datadog-qglsd   controlplane
+datadog-vz26z   node01
+```
 
-Navigate now to the [Containers List](https://app.datadoghq.com/containers) under Infrastructure and you will get a list of all the containers that are running in your Kubernetes cluster:
-
-![Screenshot of Containers](./assets/containers.png)
-
-Can you figure out how to group those containers by namespace?
+We now have correctly one Datadog agent deployed to the control plane node.

@@ -1,37 +1,66 @@
-As we said, our cluster has two nodes, one worker and one control plane node, but the agent only deployed to the worker node. We are going to add a toleration to our deployment definition to match the control plane node.
+Let's see how we can change some configuration values from the Helm chart and we will fix the Kubelet check in the process.
 
-This is fairly easy to do using the Datadog Helm chart, as there is a specific section in the `values.yaml` file to add tolerations:
+Let's run again the agent status command in the Datadog's agent pod running in the worker node:
 
-```
-## @param tolerations - array - optional
-## Allow the DaemonSet to schedule on tainted nodes (requires Kubernetes >= 1.6)
-#
-tolerations: []
-```
+`kubectl exec -ti $(kubectl get pods -l app=datadog -o custom-columns=:.metadata.name --field-selector spec.nodeName=node01) -- agent status`{{execute}}
 
-We are going to edit that section to look like the following:
+We are getting the following error:
 
 ```
-## @param tolerations - array - optional
-## Allow the DaemonSet to schedule on tainted nodes (requires Kubernetes >= 1.6)
-#
-tolerations:
-  - key: node-role.kubernetes.io/master
-    effect: NoSchedule
+    kubelet (4.1.1)
+    ---------------
+      Instance ID: kubelet:d884b5186b651429 [ERROR]
+      Configuration Source: file:/etc/datadog-agent/conf.d/kubelet.d/conf.yaml.default
+      Total Runs: 37
+      Metric Samples: Last Run: 0, Total: 0
+      Events: Last Run: 0, Total: 0
+      Service Checks: Last Run: 0, Total: 0
+      Average Execution Time : 0s
+      Last Execution Date : 2020-09-11 13:24:02.000000 UTC
+      Last Successful Execution Date : Never
+      Error: Unable to detect the kubelet URL automatically.
+      Traceback (most recent call last):
+        File "/opt/datadog-agent/embedded/lib/python3.8/site-packages/datadog_checks/base/checks/base.py", line 841, in run
+          self.check(instance)
+        File "/opt/datadog-agent/embedded/lib/python3.8/site-packages/datadog_checks/kubelet/kubelet.py", line 297, in check
+          raise CheckException("Unable to detect the kubelet URL automatically.")
+      datadog_checks.base.errors.CheckException: Unable to detect the kubelet URL automatically.
 ```
 
-We have a `values-tolerations.yaml` file ready with that section. Let's apply it:
+That error happens because we cannot verify the Kubelet certificates correctly. As this is not a production environment, let's tell the Datadog agent to skip the TLS verification by setting the environment variable called `DD_KUBELET_TLS_VERIFY` to `false`.
 
-`helm upgrade datadog --set datadog.apiKey=$DD_API_KEY datadog/datadog -f helm-values/values-tolerations.yaml`{{execute}}
-
-Let's check now the number of pods we have for the Datadog agent and the nodes they are deployed to:
-
-`kubectl get pods -l app=datadog -o custom-columns=NAME:.metadata.name,NODE:.spec.nodeName`{{execute}}
+Setting environment variables in the `values.yaml` file is easy: there is a section to do just that:
 
 ```
-NAME            NODE
-datadog-qglsd   controlplane
-datadog-vz26z   node01
+  ## @param env - list of object - optional
+  ## The dd-agent supports many environment variables
+  ## ref: https://docs.datadoghq.com/agent/docker/?tab=standard#environment-variables
+  #
+  env: []
 ```
 
-We now have correctly one Datadog agent deployed to the control plane node.
+Let's modify that section to set that environment variable:
+
+```
+  ## @param env - list of object - optional
+  ## The dd-agent supports many environment variables
+  ## ref: https://docs.datadoghq.com/agent/docker/?tab=standard#environment-variables
+  #
+  env:
+    - name: DD_KUBELET_TLS_VERIFY
+      value: false
+```
+
+We have a `values-kubelet.yaml` file ready with that section. You can check the difference between the previous applied values file:
+
+`diff helm-values/values-tolerations.yaml helm-values/values-kubelet.yaml`{{execute}}
+
+Let's apply it:
+
+`helm upgrade datadog --set datadog.apiKey=$DD_API_KEY datadog/datadog -f helm-values/values-kubelet.yaml`{{execute}}
+
+Let's run again the agent status command in the Datadog's agent pod running in the worker node:
+
+`kubectl exec -ti $(kubectl get pods -l app=datadog -o custom-columns=:.metadata.name --field-selector spec.nodeName=node01) -- agent status`{{execute}}
+
+The Kubelet check should run now successfully.

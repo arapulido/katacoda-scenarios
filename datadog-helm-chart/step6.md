@@ -55,7 +55,7 @@ We are going to enable APM and, instead of using UDP for the communication, we a
 
 We have a `values-apm.yaml` file ready with that section. You can check the difference between the previous applied values file:
 
-`diff helm-values/values-logs.yaml helm-values/values-apm.yaml`{{execute}}
+`diff -U5 helm-values/values-logs.yaml helm-values/values-apm.yaml`{{execute}}
 
 Let's apply it:
 

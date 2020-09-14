@@ -46,7 +46,7 @@ We will set both `enabled` and `containerCollectAll` to true, to enable log coll
 
 We have a `values-logs.yaml` file ready with that section. You can check the difference between the previous applied values file:
 
-`diff helm-values/values-kubelet.yaml helm-values/values-logs.yaml`{{execute}}
+`diff -U5 helm-values/values-kubelet.yaml helm-values/values-logs.yaml`{{execute}}
 
 Let's apply it:
 

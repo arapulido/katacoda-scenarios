@@ -52,7 +52,7 @@ datadog-mhv58   node01
 
 The Datadog node agent was deployed to the worker node, but not the control plane node. Why? There is a taint in the control plane node that prevents pods without the corresponding toleration being scheduled in that node:
 
-`kubectl get nodes two-nodes-control-plane -o custom-columns=NAME:.metadata.name,TAINTS:.spec.taints`{{execute}}
+`kubectl get nodes controlplane -o custom-columns=NAME:.metadata.name,TAINTS:.spec.taints`{{execute}}
 
 If we want to monitor the control plane nodes, we will need to add a toleration for the control-plane nodes. We will explain how to do this in the next step.
 

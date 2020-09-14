@@ -25,6 +25,10 @@
       {
         "title": "Deploying the agent to the Control Plane node",
         "text": "step4.md"
+      },
+      {
+        "title": "Setting environment variables",
+        "text": "step5.md"
       }
     ],
     "finish": {

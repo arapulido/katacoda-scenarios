@@ -58,7 +58,6 @@
     "uilayout": "editor-terminal-v1",
     "exclusionPatterns": ["./go/*", "./Desktop/*"],
     "hideHiddenFiles": true
-    ]
   },
   "backend": {
     "imageid": "datadog-kubernetes-cluster-running:1.16"

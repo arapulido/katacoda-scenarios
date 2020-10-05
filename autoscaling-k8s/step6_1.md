@@ -1,5 +1,5 @@
 
-Deploy the DatadogMetrics CRD by applying the `datadog/datadogmetric_crd.yaml` manifest: `kubectl apply -f datadog/datadogmetric_crd.yaml`{{execute}}
+Deploy the DatadogMetrics CRD by applying the `datadog/datadogmetrics_crd.yaml` manifest: `kubectl apply -f datadog/datadogmetrics_crd.yaml`{{execute}}
 
 <pre class="file" data-filename="datadog-metric.yaml" data-target="replace">
 apiVersion: datadoghq.com/v1alpha1
@@ -9,6 +9,8 @@ metadata:
 spec:
   query: avg:trace.rack.request.hits{service:store-frontend}.rollup(120)
 </pre>
+
+Deploy the DatadogMetrics object by applying the `datadog-metric.yaml` manifest: `kubectl apply -f datadog-metric.yaml`{{execute}}
 
 
 <pre class="file" data-filename="hpa-query.yaml" data-target="replace">
@@ -30,4 +32,5 @@ spec:
       targetAverageValue: 4
 </pre>
 
+Deploy the HPA object by applying the `hpa-query.yaml` manifest: `kubectl apply -f hpa-query.yaml`{{execute}}
 

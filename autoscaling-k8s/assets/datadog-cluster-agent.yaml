@@ -18,7 +18,7 @@ spec:
     spec:
       serviceAccountName: datadog-agent
       containers:
-      - image: datadog/cluster-agent:latest
+      - image: datadog/cluster-agent:1.7.0
         imagePullPolicy: Always
         name: datadog-cluster-agent
         env:
@@ -40,6 +40,8 @@ spec:
           - name: DD_CLUSTER_CHECKS_ENABLED 
             value: "true"
           - name: DD_EXTERNAL_METRICS_PROVIDER_ENABLED
+            value: 'true'
+          - name: DD_EXTERNAL_METRICS_PROVIDER_USE_DATADOGMETRIC_CRD
             value: 'true'
           - name: DD_EXTERNAL_METRICS_PROVIDER_WPA_CONTROLLER
             value: 'false'

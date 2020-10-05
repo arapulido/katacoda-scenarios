@@ -43,6 +43,10 @@
         "text": "step6.md"
       },
       {
+        "title": "HPA with DatadogMetric object",
+        "text": "step6_1.md"
+      },
+      {
         "title": "WPA with External Metrics",
         "text": "step7.md"
       }
@@ -81,6 +85,10 @@
       {
         "file": "cluster-agent-external-metrics.yaml",
         "target": "/root/datadog/"
+      },
+      {
+        "file": "datadogmetrics_crd.yaml",
+        "target": "/root/datadog/"
       }
     ]
     }
@@ -89,7 +97,9 @@
     "frontend-vpa.yaml",
     "frontend-hpa-cpu.yaml",
     "frontend-hpa-latency.yaml",
-    "frontend-wpa.yaml"
+    "frontend-wpa.yaml",
+    "datadog-metric.yaml",
+    "hpa-query.yaml"
   ],
   "environment": {
     "uilayout": "editor-terminal-v1",

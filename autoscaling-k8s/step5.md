@@ -31,9 +31,15 @@ datadog-app-key   Opaque    1         8s
 
 Before deploying the datadog cluster agent, we will delete the current Datadog agent DaemonSet, that we will redeploy later on with a different configuration: `kubectl delete daemonset datadog-agent`{{execute}}
 
+To deploy the Datadog cluster agent, first we need to create the service account that will be used by the cluster agent and give it the right RBAC persmissions.
+
+In the editor, open the file called `datadog/cluster-agent-rbac.yaml`{{open}} and browse it a bit. You can see that we are going to create a service account called `datadog-cluster-agent` and give it some permissions to the Kubernetes API through a ClusterRole and a ClusterRoleBinding. You can learn more about RBAC in [the official Kuberentes documentation](https://kubernetes.io/docs/reference/access-authn-authz/rbac/).
+
+Create the service account, the ClusterRole and the ClusterRoleBinding by applying the `datadog/cluster-agent-rbac.yaml` manifest: `kubectl apply -f datadog/cluster-agent-rbac.yaml`{{execute}}
+
 We will now deploy the Datadog Cluster Agent. Open the file called `datadog/datadog-cluster-agent.yaml`{{open}} in the editor and try to understand the different options that are set there. Can you spot which option enables the External Metrics Server for the HPA controller? Let's deploy it by executing `kubectl apply -f datadog/datadog-cluster-agent.yaml`{{execute}}
 
-We will also need to give the cluster agent some permissions to act as an External Metrics server. Give those permissions executing the following command: `kubectl apply -f datadog/cluster-agent-external-metrics.yaml`{{execute}}
+We will also need to give the Horizontal Pod Autoscaler some permissions to read the External Metrics Server. Give those permissions executing the following command: `kubectl apply -f datadog/hpa-rbac.yaml`{{execute}}
 
 We will now deploy a slightly different version of the Datadog host agent. Open the file called `datadog/datadog-agent-with-cluster-agent.yaml`{{open}} and try to spot the differences. What are the differences between this manifest and the one we had deployed before? (`datadog/datadog-agent.yaml`). You can spot the differences running the following `diff` command: `diff -u datadog/datadog-agent.yaml datadog/datadog-agent-with-cluster-agent.yaml`{{execute}}
 

@@ -71,7 +71,7 @@
         "target": "/root/datadog/"
       },
       {
-        "file": "serviceaccount.yaml",
+        "file": "node-agent-rbac.yaml",
         "target": "/root/datadog/"
       },
       {
@@ -83,7 +83,11 @@
         "target": "/root/datadog/"
       },
       {
-        "file": "cluster-agent-external-metrics.yaml",
+        "file": "cluster-agent-rbac.yaml",
+        "target": "/root/datadog/"
+      },
+      {
+        "file": "hpa-rbac.yaml",
         "target": "/root/datadog/"
       },
       {

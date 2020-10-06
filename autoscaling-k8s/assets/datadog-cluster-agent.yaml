@@ -16,7 +16,7 @@ spec:
         ad.datadoghq.com/datadog-cluster-agent.init_configs: '[{}]'
         ad.datadoghq.com/datadog-cluster-agent.instances: '[{"prometheus_url": "http://%%host%%:5000/metrics","namespace": "datadog.cluster_agent","metrics": ["go_goroutines","go_memstats_*","process_*","api_requests","datadog_requests","external_metrics", "cluster_checks_*"]}]'
     spec:
-      serviceAccountName: datadog-agent
+      serviceAccountName: datadog-cluster-agent
       containers:
       - image: datadog/cluster-agent:1.7.0
         imagePullPolicy: Always
@@ -41,8 +41,10 @@ spec:
             value: "true"
           - name: DD_EXTERNAL_METRICS_PROVIDER_ENABLED
             value: 'true'
+          - name: DD_EXTERNAL_METRICS_PROVIDER_MAX_AGE
+            value: '300'
           - name: DD_EXTERNAL_METRICS_PROVIDER_USE_DATADOGMETRIC_CRD
-            value: 'true'
+            value: 'false'
           - name: DD_EXTERNAL_METRICS_PROVIDER_WPA_CONTROLLER
             value: 'false'
           - name: DD_CLUSTER_NAME

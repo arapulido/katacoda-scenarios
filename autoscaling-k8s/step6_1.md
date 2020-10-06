@@ -5,9 +5,9 @@ Deploy the DatadogMetrics CRD by applying the `datadog/datadogmetrics_crd.yaml` 
 apiVersion: datadoghq.com/v1alpha1
 kind: DatadogMetric
 metadata:
-  name: frontend-hits 
+  name: frontend-hits
 spec:
-  query: avg:trace.rack.request.hits{service:store-frontend}.rollup(120)
+  query: avg:trace.rack.request.hits{env:ruby-shop,service:store-frontend}.as_count().rollup(sum, 60)
 </pre>
 
 Deploy the DatadogMetrics object by applying the `datadog-metric.yaml` manifest: `kubectl apply -f datadog-metric.yaml`{{execute}}
@@ -29,7 +29,7 @@ spec:
   - type: External
     external:
       metricName: datadogmetric@default:frontend-hits
-      targetAverageValue: 4
+      targetAverageValue: 10
 </pre>
 
 Deploy the HPA object by applying the `hpa-query.yaml` manifest: `kubectl apply -f hpa-query.yaml`{{execute}}

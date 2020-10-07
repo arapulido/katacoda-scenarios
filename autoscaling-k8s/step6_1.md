@@ -19,8 +19,6 @@ Custom Metrics Server
   External metrics provider uses DatadogMetric - Check status directly from Kubernetes with: `kubectl get datadogmetric`
 ```
 
-Similar to the HPA example, we will create a WPA object that will scale our `frontend` deployment based on the p99 latency that the service experiences.
-
 Now, before creating the HPA object, we are going to create a DatadogMetric object with a more complex query.
 
 We are going to create a new file called `datadog-metric.yaml` (file creation happens automatically by clicking below on "Copy to Editor"):
@@ -66,7 +64,7 @@ spec:
 
 Deploy the HPA object by applying the `hpa-query.yaml` manifest: `kubectl apply -f hpa-query.yaml`{{execute}}
 
-Start watching the DatadogMetric object, until it gets a value from Datadog and a status of VALID=True: `kubectl get datadogmetric -w`{{execute}}. Wait some minutes until you see VALID=True. Once you are done watching the object, type `Ctrl+C` to go back to the terminal.
+Start watching the DatadogMetric object, until it gets a value from Datadog and a status of `VALID=True`: `kubectl get datadogmetric -w`{{execute}}. Wait some minutes until you see `VALID=True`. Once you are done watching the object, type `Ctrl+C` to go back to the terminal.
 
 ```
 NAME            ACTIVE   VALID   VALUE   REFERENCES   UPDATE TIME

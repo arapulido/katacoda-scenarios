@@ -78,4 +78,6 @@ Let's watch the HPA object to check when something changes: `kubectl get hpa hit
 
 Did the deployment scale? Navigate in Datadog to the Autoscaling Workshop dashboard you created in a previous step of this course. Can you see the the correlation between the increase of requests and the increase in number of replicas?
 
+![Screenshot of HPA Dashboard](./assets/dashboard-query.png)
+
 Before moving to the next step, let's clean up our HPA and let's redeploy the Ecommerce application, so we go back to 1 replica. Execute the following command: `kubectl delete -f k8s-manifests/autoscaling/spike-traffic.yaml && kubectl delete hpa hitsexternal && kubectl delete datadogmetric frontend-hits && kubectl apply -f k8s-manifests/ecommerce-app`{{execute}}

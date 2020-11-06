@@ -90,24 +90,17 @@ Other options in our manifest:
  * `downscaleForbiddenWindowSeconds: 60`: Wait 60 seconds after a scaling event before scaling down
  * `upscaleForbiddenWindowSeconds: 30`: Wait 30 seconds after a scaling event before scaling up
 
-Let's check that the Cluster Agent is getting the metric correctly by executing the agent status for the Cluster Agent: `kubectl exec -ti $(kubectl get pods -l app=datadog-cluster-agent -o jsonpath='{.items[0].metadata.name}') -- agent status | grep -A11 "External Metrics"`{{execute}} Browse the output and check that you get an output similar to this one:
+As in the previous step we enabled DatadogMetric for the Cluster Agent deployment, now the Cluster Agent will create automatically a DatadogMetric object for any HPA or WPA object created with an external metric, for backwards compatibility.
+
+Let's watch until the DatadogMetric object is created and that it gets a valid value by executing the following command: `kubectl get datadogmetric -w`{{execute}} Once you are done watching the object, type `Ctrl+C` to go back to the terminal. You should get an output similar to this one:
 
 ```
-External Metrics
-----------------
-  Total: 1
-  Valid: 1
-
-* watermark pod autoscaler: default/frontend-wpa-latency
-  Metric name: trace.rack.request.duration.by.service.99p
-  Labels:
-  - service: store-frontend
-  Value: 6.563013076782227
-  Timestamp: 2020-04-21 14:46:30.000000 UTC
-  Valid: true
+controlplane $ kubectl get datadogmetric -w
+NAME                                                ACTIVE   VALID   VALUE   REFERENCES   UPDATE TIME
+dcaautogen-c994aac22cd79ff8ebce0c6287bf53145f9cdf
+dcaautogen-c994aac22cd79ff8ebce0c6287bf53145f9cdf   True     False   0                    0s
+dcaautogen-c994aac22cd79ff8ebce0c6287bf53145f9cdf   True     True    5.494538307189941                72s
 ```
-
-This may take some time, until we have a metric value. Keep running the latest command until you get the metric value correctly.
 
 That states that the Cluster Agent is correctly getting the value of the metric requested by our WPA object. Let's get the WPA object again to see if the metric is being reflected there. Execute the following command: `kubectl get wpa frontend-wpa-latency`{{execute}}:
 

@@ -93,7 +93,7 @@ Events:
   Normal   Autoscaler is now handle by the Cluster-Agent  23s   datadog-cluster-agent
 ```
 
-Finally, let's check that the Cluster Agent is getting the metric correctly by executing the agent status for the Cluster Agent: `kubectl exec -ti $(kubectl get pods -l app=datadog-cluster-agent -o jsonpath='{.items[0].metadata.name}') -- agent status | grep -A11 "External Metrics"`{{execute}} Browse the output and check that you get an output similar to this one (you may need to run the command several times until we get the metric value from Datadog):
+Finally, let's check that the Cluster Agent is getting the metric correctly by executing the agent status for the Cluster Agent: `kubectl exec -ti deploy/datadog-cluster-agent -- agent status | grep -A11 "External Metrics"`{{execute}} Browse the output and check that you get an output similar to this one (you may need to run the command several times until we get the metric value from Datadog):
 
 ```
 External Metrics

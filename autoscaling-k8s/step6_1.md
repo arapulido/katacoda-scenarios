@@ -1,7 +1,7 @@
 
-Before we enable DatadogMetrics in our cluster agent deployment, we need to create the CRD objects in our Kubernetes API. Deploy the DatadogMetrics CRD by applying the `datadog/datadogmetrics_crd.yaml` manifest: `kubectl apply -f datadog/datadogmetrics_crd.yaml`{{execute}}
+Before we enable DatadogMetrics in our cluster agent deployment, we need to create the [Custom Resource Definition](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) (CRD) in our Kubernetes API. Deploy the DatadogMetrics CRD by applying the `datadog/datadogmetrics_crd.yaml` manifest: `kubectl apply -f datadog/datadogmetrics_crd.yaml`{{execute}}
 
-Now, we will need to edit the Cluster Agent manifest to enable working with DatadogMetrics objects. Open the file called `datadog/datadog-cluster-agent.yaml`{{open}} with the editor and find the following section:
+Now, we will need to edit the Cluster Agent manifest to enable it to work with DatadogMetrics objects. Open the file called `datadog/datadog-cluster-agent.yaml`{{open}} with the editor and find the following section:
 
 ```
 - name: DD_EXTERNAL_METRICS_PROVIDER_USE_DATADOGMETRIC_CRD
@@ -11,7 +11,7 @@ Now, we will need to edit the Cluster Agent manifest to enable working with Data
 Edit the value to `true` and re-apply the manifest by executing `kubectl apply -f datadog/datadog-cluster-agent.yaml`{{execute}}
 
 
-Let's check that the change had effect by executing the cluster agent status command: `kubectl exec -ti $(kubectl get pods -l app=datadog-cluster-agent -o jsonpath='{.items[0].metadata.name}') -- agent status | grep "Custom Metrics Server" -A3`{{execute}} You should get an output similar to this:
+Let's check that the change had effect by executing the cluster agent status command: `kubectl exec -ti deploy/datadog-cluster-agent -- agent status | grep "Custom Metrics Server" -A3`{{execute}} You should get an output similar to this:
 
 ```
 Custom Metrics Server

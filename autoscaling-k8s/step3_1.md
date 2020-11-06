@@ -10,7 +10,7 @@ For the first graph we are going to visualize the number of pod replicas we have
 
 ![Screenshot of replicas metric](./assets/frontend_replicas.png)
 
-Save the graph and add another "Timeseries" graph to the dashboard. This time select `kubernetes.cpu.user.total` as metric and `kube_deployment:frontend` as filter.
+Save the graph and add another "Timeseries" graph to the dashboard. This time select `kubernetes.cpu.usage.total` as metric and `kube_deployment:frontend` as filter.
 
 Save the graph and add another "Timeseries" graph to the dashboard. This time select `kubernetes.memory.usage` as metric and `kube_deployment:frontend` as filter.
 

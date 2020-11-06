@@ -18,7 +18,7 @@ Then, add your Datadog API key to the secrets. You can do this by executing the 
 
 This will create a Kubernetes secret to make sure the Datadog agent is able to send data to your Datadog account.
 
-Check that the secret has been correctly created by running the following command: `kubectl get secret datadog-secret`{{execute}} You should get an output similar to the following:
+Check that the secret has been correctly created by running the following command: `kubectl get secret datadog-secret`{{execute}} You should get output similar to the following:
 
 ```
 NAME             TYPE      DATA      AGE

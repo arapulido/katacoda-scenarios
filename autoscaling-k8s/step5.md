@@ -22,7 +22,7 @@ Create a new secret with the APP key by executing:
 
 `kubectl create secret generic datadog-app-key --from-literal app-key=$DD_APP_KEY`{{execute}}
 
-Check that the secret has been correctly created by running the following command: `kubectl get secret datadog-app-key`{{execute}} You should get an output similar to the following:
+Check that the secret has been correctly created by running the following command: `kubectl get secret datadog-app-key`{{execute}} You should get output similar to the following:
 
 ```
 NAME             TYPE      DATA      AGE

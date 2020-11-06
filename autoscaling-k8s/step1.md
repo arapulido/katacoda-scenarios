@@ -2,7 +2,7 @@ Wait some minutes until your environment is setup. Once it is setup, you will se
 
 Once the environment is ready, the ecommerce application will already be provisioned for you. You can check the different deployments that are part of the application by running the following command: `kubectl get deployment --selector=app=ecommerce`{{execute}} 
 
-You should get an output similar to this:
+You should get output similar to this:
 
 ```
 NAME             DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE

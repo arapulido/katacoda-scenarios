@@ -69,7 +69,7 @@ In this section of the specification we are specifiying the minimum and maximum 
 
 Create the HPA object by applying the manifest: `kubectl apply -f frontend-hpa-cpu.yaml`{{execute}}
 
-You can check that it was created correctly by running the following command: `kubectl get hpa frontend-hpa-cpu`{{execute}} You should get an output similar to this one:
+You can check that it was created correctly by running the following command: `kubectl get hpa frontend-hpa-cpu`{{execute}} You should get output similar to this one:
 
 ```
 NAME               REFERENCE             TARGETS         MINPODS   MAXPODS   REPLICAS   AGE

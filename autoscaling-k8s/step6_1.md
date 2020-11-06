@@ -11,7 +11,7 @@ Now, we will need to edit the Cluster Agent manifest to enable it to work with D
 Edit the value to `true` and re-apply the manifest by executing `kubectl apply -f datadog/datadog-cluster-agent.yaml`{{execute}}
 
 
-Let's check that the change had effect by executing the cluster agent status command: `kubectl exec -ti deploy/datadog-cluster-agent -- agent status | grep "Custom Metrics Server" -A3`{{execute}} You should get an output similar to this:
+Let's check that the change had effect by executing the cluster agent status command: `kubectl exec -ti deploy/datadog-cluster-agent -- agent status | grep "Custom Metrics Server" -A3`{{execute}} You should get output similar to this:
 
 ```
 Custom Metrics Server
@@ -34,7 +34,7 @@ spec:
 
 Deploy the DatadogMetrics object by applying the `datadog-metric.yaml` manifest: `kubectl apply -f datadog-metric.yaml`{{execute}}
 
-Check that the object was correctly created by executing: `kubectl get datadogmetric`{{execute}} You should get an output similar to this:
+Check that the object was correctly created by executing: `kubectl get datadogmetric`{{execute}} You should get output similar to this:
 
 ```
 NAME            ACTIVE   VALID   VALUE   REFERENCES   UPDATE TIME

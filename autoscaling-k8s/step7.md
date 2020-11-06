@@ -92,7 +92,7 @@ Other options in our manifest:
 
 As in the previous step we enabled DatadogMetric for the Cluster Agent deployment, now the Cluster Agent will create automatically a DatadogMetric object for any HPA or WPA object created with an external metric, for backwards compatibility.
 
-Let's watch until the DatadogMetric object is created and that it gets a valid value by executing the following command: `kubectl get datadogmetric -w`{{execute}} Once you are done watching the object, type `Ctrl+C` to go back to the terminal. You should get an output similar to this one:
+Let's watch until the DatadogMetric object is created and that it gets a valid value by executing the following command: `kubectl get datadogmetric -w`{{execute}} Once you are done watching the object, type `Ctrl+C` to go back to the terminal. You should get output similar to this one:
 
 ```
 controlplane $ kubectl get datadogmetric -w

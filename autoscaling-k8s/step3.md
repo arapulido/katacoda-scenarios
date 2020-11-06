@@ -33,7 +33,7 @@ spec:
     updateMode: "Off"
 </pre>
 
-Create the VPA object by applying the just created manifest: `kubectl apply -f frontend-vpa.yaml`{{execute}} You can check that the VPA object was created correctly by running the following command: `kubectl get vpa`{{execute}} You should get an output similar to:
+Create the VPA object by applying the just created manifest: `kubectl apply -f frontend-vpa.yaml`{{execute}} You can check that the VPA object was created correctly by running the following command: `kubectl get vpa`{{execute}} You should get output similar to:
 
 ```
 NAME           AGE

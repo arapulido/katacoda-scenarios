@@ -1,3 +1,0 @@
-You have now setup monitoring etcd running in your Kubernetes control plane. Will you have to always go through these steps on your own Kubernetes clusters? Maybe. While there are many clusters that look like they are identical, many clusters are different. Depending on how you have your certificates configured, or DNS, or so many other variables, you may have to do some or all of these setup tasks. Or maybe even more. But hopefully this has introduced you to some of the processes you need to go through to figure out what is needed. 
-
-Click the **Next** button to move on to the next page where you will learn about using the API Server. 

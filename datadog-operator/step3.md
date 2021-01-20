@@ -10,8 +10,6 @@ Open the file called `dd-operator-configs/datadog-agent-tolerations.yaml`{{open}
           effect: NoSchedule
 ```
 
-We are going to edit that section to look like the following:
-
 Let's apply this new object description:
 
 `kubectl apply -f dd-operator-configs/datadog-agent-tolerations.yaml`{{execute}}

@@ -20,7 +20,7 @@ Export your API key in an environment variable:
 
 Check that your API key has been successfully exported by running this command: `echo $DD_API_KEY`{{execute}}. You should get the same value that you copied from the Datadog web application.
 
-To retrieve the App key, navigate to the [API settings page](https://app.datadoghq.com/account/settings#api) and reveal your App key.
+To retrieve the App key, navigate to the [Applications Keys page](https://app.datadoghq.com/access/application-keys) and reveal your App key.
 
 ![Screenshot of App Keys area](./assets/app_key.png)
 

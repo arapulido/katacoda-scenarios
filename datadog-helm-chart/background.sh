@@ -10,7 +10,8 @@ if [ "$STATUS" != "complete" ]; then
   chmod 700 get_helm.sh
   ./get_helm.sh
   helm repo add datadog https://helm.datadoghq.com
-  helm repo add stable https://kubernetes-charts.storage.googleapis.com
+  helm repo add stable https://charts.helm.sh/stable
+  helm repo update
 
   git clone https://github.com/arapulido/dd-helm-chart-values.git helm-values 
 

@@ -1,41 +1,38 @@
-As we said, our cluster has two nodes, one worker and one control plane node, but the agent only deployed to the worker node. We are going to add a toleration to our deployment definition to match the control plane node.
+As we said, our cluster has two nodes, one worker and one control plane node, but the agent only deployed to the worker node. We are going to add a toleration to our `DatadogAgent` definition to match the control plane node.
 
-This is fairly easy to do using the Datadog Helm chart, as there is a specific section in the `values.yaml` file to add tolerations:
+Open the file called `dd-operator-configs/datadog-agent-tolerations.yaml`{{open}} and check how we have added a `config` section to the `agent` section to add the needed toleration:
 
 ```
-## @param tolerations - array - optional
-## Allow the DaemonSet to schedule on tainted nodes (requires Kubernetes >= 1.6)
-#
-tolerations: []
+[...]
+    config:
+      tolerations:
+        - key: node-role.kubernetes.io/master
+          effect: NoSchedule
 ```
 
 We are going to edit that section to look like the following:
 
+Let's apply this new object description:
+
+`kubectl apply -f dd-operator-configs/datadog-agent-tolerations.yaml`{{execute}}
+
+You can follow the update from the `DatadogAgent` object status:
+
+`kubectl get datadogagent`{{execute}}
+
 ```
-## @param tolerations - array - optional
-## Allow the DaemonSet to schedule on tainted nodes (requires Kubernetes >= 1.6)
-#
-tolerations:
-  - key: node-role.kubernetes.io/master
-    effect: NoSchedule
+NAME      ACTIVE   AGENT              CLUSTER-AGENT   CLUSTER-CHECKS-RUNNER   AGE
+datadog   True     Updating (2/1/1)                                           7m37s
 ```
-
-We have a `values-tolerations.yaml` file ready with that section. You can check the diff between the two values files:
-
-`diff helm-values/values.yaml helm-values/values-tolerations.yaml`{{execute}}
-
-Let's apply it:
-
-`helm upgrade datadog --set datadog.apiKey=$DD_API_KEY datadog/datadog -f helm-values/values-tolerations.yaml`{{execute}}
 
 Let's check now the number of pods we have for the Datadog agent and the nodes they are deployed to:
 
-`kubectl get pods -l app=datadog -o custom-columns=NAME:.metadata.name,NODE:.spec.nodeName`{{execute}}
+`kubectl get pods -l agent.datadoghq.com/name=datadog -o custom-columns=NAME:.metadata.name,NODE:.spec.nodeName`{{execute}}
 
 ```
-NAME            NODE
-datadog-qglsd   controlplane
-datadog-vz26z   node01
+NAME                  NODE
+datadog-agent-qglsd   controlplane
+datadog-agent-vz26z   node01
 ```
 
 We now have correctly one Datadog agent deployed to the control plane node.

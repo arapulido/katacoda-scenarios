@@ -1,0 +1,3 @@
+The Datadog agent has many features. To improve the developer experience when deploying the Datadog agents, Datadog has created an operator that makes it easier to deploy the node-based Agent, the Cluster Agent, and the Cluster Checks runners. 
+
+In this scenario we will be explaining and using the Datadog Operator in a real cluster with different manifests, checking in real time the features they enable.

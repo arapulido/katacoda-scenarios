@@ -27,16 +27,8 @@
         "text": "step4.md"
       },
       {
-        "title": "Enabling log collection",
+        "title": "Enabling log, process and APM",
         "text": "step5.md"
-      },
-      {
-        "title": "Enabling the APM agent",
-        "text": "step6.md"
-      },
-      {
-        "title": "Enabling the Cluster Agent",
-        "text": "step7.md"
       }
     ],
     "finish": {

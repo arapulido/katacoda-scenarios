@@ -1,62 +1,51 @@
-Logs collection is disabled by default in the Datadog Helm chart default values. Let's check that, indeed, the logs agent is not currently running:
+Logs collection, APM and the process monitoring are disabled by default in the `DatadogAgent` object unless enabled explicitely.
+
+For example, if you run the agent status command:
 
 `kubectl exec -ti $(kubectl get pods -l app=datadog -o custom-columns=:.metadata.name --field-selector spec.nodeName=node01) -- agent status`{{execute}}
 
 You should get the following:
 
 ```
-...
+[...]
 ==========
 Logs Agent
 ==========
 
 
   Logs Agent is not running
-...
+[...]
 ```
 
-There is a section in the `values.yaml` file to enable log collection easily:
+The Datadog Operator makes it very easy to enable logs, APM and process monitoring. Open the file called `dd-operator-configs/datadog-agent-agents.yaml`{{open}} and check how we have added an `apm`, a `process` and a `log` sections to the `agent` section to enable those features.
 
 ```
-  ## @param logs - object - required
-  ## Enable logs agent and provide custom configs
-  #
-  logs:
-    ## @param enabled - boolean - optional - default: false
-    ## Enables this to activate Datadog Agent log collection.
-    ## ref: https://docs.datadoghq.com/agent/basic_agent_usage/kubernetes/#log-collection-setup
-    #
-    enabled: false
-
-    ## @param containerCollectAll - boolean - optional - default: false
-    ## Enable this to allow log collection for all containers.
-    ## ref: https://docs.datadoghq.com/agent/basic_agent_usage/kubernetes/#log-collection-setup
-    #
-    containerCollectAll: false
-
-    ## @param containerUseFiles - boolean - optional - default: true
-    ## Collect logs from files in /var/log/pods instead of using container runtime API.
-    ## It's usually the most efficient way of collecting logs.
-    ## ref: https://docs.datadoghq.com/agent/basic_agent_usage/kubernetes/#log-collection-setup
-    #
-    containerCollectUsingFiles: true
+apm:
+  enabled: true
+process:
+  enabled: true
+log:
+  enabled: true
 ```
 
-We will set both `enabled` and `containerCollectAll` to true, to enable log collection and to collect logs from all containers in our cluster.
+Let's apply this new object description:
 
-We have a `values-logs.yaml` file ready with that section. You can check the difference between the previous applied values file:
+`kubectl apply -f dd-operator-configs/datadog-agent-agents.yaml`{{execute}}
 
-`diff -U5 helm-values/values-kubelet.yaml helm-values/values-logs.yaml`{{execute}}
+You can follow the update from the `DatadogAgent` object status:
 
-Let's apply it:
+`kubectl get datadogagent`{{execute}}
 
-`helm upgrade datadog --set datadog.apiKey=$DD_API_KEY datadog/datadog -f helm-values/values-logs.yaml`{{execute}}
+```
+NAME      ACTIVE   AGENT              CLUSTER-AGENT   CLUSTER-CHECKS-RUNNER   AGE
+datadog   True     Updating (2/1/1)                                           7m37s
+```
 
-Let's run again the agent status command in the Datadog's agent pod running in the worker node:
+Once the updated pods are up and running, run again the agent status command in the Datadog's agent pod running in the worker node:
 
-`kubectl exec -ti $(kubectl get pods -l app=datadog -o custom-columns=:.metadata.name --field-selector spec.nodeName=node01) -- agent status`{{execute}}
+`kubectl exec -ti $(kubectl get pods -l agent.datadoghq.com/name=datadog -o custom-columns=:.metadata.name --field-selector spec.nodeName=node01) -- agent status`{{execute}}
 
-Log collection should be enabled now:
+Log collection should be enabled now (and APM and process monitoring):
 
 ```
 ==========

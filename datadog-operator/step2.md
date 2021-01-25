@@ -13,12 +13,11 @@ ksm-kube-state-metrics-5f8944dfc9-t95nw   1/1     Running   0          18s
 my-datadog-operator-7d59d55df7-nq8bb      1/1     Running   0          2m14s
 ```
 
-Once we have the operator up and running, we are ready to deploy the Datadog agent. First, we are going to create two Kubernetes secrets to hold our Datadog API and APP keys:
+Once we have the operator up and running, we are ready to deploy the Datadog agent. First, we are going to create a Kubernetes secret to hold our Datadog API key:
 
 `kubectl create secret generic datadog-secret --from-literal api-key=$DD_API_KEY`{{execute}}
-`kubectl create secret generic datadog-app-key --from-literal app-key=$DD_APP_KEY`{{execute}}
 
-Let's deploy now the Datadog node agent. Open the configuration we are going to apply and review it a bit `dd-operator-configs/datadog-agent-basic.yaml`{{open}}. Can you see the relation between the secrets we just created and that configuration?
+Let's deploy now the Datadog node agent. Open the configuration we are going to apply and review it a bit `dd-operator-configs/datadog-agent-basic.yaml`{{open}}. Can you see the relation between the secret we just created and that configuration?
 
 Let's apply it:
 
@@ -66,3 +65,10 @@ Let's check the status of the Datadog agent:
 `kubectl exec -ti ds/datadog-agent -- agent status`{{execute}}
 
 Check the different checks that are running by default. You can see that the Kubelet check is failing. We will fix the configuration in a later step to fix this.
+
+```
+kubelet (5.0.0)
+---------------
+Instance ID: kubelet:d884b5186b651429 [ERROR]
+Configuration Source: file:/etc/datadog-agent/conf.d/kubelet.d/conf.yaml.default
+```

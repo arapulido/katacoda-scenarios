@@ -1,4 +1,4 @@
-Let's see how we can change add environment variables to the  and we will fix the Kubelet check in the process.
+Let's see how we can add environment variables to the `DatadogAgent` definition and we will fix the Kubelet check in the process.
 
 Let's run again the agent status command in the Datadog's agent pod running in the worker node:
 

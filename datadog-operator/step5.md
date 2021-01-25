@@ -2,7 +2,7 @@ Logs collection, APM and the process monitoring are disabled by default in the `
 
 For example, if you run the agent status command:
 
-`kubectl exec -ti $(kubectl get pods -l app=datadog -o custom-columns=:.metadata.name --field-selector spec.nodeName=node01) -- agent status`{{execute}}
+`kubectl exec -ti $(kubectl get pods -l agent.datadoghq.com/name=datadog -o custom-columns=:.metadata.name --field-selector spec.nodeName=node01) -- agent status`{{execute}}
 
 You should get the following:
 
@@ -26,6 +26,7 @@ process:
   enabled: true
 log:
   enabled: true
+  logsConfigContainerCollectAll: true
 ```
 
 Let's apply this new object description:
@@ -53,8 +54,8 @@ Logs Agent
 ==========
 
     Sending compressed logs in HTTPS to agent-http-intake.logs.datadoghq.com on port 443
-    BytesSent: 0
-    EncodedBytesSent: 28
-    LogsProcessed: 0
-    LogsSent: 0
+    BytesSent: 3.289499e+06
+    EncodedBytesSent: 100075
+    LogsProcessed: 1976
+    LogsSent: 1972
 ```

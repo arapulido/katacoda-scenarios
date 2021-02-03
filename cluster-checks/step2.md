@@ -2,7 +2,7 @@ The first thing we are going to do is to deploy the Datadog node agent, using th
 
 Let's deploy the chart passing our API key:
 
-`helm install datadog --set datadog.apiKey=$DD_API_KEY datadog/datadog -f cluster-checks-files/default-values.yaml --version=2.8.1`{{execute}}
+`helm install datadog --set datadog.apiKey=$DD_API_KEY datadog/datadog -f cluster-checks-files/helm/default-values.yaml --version=2.8.1`{{execute}}
 
 Let's check the workloads that have been deployed:
 
@@ -24,6 +24,6 @@ datadog   1         1         1       1            1           kubernetes.io/os=
 
 This is the Daemonset that deploys the Datadog node agent. Let's check the status of the Datadog agent:
 
-`kubectl exec -ti $(kubectl get pods -l app=datadog -o custom-columns=:metadata.name) -- agent status`{{execute}}
+`kubectl exec -ti ds/datadog -- agent status`{{execute}}
 
-Check the different checks that are running by default. You can see that the Kubelet check is failing. We will fix the configuration in a later step to fix this.
+Check the different checks that are running by default.

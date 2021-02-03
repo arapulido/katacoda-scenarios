@@ -1,41 +1,25 @@
-As we said, our cluster has two nodes, one worker and one control plane node, but the agent only deployed to the worker node. We are going to add a toleration to our deployment definition to match the control plane node.
+Now that we have our Datadog agent up and running we will create a NGINX Kubernetes deployment with 3 pods.
 
-This is fairly easy to do using the Datadog Helm chart, as there is a specific section in the `values.yaml` file to add tolerations:
+Open the file called `cluster-checks-files/nginx-deploy.yaml`{{open}} and check that we are going to create a regular 3 replicas NGINX deployment using the `bitnami/nginx` image.
 
-```
-## @param tolerations - array - optional
-## Allow the DaemonSet to schedule on tainted nodes (requires Kubernetes >= 1.6)
-#
-tolerations: []
-```
+Create the deployment applying that YAML file:
 
-We are going to edit that section to look like the following:
+`kubectl apply -f cluster-checks-files/nginx-deploy.yaml`{{execute}}
 
-```
-## @param tolerations - array - optional
-## Allow the DaemonSet to schedule on tainted nodes (requires Kubernetes >= 1.6)
-#
-tolerations:
-  - key: node-role.kubernetes.io/master
-    effect: NoSchedule
-```
+Let's check the workloads that have been deployed:
 
-We have a `values-tolerations.yaml` file ready with that section. You can check the diff between the two values files:
+`kubectl get deployment nginx`{{execute}}
 
-`diff helm-values/values.yaml helm-values/values-tolerations.yaml`{{execute}}
+If we run again the agent status commend, we see that the NGINX check is not running:
 
-Let's apply it:
+`kubectl exec -ti $(kubectl get pods -l app=datadog -o custom-columns=:metadata.name) -- agent status`{{execute}}
 
-`helm upgrade datadog --set datadog.apiKey=$DD_API_KEY datadog/datadog -f helm-values/values-tolerations.yaml`{{execute}}
+We are going to annotate the deployment to enable the [NGINX integration](https://docs.datadoghq.com/integrations/nginx/?tab=host). To learn how to annotate Kubernetes deployments to enable integrations, you can refer to [the official documentation](https://docs.datadoghq.com/agent/kubernetes/integrations/?tab=kubernetes).
 
-Let's check now the number of pods we have for the Datadog agent and the nodes they are deployed to:
+We have prepared a file with the right annotations. Open the file `cluster-checks-files/nginx-deploy-annotations.yaml`{{open}} and check the annotations to enable the NGINX check.
 
-`kubectl get pods -l app=datadog -o custom-columns=NAME:.metadata.name,NODE:.spec.nodeName`{{execute}}
+You can check the difference between both deployments running this command: `diff cluster-checks-files/nginx-deployment.yaml cluster-checks-files/nginx-deploy-annotations.yaml`{{execute}}
 
-```
-NAME            NODE
-datadog-qglsd   controlplane
-datadog-vz26z   node01
-```
+Lets apply those changes:
 
-We now have correctly one Datadog agent deployed to the control plane node.
+

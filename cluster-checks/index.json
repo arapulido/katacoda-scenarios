@@ -15,11 +15,11 @@
         "text": "step1.md"
       },
       {
-        "title": "Deploying the agent: default options",
+        "title": "Deploying the node agent using the Helm chart",
         "text": "step2.md"
       },
       {
-        "title": "Adding tolerations to the agent pods",
+        "title": "Pod checks with autoconf",
         "text": "step3.md"
       },
       {

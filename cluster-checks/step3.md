@@ -1,14 +1,18 @@
 Now that we have our Datadog agent up and running we will create a NGINX Kubernetes deployment with 3 pods.
 
-Open the file called `cluster-checks-files/nginx/nginx-deploy.yaml`{{open}} and check that we are going to create a regular 3 replicas NGINX deployment using a Docker image based on the `bitnami/nginx` image.
+Open the file called `cluster-checks-files/nginx/nginx-deploy.yaml`{{open}} and check that we are going to create a regular 3 replicas NGINX deployment using a Docker image based on the `bitnami/nginx` image and expose them as a ClusterIP service called `nginx`.
 
-Create the deployment applying that YAML file:
+Create the deployment and service applying that YAML file:
 
 `kubectl apply -f cluster-checks-files/nginx/nginx-deploy.yaml`{{execute}}
 
-Let's check the workloads that have been deployed:
+Let's check the workloads and service that have been deployed:
 
-`kubectl get deployment nginx`{{execute}}
+`kubectl get deployment nginx; kubectl get svc nginx`{{execute}}
+
+We are also going to deploy a `busybox` deployment to get regular traffic into our service:
+
+`kubectl apply -f cluster-checks-files/nginx/regular-traffic.yaml`{{execute}}
 
 If we run again the agent status command, we see that the NGINX check is not running:
 
@@ -18,7 +22,7 @@ We are going to annotate the deployment to enable the [NGINX integration](https:
 
 We have prepared a file with the right annotations. Open the file `cluster-checks-files/nginx/nginx-deploy-annotations.yaml`{{open}} and check the annotations to enable the NGINX check.
 
-You can check the difference between both deployments running this command: `diff cluster-checks-files/nginx/nginx-deploy.yaml cluster-checks-files/nginx-deploy-annotations.yaml`{{execute}}
+You can check the difference between both deployments running this command: `diff cluster-checks-files/nginx/nginx-deploy.yaml cluster-checks-files/nginx/nginx-deploy-annotations.yaml`{{execute}}
 
 Lets apply those changes:
 

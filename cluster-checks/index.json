@@ -19,11 +19,11 @@
         "text": "step2.md"
       },
       {
-        "title": "Pod checks with autoconf",
+        "title": "Pod checks with autoconf annotations",
         "text": "step3.md"
       },
       {
-        "title": "Setting environment variables",
+        "title": "Cluster Checks and Datadog Cluster Agent",
         "text": "step4.md"
       },
       {

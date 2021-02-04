@@ -1,66 +1,28 @@
-Let's see how we can change some configuration values from the Helm chart and we will fix the Kubelet check in the process.
+We have now metrics being sent to Datadog for every NGINX pod in the nginx deployment. But, in some cases, you want to get metrics from non-containerized workloads. [Cluster Checks](https://docs.datadoghq.com/agent/cluster_agent/clusterchecks/) allow you to monitor this type of workloads, including:
 
-Let's run again the agent status command in the Datadog's agent pod running in the worker node:
+ * Out-of-cluster datastores and endpoints (for example, RDS or CloudSQL).
+ * Load-balanced cluster services (for example, Kubernetes services).
 
-`kubectl exec -ti $(kubectl get pods -l app=datadog -o custom-columns=:.metadata.name --field-selector spec.nodeName=node01) -- agent status`{{execute}}
+In order to enable Cluster Checks, we will need to deploy a second type of Datadog Agent: the [Datadog Cluster Agent](https://docs.datadoghq.com/agent/cluster_agent/). Deploying this agent has many benefits, as it will act as a proxy between the API server and the node agents, alleviating the load of the API server.
 
-We are getting the following error:
+Among other features, the Cluster Agent will schedule the different cluster level checks, making sure that only one worker agent is performing the check, avoiding duplication of data.
 
-```
-    kubelet (4.1.1)
-    ---------------
-      Instance ID: kubelet:d884b5186b651429 [ERROR]
-      Configuration Source: file:/etc/datadog-agent/conf.d/kubelet.d/conf.yaml.default
-      Total Runs: 37
-      Metric Samples: Last Run: 0, Total: 0
-      Events: Last Run: 0, Total: 0
-      Service Checks: Last Run: 0, Total: 0
-      Average Execution Time : 0s
-      Last Execution Date : 2020-09-11 13:24:02.000000 UTC
-      Last Successful Execution Date : Never
-      Error: Unable to detect the kubelet URL automatically.
-      Traceback (most recent call last):
-        File "/opt/datadog-agent/embedded/lib/python3.8/site-packages/datadog_checks/base/checks/base.py", line 841, in run
-          self.check(instance)
-        File "/opt/datadog-agent/embedded/lib/python3.8/site-packages/datadog_checks/kubelet/kubelet.py", line 297, in check
-          raise CheckException("Unable to detect the kubelet URL automatically.")
-      datadog_checks.base.errors.CheckException: Unable to detect the kubelet URL automatically.
-```
+Let's enable the Cluster Agent, by modifying the Helm values that we applied in the first step of this scenario.
 
-That error happens because we cannot verify the Kubelet certificates correctly. As this is not a production environment, let's tell the Datadog agent to skip the TLS verification by setting the environment variable called `DD_KUBELET_TLS_VERIFY` to `false`.
-
-Setting environment variables in the `values.yaml` file is easy: there is a section to do just that:
+We will set the following options:
 
 ```
-  ## @param env - list of object - optional
-  ## The dd-agent supports many environment variables
-  ## ref: https://docs.datadoghq.com/agent/docker/?tab=standard#environment-variables
-  #
-  env: []
+clusterAgent.enabled: true
+clusterChecks.enabled: true
+clusterName: katacoda
 ```
 
-Let's modify that section to set that environment variable:
+The option `clusterAgent.enabled: true` will force the deployment of the Cluster Agent. The default values will deploy 1 replica of the Cluster Agent.
+The option `clusterChecks.enabled: true` will enable the Cluster Checks feature.
+The option `clusterName: katacoda` will give a name (`katacoda`) to our cluster, that will help us organize our cluster level metrics by cluster.
 
-```
-  ## @param env - list of object - optional
-  ## The dd-agent supports many environment variables
-  ## ref: https://docs.datadoghq.com/agent/docker/?tab=standard#environment-variables
-  #
-  env:
-    - name: DD_KUBELET_TLS_VERIFY
-      value: false
-```
+You can check the differences between the previous values file and this new one running the following command: `diff cluster-checks-files/helm/cluster-agent-values.yaml cluster-checks-files/helm/default-values.yaml`{{execute}}
 
-We have a `values-kubelet.yaml` file ready with that section. You can check the difference between the previous applied values file:
+Let's upgrade our Helm release to use this new values file:
 
-`diff helm-values/values-tolerations.yaml helm-values/values-kubelet.yaml`{{execute}}
-
-Let's apply it:
-
-`helm upgrade datadog --set datadog.apiKey=$DD_API_KEY datadog/datadog -f helm-values/values-kubelet.yaml`{{execute}}
-
-Let's run again the agent status command in the Datadog's agent pod running in the worker node:
-
-`kubectl exec -ti $(kubectl get pods -l app=datadog -o custom-columns=:.metadata.name --field-selector spec.nodeName=node01) -- agent status`{{execute}}
-
-The Kubelet check should run now successfully.
+`helm upgrade datadog --set datadog.apiKey=$DD_API_KEY datadog/datadog -f cluster-checks-files/helm/cluster-agent-values.yaml --version=2.8.1`{{execute}}

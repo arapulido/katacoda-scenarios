@@ -21,8 +21,38 @@ The option `clusterAgent.enabled: true` will force the deployment of the Cluster
 The option `clusterChecks.enabled: true` will enable the Cluster Checks feature.
 The option `clusterName: katacoda` will give a name (`katacoda`) to our cluster, that will help us organize our cluster level metrics by cluster.
 
-You can check the differences between the previous values file and this new one running the following command: `diff cluster-checks-files/helm/cluster-agent-values.yaml cluster-checks-files/helm/default-values.yaml`{{execute}}
+You can check the differences between the previous values file and this new one running the following command: `diff -U6 cluster-checks-files/helm/cluster-agent-values.yaml cluster-checks-files/helm/default-values.yaml`{{execute}}
 
 Let's upgrade our Helm release to use this new values file:
 
-`helm upgrade datadog --set datadog.apiKey=$DD_API_KEY datadog/datadog -f cluster-checks-files/helm/cluster-agent-values.yaml --version=2.8.1`{{execute}}
+`helm delete datadog && helm install datadog --set datadog.apiKey=$DD_API_KEY datadog/datadog -f cluster-checks-files/helm/cluster-agent-values.yaml --version=2.8.1`{{execute}}
+
+Let's check the Cluster Agent deployment:
+
+`kubectl get deploy datadog-cluster-agent`{{execute}}
+
+Let's wait until the Cluster Agent pod is running (Remember to type `Ctrl+C` to return to the terminal once it is running):
+
+`kubectl get pods -w -l app=datadog-cluster-agent`{{execute}}
+
+Once it is running,  we are able to run the status command in the cluster agent pod:
+
+`kubectl exec -ti deploy/datadog-cluster-agent -- agent status`{{execute}}
+
+You should get that the only check that is currently running is the one that gathers metrics from the API server:
+
+```
+kubernetes_apiserver
+--------------------
+  Instance ID: kubernetes_apiserver [OK]
+  Configuration Source: file:/etc/datadog-agent/conf.d/kubernetes_apiserver.d/conf.yaml.default
+  Total Runs: 11
+  Metric Samples: Last Run: 0, Total: 0
+  Events: Last Run: 0, Total: 0
+  Service Checks: Last Run: 3, Total: 33
+  Average Execution Time : 112ms
+  Last Execution Date : 2021-02-04 14:06:33.000000 UTC
+  Last Successful Execution Date : 2021-02-04 14:06:33.000000 UTC
+```
+
+Let's enable a Service cluster check for our NGINX service in the next step.

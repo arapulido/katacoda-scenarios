@@ -1,8 +1,8 @@
-We have now set the HTTP check for the `nginx` service and the NGINX check for the `nginx` pods. This is fairly easy to do, as the `nginx` service matches clearly just 1 deployment, so keeping track of what NGINX pods we need to annotate is simple enough.
+We have now set the HTTP check for the `nginx` service and the NGINX check for the `nginx` pods. This is fairly easy to do, as the `nginx` service matches just 1 deployment, so keeping track of what NGINX pods we need to annotate is simple enough.
 
 But a [Service in Kubernetes](https://kubernetes.io/docs/concepts/services-networking/service/#service-resource) is just a virtual load balancer that balances traffic between several [Endpoints](https://kubernetes.io/docs/reference/kubernetes-api/services-resources/endpoints-v1/). What if we don't know what endpoints will be part of our load balanced service? These could be several Kubernetes deployments, single pods, external services, etc. In those cases, enabling the NGINX check for every single Endpoint can be a bit more challenging.
 
-To make this case easier, we can enable [Endpoint Checks](https://docs.datadoghq.com/agent/cluster_agent/endpointschecks/). With Endpoint Checks, instead of annotating the deployment, we will add the endpoint annotations directly in the Service object description and the Cluster Agent will resolve this automatically, dispatching checks for all the different available endpoints.
+To make this use case easier, we can enable [Endpoint Checks](https://docs.datadoghq.com/agent/cluster_agent/endpointschecks/). With Endpoint Checks, instead of annotating the deployment, we will add the endpoint annotations directly into the Service object description and the Cluster Agent will resolve this automatically, dispatching checks for all the different available endpoints.
 
 We have prepared a file with the right annotations. Open the file `cluster-checks-files/nginx/nginx-service-endpoints.yaml`{{open}} and check the annotations to enable the HTTP check and the NGINX endpoint checks in the Service definition.
 

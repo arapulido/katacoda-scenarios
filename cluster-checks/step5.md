@@ -50,6 +50,7 @@ We can see that the HTTP check for our Kubernetes service `nginx` has been succe
 In the list of checks you should get something similar to the following:
 
 ```
+[...]
 http_check (4.9.0)
 ------------------
   Instance ID: http_check:My Nginx:30b88974d4440b2b [OK]
@@ -61,6 +62,7 @@ http_check (4.9.0)
   Average Execution Time : 14ms
   Last Execution Date : 2021-02-05 14:06:31.000000 UTC
   Last Successful Execution Date : 2021-02-05 14:06:31.000000 UTC
+[...]
 ```
 
 You should start seeing metrics in Datadog related to your service. Navigate to the [Metrics Explorer in the Datadog App](https://app.datadoghq.com/metric/explorer?exp_metric=network.http.response_time&exp_scope=kube_service%3Anginx&exp_agg=avg&exp_row_type=metric) to check the latency of our loadbalanced service.

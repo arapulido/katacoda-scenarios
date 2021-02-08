@@ -26,7 +26,7 @@ We are going to annotate the deployment to enable the [NGINX integration](https:
 
 We have prepared a file with the right annotations. Open the file `cluster-checks-files/nginx/nginx-deploy-annotations.yaml`{{open}} and check the annotations to enable the NGINX check.
 
-You can check the difference between both deployments running this command: `diff cluster-checks-files/nginx/nginx-deploy.yaml cluster-checks-files/nginx/nginx-deploy-annotations.yaml`{{execute}}
+You can check the difference between both deployments running this command: `diff -U2 cluster-checks-files/nginx/nginx-deploy.yaml cluster-checks-files/nginx/nginx-deploy-annotations.yaml`{{execute}}
 
 Let's apply those changes:
 

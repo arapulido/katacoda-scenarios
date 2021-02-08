@@ -31,7 +31,7 @@ Let's check the Cluster Agent deployment:
 
 `kubectl get deploy datadog-cluster-agent`{{execute}}
 
-Let's wait until the Cluster Agent pod is running (Remember to type `Ctrl+C` to return to the terminal once it is running):
+Let's wait until the Cluster Agent pod is running and ready (Remember to type `Ctrl+C` to return to the terminal):
 
 `kubectl get pods -w -l app=datadog-cluster-agent`{{execute}}
 
@@ -42,6 +42,7 @@ Once it is running,  we are able to run the status command in the cluster agent 
 You should get that the only check that is currently running is the one that gathers metrics from the API server:
 
 ```
+[...]
 kubernetes_apiserver
 --------------------
   Instance ID: kubernetes_apiserver [OK]
@@ -53,6 +54,7 @@ kubernetes_apiserver
   Average Execution Time : 112ms
   Last Execution Date : 2021-02-04 14:06:33.000000 UTC
   Last Successful Execution Date : 2021-02-04 14:06:33.000000 UTC
+[...]
 ```
 
 Let's enable a Service cluster check for our NGINX service in the next step.

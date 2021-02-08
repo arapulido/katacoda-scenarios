@@ -14,7 +14,7 @@ clusterChecks.replicas: 1
 * The option `clusterChecksRunner.enabled: true` will create a new deployment for Cluster Checks Runners.
 * The option `clusterChecksRunner.replicas: 1` will ensure that we are deploying only 1 pod.
 
-You can check the differences between the previous values file and this new one running the following command: `diff -U5 cluster-checks-files/helm/cluster-checks-runner.yaml cluster-checks-files/helm/cluster-agent-values.yaml`{{execute}}
+You can check the differences between the previous values file and this new one running the following command: `diff -U5 cluster-checks-files/helm/cluster-agent-values.yaml cluster-checks-files/helm/cluster-checks-runner.yaml`{{execute}}
 
 Let's upgrade our Helm release to use this new values file:
 
@@ -24,9 +24,9 @@ This new `values.yaml` file, apart from deploying the Cluster Agent and the Node
 
 `kubectl get deploy datadog-clusterchecks`{{execute}}
 
-Let's wait until the clusterchecks pod is up and running (remember to type `Ctrl+C` to return to the terminal):
+Let's wait until the clusterchecks pod is running and ready(remember to type `Ctrl+C` to return to the terminal):
 
-`kubectl get pods -l app=datadog-clusterchecks`{{execute}}
+`kubectl get pods -l app=datadog-clusterchecks -w`{{execute}}
 
 We can now check that the clusterchecks pod is running the HTTP check, and not the node agent:
 

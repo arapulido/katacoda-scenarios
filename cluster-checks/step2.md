@@ -13,7 +13,7 @@ NAME                         READY   UP-TO-DATE   AVAILABLE   AGE
 datadog-kube-state-metrics   1/1     1            1           15h
 ```
 
-The Datadog Helm chart, by default, aside from the Datadog agent, deploys [Kube State Metrics](https://github.com/kubernetes/kube-state-metrics) by default. Kube State Metrics is a service that listens to the Kubernetes API and generates metrics about the state of the objects. Datadog uses some of these metrics to populate its Kubernetes default dashboard.
+The Datadog Helm chart, by default, aside from the Datadog agent, deploys [Kube State Metrics](https://github.com/kubernetes/kube-state-metrics). Kube State Metrics is a service that listens to the Kubernetes API and generates metrics about the state of the objects. Datadog uses some of these metrics to populate its Kubernetes default dashboard.
 
 `kubectl get daemonset`{{execute}}
 

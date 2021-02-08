@@ -14,7 +14,11 @@ We are also going to deploy a `busybox` deployment to get regular traffic into o
 
 `kubectl apply -f cluster-checks-files/nginx/regular-traffic.yaml`{{execute}}
 
-If we run again the agent status command, we see that the NGINX check is not running:
+Let's wait until all the pods are running before continuing (type `Ctrl+C` to return to the terminal once all the pods are running):
+
+`kubectl get pods -w`{{execute}}
+
+Now that the pods are up and running, let's run again the agent status command. We see that the NGINX check is not yet running:
 
 `kubectl exec -ti ds/datadog -- agent status`{{execute}}
 
@@ -24,13 +28,13 @@ We have prepared a file with the right annotations. Open the file `cluster-check
 
 You can check the difference between both deployments running this command: `diff cluster-checks-files/nginx/nginx-deploy.yaml cluster-checks-files/nginx/nginx-deploy-annotations.yaml`{{execute}}
 
-Lets apply those changes:
+Let's apply those changes:
 
 `kubectl apply -f cluster-checks-files/nginx/nginx-deploy-annotations.yaml`{{execute}}
 
-The NGINX deployment will perform a rolling update. You can watch the pods getting restarted executing this command: `kubectl get pods -l app=nginx -w`{{execute}}
+The NGINX deployment will perform a rolling update. You can watch the progress of the rolling update rnning this command: `kubectl get deploy nginx -w`{{execute}}
 
-Once the 3 pods have been restarted, type `Ctrl+C` to return to the terminal.
+Once the 3 replicas have been restarted, type `Ctrl+C` to return to the terminal.
 
 Let's run again the Datadog agent's status command to check that the NGINX check is now running correctly:
 

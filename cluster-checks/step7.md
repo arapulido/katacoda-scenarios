@@ -1,102 +1,85 @@
-Right now we have deployed Datadog's node agent. A Daemonset that ensures at least 1 replica per node in our cluster.
+We have now set the HTTP check for the `nginx` service and the NGINX check for the `nginx` pods. This is fairly easy to do, as the `nginx` service matches clearly just 1 deployment, so keeping track of what NGINX pods we need to annotate is simple enough.
 
-Another type of Datadog's Kubernetes agent is the [Cluster Agent](https://docs.datadoghq.com/agent/cluster_agent/), that acts a proxy between the API server and the agents, and provides cluster level monitoring data.
+But a [Service in Kubernetes](https://kubernetes.io/docs/concepts/services-networking/service/#service-resource) is just a virtual load balancer that balances traffic between several [Endpoints](https://kubernetes.io/docs/reference/kubernetes-api/services-resources/endpoints-v1/). What if we don't know what endpoints will be part of our load balanced service? These could be several Kubernetes deployments, single pods, external services, etc. In those cases, enabling the NGINX check for every single Endpoint can be a bit more challenging.
 
-The Cluster Agent is disabled by default in the Datadog Helm chart default values. There is a section in the `values.yaml` file to enable the Cluster Agent and to set the number of replicas:
+To make this case easier, we can enable [Endpoint Checks](https://docs.datadoghq.com/agent/cluster_agent/endpointschecks/). With Endpoint Checks, instead of annotating the deployment, we will add the endpoint annotations directly in the Service object description and the Cluster Agent will resolve this automatically, dispatching checks for all the different available endpoints.
 
-```
-...
-## @param clusterAgent - object - required
-## This is the Datadog Cluster Agent implementation that handles cluster-wide
-## metrics more cleanly, separates concerns for better rbac, and implements
-## the external metrics API so you can autoscale HPAs based on datadog metrics
-## ref: https://docs.datadoghq.com/agent/kubernetes/cluster/
-#
-clusterAgent:
-  ## @param enabled - boolean - required
-  ## Set this to true to enable Datadog Cluster Agent
-  #
-  enabled: false
-...
-...
-...
-  ## @param replicas - integer - required
-  ## Specify the of cluster agent replicas, if > 1 it allow the cluster agent to
-  ## work in HA mode.
-  #
-  replicas: 1
-...
-```
+We have prepared a file with the right annotations. Open the file `cluster-checks-files/nginx/nginx-service-endpoints.yaml`{{open}} and check the annotations to enable the HTTP check and the NGINX endpoint checks in the Service definition.
 
-We are going to enable the Cluster Agent and leave the replicas to `1`.
+You can check the difference between both service descriptions running this command: `diff -U6 cluster-checks-files/nginx/nginx-service-annotations.yaml cluster-checks-files/nginx/nginx-service-endpoints.yaml`{{execute}}
 
-We have a `values-cluster-agent.yaml` file ready with that section. You can check the difference between the previous applied values file:
+Let's apply those changes:
 
-`diff -U4 helm-values/values-apm.yaml helm-values/values-cluster-agent.yaml`{{execute}}
+`kubectl apply -f cluster-checks-files/nginx/nginx-service-endpoints.yaml`{{execute}}
 
-Let's apply it:
+Let's wait until the NGINX pods get restarted (type `Ctrl+C` to return to the terminal when done): `kubectl get deploy nginx -w`{{execute}}
 
-`helm upgrade datadog --set datadog.apiKey=$DD_API_KEY datadog/datadog -f helm-values/values-cluster-agent.yaml`{{execute}}
+Once the NGINX pods are running, let's run the `clusterchecks` command in the Cluster Agent pod:
 
-As with the node agents, several Kubernetes objects were created. Let's check the secrets first: `kubectl get secrets`{{execute}} You should get an output similar to this one:
+`kubectl exec -ti deploy/datadog-cluster-agent -- agent clusterchecks`{{execute}}
+
+You should get an output similar to this:
 
 ```
-NAME                                     TYPE                                  DATA   AGE
-...
-datadog-cluster-agent                    Opaque                                1      3m23s
-datadog-cluster-agent-token-n6j2n        kubernetes.io/service-account-token   3      3m23s
-...
+===== 3 Pod-backed Endpoints-Checks scheduled =====
+
+=== nginx check ===
+Configuration provider: kubernetes-endpoints
+Configuration source: kube_endpoints:kube_endpoint_uid://default/nginx/
+Instance ID: nginx:My Nginx Service Endpoints:fea12b83c2ac31d2
+name: My Nginx Service Endpoints
+nginx_status_url: http://10.44.0.6:8080/nginx_status
+tags:
+- kube_namespace:default
+- kube_endpoint_ip:10.44.0.6
+- kube_service:nginx
+- cluster_name:katacoda
+- kube_cluster_name:katacoda
+~
+Init Config:
+{}
+Auto-discovery IDs:
+* kube_endpoint_uid://default/nginx/10.44.0.6
+* kubernetes_pod://fa1da017-62ac-4dcf-bc74-41bcc10395cf
+State: dispatched to node01
+===
+[...]
 ```
 
-The most important one is the one called `datadog-cluster-agent`. This is a secret that was automatically created and that contains a generated token that will be used to secure the communication between your node agents and your cluster agent.
-
-The other `token` secret is the one used by the service account to communicate with the API server.
-
-Let's check the workloads that have been deployed:
-
-`kubectl get deployments`{{execute}}
-
-```
-NAME                         READY   UP-TO-DATE   AVAILABLE   AGE
-datadog-cluster-agent        1/1     1            1           24m
-...
-
-```
-
-Now, let's check that both of our Node Agents are connected to the Cluster Agent successfully:
+And if we now run the `agent status` command in the node agent, we will see the nginx checks running there:
 
 `kubectl exec -ti $(kubectl get pods -l app=datadog -o custom-columns=:.metadata.name --field-selector spec.nodeName=node01) -- agent status`{{execute}}
-`kubectl exec -ti $(kubectl get pods -l app=datadog -o custom-columns=:.metadata.name --field-selector spec.nodeName=controlplane) -- agent status`{{execute}}
-
-In both cases you should get an output similar to this one:
 
 ```
-...
-=====================
-Datadog Cluster Agent
-=====================
-
-  - Datadog Cluster Agent endpoint detected: https://10.98.143.176:5005
-  Successfully connected to the Datadog Cluster Agent.
-  - Running: 1.7.0+commit.4568d4d
-```
-
-Finally, let's run the agent `status` command in the Cluster Agent pod:
-
-`kubectl exec -ti $(kubectl get pods -l app=datadog-cluster-agent -o custom-columns=:.metadata.name) -- agent status`{{execute}}
-
-The Kubernetes API check should run successfully:
-
-```
-    kubernetes_apiserver
-    --------------------
-      Instance ID: kubernetes_apiserver [OK]
-      Configuration Source: file:/etc/datadog-agent/conf.d/kubernetes_apiserver.d/conf.yaml.default
-      Total Runs: 111
-      Metric Samples: Last Run: 0, Total: 0
-      Events: Last Run: 0, Total: 0
-      Service Checks: Last Run: 3, Total: 333
-      Average Execution Time : 15ms
-      Last Execution Date : 2020-09-14 14:19:40.000000 UTC
-      Last Successful Execution Date : 2020-09-14 14:19:40.000000 UTC
+nginx (3.8.0)
+-------------
+  Instance ID: nginx:My Nginx Service Endpoints:a91e5f9a9ae19357 [OK]
+  Configuration Source: kube_endpoints:kube_endpoint_uid://default/nginx/
+  Total Runs: 18
+  Metric Samples: Last Run: 7, Total: 126
+  Events: Last Run: 0, Total: 0
+  Service Checks: Last Run: 1, Total: 18
+  Average Execution Time : 6ms
+  Last Execution Date : 2021-02-08 11:32:43.000000 UTC
+  Last Successful Execution Date : 2021-02-08 11:32:43.000000 UTC
+  
+  Instance ID: nginx:My Nginx Service Endpoints:b0bf5f37b01bc443 [OK]
+  Configuration Source: kube_endpoints:kube_endpoint_uid://default/nginx/
+  Total Runs: 17
+  Metric Samples: Last Run: 7, Total: 119
+  Events: Last Run: 0, Total: 0
+  Service Checks: Last Run: 1, Total: 17
+  Average Execution Time : 15ms
+  Last Execution Date : 2021-02-08 11:32:29.000000 UTC
+  Last Successful Execution Date : 2021-02-08 11:32:29.000000 UTC
+  
+  Instance ID: nginx:My Nginx Service Endpoints:ec258176e6231401 [OK]
+  Configuration Source: kube_endpoints:kube_endpoint_uid://default/nginx/
+  Total Runs: 17
+  Metric Samples: Last Run: 7, Total: 119
+  Events: Last Run: 0, Total: 0
+  Service Checks: Last Run: 1, Total: 17
+  Average Execution Time : 7ms
+  Last Execution Date : 2021-02-08 11:32:36.000000 UTC
+  Last Successful Execution Date : 2021-02-08 11:32:36.000000 UTC
 ```

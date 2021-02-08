@@ -1,18 +1,18 @@
 Now that we have the Cluster Agent (with cluster checks enabled) deployed in our cluster, let's enable the HTTP cluster check for our `nginx` Kubernetes service.
 
-Right now, with the NGINX pod check, we are collecting metrics from the individual endpoints, but what if we want to get aggregated data (like aggregated latency) from the service that our users are going to be accessing (in our case, the `nginx` Kubernetes service). We can enable a check for a specific service using again Kubernetes annotations.
+Right now, with the NGINX pod check, we are collecting metrics from the individual endpoints, but what if we want to get aggregated data (like aggregated latency) from the service that our users are going to be accessing (in our case, the `nginx` Kubernetes service). We can enable a check for a specific service using Kubernetes annotations.
 
 We are going to annotate the service to enable the [HTTP integration](https://docs.datadoghq.com/integrations/http_check/). To learn how to annotate Kubernetes service to enable integrations, you can refer to [the official documentation](https://docs.datadoghq.com/agent/cluster_agent/clusterchecks/#template-source-kubernetes-service-annotations).
 
 We have prepared a file with the right annotations. Open the file `cluster-checks-files/nginx/nginx-service-annotations.yaml`{{open}} and check the annotations to enable the HTTP check in the Service definition.
 
-You can check the difference between both deployments running this command: `diff -U6 cluster-checks-files/nginx/nginx-deploy-annotations.yaml cluster-checks-files/nginx/nginx-service-annotations.yaml`{{execute}}
+You can check the difference between both service descriptions running this command: `diff -U6 cluster-checks-files/nginx/nginx-deploy-annotations.yaml cluster-checks-files/nginx/nginx-service-annotations.yaml`{{execute}}
 
-Lets apply those changes:
+Let's apply those changes:
 
 `kubectl apply -f cluster-checks-files/nginx/nginx-service-annotations.yaml`{{execute}}
 
-The annotations should have enabled the cluster check and the Cluster Agent should start dispatching the check to one of the node agents. We can check if this went well by running the `clusterchecks` command. The `clusterchecks` command will give the list of scheduled clusterchecks and it will report which worker node is running the check: `kubectl exec -ti deploy/datadog-cluster-agent -- agent configcheck`{{execute}}
+The annotations enables the cluster check and the Cluster Agent should start dispatching the check to one of the node agents. We can check if this went well by running the `clusterchecks` command. The `clusterchecks` command will give the list of scheduled clusterchecks and it will report which worker node is running the check: `kubectl exec -ti deploy/datadog-cluster-agent -- agent clusterchecks`{{execute}}
 
 You should get an output similar to this one:
 

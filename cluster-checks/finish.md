@@ -1,1 +1,1 @@
-Congratulations! You have completed all the labs of the Understanding Datadog's Helm Chart workshop.
+Congratulations! You have completed all the labs of the Introduction to Cluster Checks and Endpoint Checks snippet scenario.

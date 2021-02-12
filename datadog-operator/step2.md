@@ -2,7 +2,7 @@ The first thing we are going to do is to deploy the Datadog Operator Helm chart 
 
 Let's deploy the charts:
 
-`helm install my-datadog-operator datadog/datadog-operator --version="0.4.0"`{{execute}}
+`helm install my-datadog-operator datadog/datadog-operator --set image.tag="v0.5.0-rc.2" --version="0.4.0"`{{execute}}
 `helm install ksm stable/kube-state-metrics --version="2.8.11"`{{execute}}
 
 Let's check that the Datadog operator and the Kube State Metrics pods are running correctly by executing: `kubectl get pods`{{execute}} You should get an output similar to this one:

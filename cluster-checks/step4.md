@@ -21,7 +21,7 @@ clusterName: katacoda
 * The option `clusterChecks.enabled: true` will enable the Cluster Checks feature.
 * The option `clusterName: katacoda` will give a name (`katacoda`) to our cluster, that will help us organize our cluster level metrics by cluster.
 
-You can check the differences between the previous values file and this new one running the following command: `diff -U6 cluster-checks-files/helm/cluster-agent-values.yaml cluster-checks-files/helm/default-values.yaml`{{execute}}
+You can check the differences between the previous values file and this new one running the following command: `diff -U6 cluster-checks-files/helm/default-values.yaml cluster-checks-files/helm/cluster-agent-values.yaml`{{execute}}
 
 Let's upgrade our Helm release to use this new values file:
 

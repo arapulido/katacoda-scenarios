@@ -13,7 +13,7 @@ if [ "$STATUS" != "complete" ]; then
   helm repo add stable https://charts.helm.sh/stable
   helm repo update
 
-  git clone https://github.com/arapulido/dd-operator-configs dd-operator-configs
+  git clone -b datadog-operator https://github.com/arapulido/katacoda-scenarios-files.git dd-operator-configs
 
   NNODES=$(kubectl get nodes | grep Ready | wc -l)
 

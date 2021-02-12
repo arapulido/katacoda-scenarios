@@ -2,7 +2,8 @@ The first thing we are going to do is to deploy the Datadog Operator Helm chart 
 
 Let's deploy the charts:
 
-`helm install my-datadog-operator datadog/datadog-operator --set image.tag="v0.5.0-rc.2" --version="0.4.0"`{{execute}}
+`helm install my-datadog-operator datadog/datadog-operator --set image.tag="v0.5.0-rc.2" --set datadog-crds.crds.datadogAgents=false--version="0.4.0" && kubectl apply -f https://raw.githubusercontent.com/DataDog/datadog-operator/master/config/crd/bases/v1beta1/datadoghq.com_datadogagents.yaml`{{execute}}
+
 `helm install ksm stable/kube-state-metrics --version="2.8.11"`{{execute}}
 
 Let's check that the Datadog operator and the Kube State Metrics pods are running correctly by executing: `kubectl get pods`{{execute}} You should get an output similar to this one:
@@ -15,7 +16,7 @@ my-datadog-operator-7d59d55df7-nq8bb      1/1     Running   0          2m14s
 
 Once we have the operator up and running, we are ready to deploy the Datadog agent. First, we are going to create a Kubernetes secret to hold our Datadog API key:
 
-`kubectl create secret generic datadog-secret --from-literal api-key=$DD_API_KEY`{{execute}}
+`kubectl create secret generic datadog-secret --from-literal api-key=$DD_API_KEY --from-literal app-key=$DD_APP_KEY`{{execute}}
 
 Let's deploy now the Datadog node agent. Open the configuration we are going to apply and review it a bit `dd-operator-configs/datadog-agent-basic.yaml`{{open}}. Can you see the relation between the secret we just created and that configuration?
 

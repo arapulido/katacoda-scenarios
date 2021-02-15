@@ -1,5 +1,5 @@
 {
-  "title": "Understanding Datadog's Operator - Node agent",
+  "title": "Understanding Datadog's Operator",
   "description": "",
   "difficulty": "Beginner",
   "time": "60 minutes",
@@ -29,6 +29,10 @@
       {
         "title": "Enabling log, process and APM",
         "text": "step5.md"
+      },
+      {
+        "title": "Enabling the Cluster Agent and the Orchestrator Explorer",
+        "text": "step6.md"
       }
     ],
     "finish": {

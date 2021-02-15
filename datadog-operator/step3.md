@@ -14,18 +14,22 @@ Let's apply this new object description:
 
 `kubectl apply -f dd-operator-configs/datadog-agent-tolerations.yaml`{{execute}}
 
-You can follow the update from the `DatadogAgent` object status:
+You can follow the update from the `DatadogAgent` object status (type `Ctrl+C` to return to the terminal once you can see the agents running and ready):
 
-`kubectl get datadogagent`{{execute}}
+`kubectl get datadogagent -w`{{execute}}
 
 ```
+controlplane $ kubectl get datadogagent -w
 NAME      ACTIVE   AGENT              CLUSTER-AGENT   CLUSTER-CHECKS-RUNNER   AGE
-datadog   True     Updating (2/1/1)                                           7m37s
+datadog   True     Updating (2/1/1)                                           8m9s
+datadog   True     Updating (2/1/1)                                           8m13s
+datadog   True     Running (2/1/2)                                            8m43s
+datadog   True     Running (2/2/2)                                            8m52s
 ```
 
 Let's check now the number of pods we have for the Datadog agent and the nodes they are deployed to:
 
-`kubectl get pods -l agent.datadoghq.com/name=datadog -o custom-columns=NAME:.metadata.name,NODE:.spec.nodeName`{{execute}}
+`kubectl get pods -l agent.datadoghq.com/name=datadog -l agent.datadoghq.com/component=agent -o custom-columns=NAME:.metadata.name,NODE:.spec.nodeName`{{execute}}
 
 ```
 NAME                  NODE

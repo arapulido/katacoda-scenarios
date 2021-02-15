@@ -2,7 +2,7 @@ Logs collection, APM and the process monitoring are disabled by default in the `
 
 For example, if you run the agent status command:
 
-`kubectl exec -ti $(kubectl get pods -l agent.datadoghq.com/name=datadog -o custom-columns=:.metadata.name --field-selector spec.nodeName=node01) -- agent status`{{execute}}
+`kubectl exec -ti $(kubectl get pods -l agent.datadoghq.com/name=datadog -l agent.datadoghq.com/component=agent -o custom-columns=:.metadata.name --field-selector spec.nodeName=node01) -- agent status`{{execute}}
 
 You should get the following:
 
@@ -33,18 +33,22 @@ Let's apply this new object description:
 
 `kubectl apply -f dd-operator-configs/datadog-agent-agents.yaml`{{execute}}
 
-You can follow the update from the `DatadogAgent` object status:
+You can follow the update from the `DatadogAgent` object status (type `Ctrl+C` to return to the terminal once you can see the agents running and ready):
 
-`kubectl get datadogagent`{{execute}}
+`kubectl get datadogagent -w`{{execute}}
 
 ```
+controlplane $ kubectl get datadogagent -w
 NAME      ACTIVE   AGENT              CLUSTER-AGENT   CLUSTER-CHECKS-RUNNER   AGE
-datadog   True     Updating (2/1/1)                                           7m37s
+datadog   True     Updating (2/1/1)                                           8m9s
+datadog   True     Updating (2/1/1)                                           8m13s
+datadog   True     Running (2/1/2)                                            8m43s
+datadog   True     Running (2/2/2)                                            8m52s
 ```
 
 Once the updated pods are up and running, run again the agent status command in the Datadog's agent pod running in the worker node:
 
-`kubectl exec -ti $(kubectl get pods -l agent.datadoghq.com/name=datadog -o custom-columns=:.metadata.name --field-selector spec.nodeName=node01) -- agent status`{{execute}}
+`kubectl exec -ti $(kubectl get pods -l agent.datadoghq.com/name=datadog -l agent.datadoghq.com/component=agent -o custom-columns=:.metadata.name --field-selector spec.nodeName=node01) -- agent status`{{execute}}
 
 Log collection should be enabled now (and APM and process monitoring):
 

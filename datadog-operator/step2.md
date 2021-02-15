@@ -46,7 +46,7 @@ datadog-agent   1         1         1       1            1           <none>     
 
 This is the Daemonset that deploys the Datadog node agent. To be able to gather information from the Kubelet and system metrics from each of the nodes, the Datadog node agent deploys at least 1 node agent pod per node. Let's check how many pods do we have after deploying the Daemonset and which nodes are they deployed to:
 
-`kubectl get pods -l agent.datadoghq.com/name=datadog -o custom-columns=NAME:.metadata.name,NODE:.spec.nodeName`{{execute}}
+`kubectl get pods -l agent.datadoghq.com/name=datadog -l agent.datadoghq.com/component=agent -o custom-columns=NAME:.metadata.name,NODE:.spec.nodeName`{{execute}}
 
 You should get an output similar to this one:
 

@@ -33,6 +33,10 @@
       {
         "title": "Enabling the Cluster Agent and the Orchestrator Explorer",
         "text": "step6.md"
+      },
+      {
+        "title": "Enabling ClusterChecks and the Cluster Checks Runner",
+        "text": "step7.md"
       }
     ],
     "finish": {

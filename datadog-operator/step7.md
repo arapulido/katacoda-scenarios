@@ -1,0 +1,50 @@
+Now that we have the the Cluster Agent with the Orchestrator Explorer up and running, we will finish this scenario by enabling Cluster Checks and the Cluster Checks runner.
+
+[Cluster Checks](https://docs.datadoghq.com/agent/cluster_agent/clusterchecks/) allow you to monitor this type of workloads, including:
+
+* Out-of-cluster datastores and endpoints (for example, RDS or CloudSQL).
+* Load-balanced cluster services (for example, Kubernetes services).
+
+You can follow this other [Katacoda scenario]() to learn more about Cluster Checks and how they can help to better monitor your Kubernetes infrastructure.
+
+Open the file called `dd-operator-configs/datadog-cluster-checks.yaml`{{open}} and check how we have added a `config` section to the `clusterAgent` section:
+
+```
+  clusterAgent:
+    image:
+      name: "datadog/cluster-agent:latest"
+    config:
+      clusterChecksEnabled: true
+```
+
+You can check the differences between the previous configuration and this one by running the following command:
+
+`diff -U3 dd-operator-configs/datadog-cluster-agent.yaml dd-operator-configs/datadog-cluster-checks.yaml`{{execute}}
+
+That configuration option will enable Cluster Checks and will force the deployment of 1 replica of the [Cluster Check Runner agent](https://docs.datadoghq.com/agent/cluster_agent/clusterchecksrunner/?tab=operator), an agent that is specifically dedicated to running cluster checks.
+
+Let's apply this new object description:
+
+`kubectl apply -f dd-operator-configs/datadog-cluster-checks.yaml`{{execute}}
+
+You can follow the update from the `DatadogAgent` object status (type `Ctrl+C` to return to the terminal once you can see the agents running and ready):
+
+`kubectl get datadogagent -w`{{execute}}
+
+```
+controlplane $ kubectl get datadogagent -w
+NAME      ACTIVE   AGENT                 CLUSTER-AGENT     CLUSTER-CHECKS-RUNNER   AGE
+datadog   True     Progressing (1/0/1)   Running (1/1/1)   Progressing (1/0/1)     8s
+datadog   True     Running (1/1/1)       Running (1/1/1)   Running (1/1/1)         37s
+```
+
+Now, apart from the `DaemonSet` that deploys the node agents, and the `Deployment` for the Cluster Agent, this configuration creates a new `Deployment`:
+
+`kubectl get deploy datadog-cluster-checks-runner`{{execute}}
+
+```
+NAME                            READY   UP-TO-DATE   AVAILABLE   AGE
+datadog-cluster-checks-runner   1/1     1            1           2m33s
+```
+
+Any cluster check that we configure in this cluster will be dispatched by the Cluster Agent to the Cluster Check Runner pod.

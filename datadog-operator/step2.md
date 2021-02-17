@@ -2,7 +2,7 @@ The first thing we are going to do is to deploy the Datadog Operator Helm chart 
 
 Let's deploy the charts:
 
-`helm install my-datadog-operator datadog/datadog-operator --set image.tag="v0.5.0-rc.2" --set datadog-crds.crds.datadogAgents=false--version="0.4.0" && kubectl apply -f https://raw.githubusercontent.com/DataDog/datadog-operator/master/config/crd/bases/v1beta1/datadoghq.com_datadogagents.yaml`{{execute}}
+`helm install my-datadog-operator datadog/datadog-operator --set image.tag="v0.5.0-rc.2" --set datadog-crds.crds.datadogAgents=false --version="0.4.0" && kubectl apply -f https://raw.githubusercontent.com/DataDog/datadog-operator/master/config/crd/bases/v1beta1/datadoghq.com_datadogagents.yaml`{{execute}}
 
 `helm install ksm stable/kube-state-metrics --version="2.8.11"`{{execute}}
 

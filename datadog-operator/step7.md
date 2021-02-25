@@ -12,7 +12,7 @@ Open the file called `dd-operator-configs/datadog-cluster-checks.yaml`{{open}} a
 ```
   clusterAgent:
     image:
-      name: "datadog/cluster-agent:latest"
+      name: "datadog/cluster-agent:1.11.0"
     config:
       clusterChecksEnabled: true
 ```
@@ -48,3 +48,5 @@ datadog-cluster-checks-runner   1/1     1            1           2m33s
 ```
 
 Any cluster check that we configure in this cluster will be dispatched by the Cluster Agent to the Cluster Check Runner pod.
+
+If you want to learn more about Cluster Checks and the Cluster Checks Runner, you can follow this other [snippet scenario in our lab environment](https://labs.datadoghq.com/snippets/introduction-to-cluster-checks-and-endpoint-checks).

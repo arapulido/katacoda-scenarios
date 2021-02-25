@@ -2,7 +2,7 @@ The first thing we are going to do is to deploy the Datadog Operator Helm chart 
 
 Let's deploy the charts:
 
-`helm install my-datadog-operator datadog/datadog-operator --set image.tag="v0.5.0-rc.2" --set datadog-crds.crds.datadogAgents=false --version="0.4.0" && kubectl apply -f https://raw.githubusercontent.com/DataDog/datadog-operator/master/config/crd/bases/v1beta1/datadoghq.com_datadogagents.yaml`{{execute}}
+`helm install my-datadog-operator datadog/datadog-operator --set image.tag="0.5.0" --set datadog-crds.crds.datadogAgents=false --version="0.4.0" && kubectl apply -f https://raw.githubusercontent.com/DataDog/datadog-operator/master/config/crd/bases/v1beta1/datadoghq.com_datadogagents.yaml`{{execute}}
 
 `helm install ksm stable/kube-state-metrics --version="2.8.11"`{{execute}}
 
@@ -58,6 +58,8 @@ datadog-agent-mhv58   node01
 The Datadog node agent was deployed to the worker node, but not the control plane node. Why? There is a taint in the control plane node that prevents pods without the corresponding toleration being scheduled in that node:
 
 `kubectl get nodes controlplane -o custom-columns=NAME:.metadata.name,TAINTS:.spec.taints`{{execute}}
+
+You can read more about taints and tolerations in Kubernetes in [their official documentation](https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/).
 
 If we want to monitor the control plane nodes, we will need to add a toleration for the control-plane nodes. We will explain how to do this in the next step.
 

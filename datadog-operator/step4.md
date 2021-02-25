@@ -37,6 +37,8 @@ Open the file called `dd-operator-configs/datadog-agent-kubelet.yaml`{{open}} an
         value: "false"
 ```
 
+You can check the differences between the previous `DatadogAgent` configuration file and this new one running the following command: `diff -U1 dd-operator-configs/datadog-agent-tolerations.yaml dd-operator-configs/datadog-agent-kubelet.yaml`{{execute}}
+
 Let's apply this new object description:
 
 `kubectl apply -f dd-operator-configs/datadog-agent-kubelet.yaml`{{execute}}

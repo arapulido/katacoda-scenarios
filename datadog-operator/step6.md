@@ -2,7 +2,7 @@ Now that we have the node agent up and running with APM, Logs and Process monito
 
 The [Datadog Cluster Agent](https://docs.datadoghq.com/agent/cluster_agent/) provides a streamlined, centralized approach to collecting cluster level monitoring data. By acting as a proxy between the API server and node-based Agents, the Cluster Agent helps to alleviate server load. It also relays cluster level metadata to node-based Agents, allowing them to enrich the metadata of locally collected metrics.
 
-The Cluster Agent is also required to enable the [Kubernetes resources view](https://docs.datadoghq.com/infrastructure/livecontainers/?tab=helm#kubernetes-resources-view) in the Live Containers page, that we will do in this step as well.
+The Cluster Agent is also required to enable the [Kubernetes resources view](https://docs.datadoghq.com/infrastructure/livecontainers/?tab=helm#kubernetes-resources-view) in the Live Containers page. We will enable that view in this step as well.
 
 Open the file called `dd-operator-configs/datadog-cluster-agent.yaml`{{open}} and check the sections `clusterAgent` and `features`:
 
@@ -14,6 +14,8 @@ Open the file called `dd-operator-configs/datadog-cluster-agent.yaml`{{open}} an
     orchestratorExplorer:
       enabled: true
 ```
+
+You can check the differences between the previous `DatadogAgent` configuration file and this new one running the following command: `diff -u dd-operator-configs/datadog-agent-agents.yaml dd-operator-configs/datadog-cluster-agent.yaml`{{execute}}
 
 The section `clusterAgent` section forces the deployment of the Cluster Agent, and `features.orchestratorExplorer` enables the Kubernetes resources view.
 
@@ -62,7 +64,7 @@ Datadog Cluster Agent
 
 We have also enabled the Orchestrator Explorer, to enable the Kubernetes resources view. Let's check that it is running correctly by running the `status` command, this time against the Cluster Agent:
 
-`kubectl exec -ti deploy/datadog-cluser-agent -- agent status`
+`kubectl exec -ti deploy/datadog-cluster-agent -- agent status`{{execute}}
 
 You should get an output similar to this one:
 
@@ -78,4 +80,6 @@ Orchestrator Explorer
 ```
 
 Open now the [Live Containers view in Datadog](https://app.datadoghq.com/orchestration/overview/pod?cols=name%2Cstatus%2Cready%2Crestarts%2Cage%2Clabels&paused=false&sort=&tags=kube_cluster_name%3Akatacoda) to watch your Kubernetes objects directly from Datadog:
+
+![Screenshot of the Orchestration Explorer](./assets/orchestration_explorer.png)
 

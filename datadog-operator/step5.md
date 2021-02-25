@@ -29,6 +29,8 @@ log:
   logsConfigContainerCollectAll: true
 ```
 
+You can check the differences between the previous `DatadogAgent` configuration file and this new one running the following command: `diff -U1 dd-operator-configs/datadog-agent-kubelet.yaml dd-operator-configs/datadog-agent-agents.yaml`{{execute}}
+
 Let's apply this new object description:
 
 `kubectl apply -f dd-operator-configs/datadog-agent-agents.yaml`{{execute}}

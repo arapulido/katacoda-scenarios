@@ -2,7 +2,7 @@ The first thing we are going to do is to deploy the Datadog Operator Helm chart 
 
 Let's deploy the charts:
 
-`helm install my-datadog-operator datadog/datadog-operator --set image.tag="0.5.0" --set datadog-crds.crds.datadogAgents=false --version="0.4.0" && kubectl apply -f https://raw.githubusercontent.com/DataDog/datadog-operator/master/config/crd/bases/v1beta1/datadoghq.com_datadogagents.yaml`{{execute}}
+`helm install my-datadog-operator datadog/datadog-operator --version="0.5.0"`{{execute}}
 
 `helm install ksm stable/kube-state-metrics --version="2.8.11"`{{execute}}
 
@@ -14,7 +14,7 @@ ksm-kube-state-metrics-5f8944dfc9-t95nw   1/1     Running   0          18s
 my-datadog-operator-7d59d55df7-nq8bb      1/1     Running   0          2m14s
 ```
 
-Once we have the operator up and running, we are ready to deploy the Datadog agent. First, we are going to create a Kubernetes secret to hold our Datadog API key:
+Once we have the operator up and running, we are ready to deploy the Datadog agent. First, we are going to create a Kubernetes secret to hold our Datadog API and App keys:
 
 `kubectl create secret generic datadog-secret --from-literal api-key=$DD_API_KEY --from-literal app-key=$DD_APP_KEY`{{execute}}
 
@@ -67,10 +67,10 @@ Let's check the status of the Datadog agent:
 
 `kubectl exec -ti ds/datadog-agent -- agent status`{{execute}}
 
-Check the different checks that are running by default. You can see that the Kubelet check is failing. We will fix the configuration in a later step to fix this.
+Check the different checks that are running by default. You can see that the Kubelet check is failing. We will fix the configuration in a later step.
 
 ```
-kubelet (5.0.0)
+kubelet (5.1.0)
 ---------------
 Instance ID: kubelet:d884b5186b651429 [ERROR]
 Configuration Source: file:/etc/datadog-agent/conf.d/kubelet.d/conf.yaml.default

@@ -8,7 +8,7 @@ controlplane   Ready    master   40m   v1.16.4
 node01         Ready    <none>   39m   v1.16.0
 ```
 
-The first thing we need to deploy the Datadog agent in our cluster is to retrieve the API for our organization. If you don't currently have a Datadog account, or don't want to use your company's production environment, you can sign up for a [new Datadog trial account](https://www.datadoghq.com/free-datadog-trial/).
+The first thing we need to deploy the Datadog agent in our cluster is to retrieve the API key and the APP key for our organization. If you don't currently have a Datadog account, or don't want to use your company's production environment, you can sign up for a [new Datadog trial account](https://www.datadoghq.com/free-datadog-trial/).
 
 To retrieve the API key, log into [Datadog](https://app.datadoghq.com/) and navigate to the [API settings page](https://app.datadoghq.com/account/settings#api) to reveal your API key.
 
@@ -19,3 +19,13 @@ Export your API key in an environment variable:
 `export DD_API_KEY=<YOUR_DATADOG_API_KEY>`{{copy}}
 
 Check that your API key has been successfully exported by running this command: `echo $DD_API_KEY`{{execute}}. You should get the same value that you copied from the Datadog web application.
+
+To retrieve the App key, navigate to the [Application Keys page](https://app.datadoghq.com/access/application-keys) to reveal your App key.
+
+![Screenshot of App Keys area](./assets/app_key.png)
+
+Export your App key in an environment variable:
+
+`export DD_APP_KEY=<YOUR_DATADOG_APP_KEY>`{{copy}}
+
+Check that your App key has been successfully exported by running this command: `echo $DD_APP_KEY`{{execute}}. You should get the same value that you copied from the Datadog web application.

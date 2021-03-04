@@ -5,8 +5,6 @@ Now that we have the the Cluster Agent with the Orchestrator Explorer up and run
 * Out-of-cluster datastores and endpoints (for example, RDS or CloudSQL).
 * Load-balanced cluster services (for example, Kubernetes services).
 
-You can follow this other [Katacoda scenario]() to learn more about Cluster Checks and how they can help to better monitor your Kubernetes infrastructure.
-
 Open the file called `dd-operator-configs/datadog-cluster-checks.yaml`{{open}} and check how we have added a `config` section to the `clusterAgent` section:
 
 ```

@@ -7,7 +7,7 @@ Let's run again the agent status command in the Datadog's agent pod running in t
 We are getting the following error:
 
 ```
-kubelet (5.0.0)
+kubelet (5.1.0)
 ---------------
 Instance ID: kubelet:d884b5186b651429 [ERROR]
 Configuration Source: file:/etc/datadog-agent/conf.d/kubelet.d/conf.yaml.default
@@ -63,7 +63,7 @@ Once the updated pods are up and running, run again the agent status command in 
 The Kubelet check should run now successfully:
 
 ```
-kubelet (5.0.0)
+kubelet (5.1.0)
 ---------------
 Instance ID: kubelet:d884b5186b651429 [OK]
 Configuration Source: file:/etc/datadog-agent/conf.d/kubelet.d/conf.yaml.default

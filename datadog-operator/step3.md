@@ -40,3 +40,7 @@ datadog-agent-vz26z   node01
 ```
 
 We now have correctly one Datadog agent deployed to the control plane node.
+
+Open now the [Infrastructure List view in Datadog](https://app.datadoghq.com/infrastructure) and check that you are able to see both nodes (and their system metrics) in the list:
+
+![Screenshot of the Infrastructure List view](./assets/infrastructure_list.png)

@@ -9,7 +9,7 @@ Open the file called `dd-operator-configs/datadog-cluster-agent.yaml`{{open}} an
 ```
   clusterAgent:
     image:
-      name: "datadog/cluster-agent:latest"
+      name: "datadog/cluster-agent:1.11.0"
   features:
     orchestratorExplorer:
       enabled: true
@@ -57,9 +57,9 @@ You should get an output similar to this one:
 Datadog Cluster Agent
 =====================
 
-  - Datadog Cluster Agent endpoint detected: https://10.97.142.200:5005
+  - Datadog Cluster Agent endpoint detected: https://10.108.81.118:5005
   Successfully connected to the Datadog Cluster Agent.
-  - Running: 1.10.0+commit.a285fcc
+  - Running: 1.11.0+commit.4eadd95
 ```
 
 We have also enabled the Orchestrator Explorer, to enable the Kubernetes resources view. Let's check that it is running correctly by running the `status` command, this time against the Cluster Agent:

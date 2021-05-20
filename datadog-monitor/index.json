@@ -1,0 +1,49 @@
+{
+  "title": "Understanding Datadog's Operator",
+  "description": "",
+  "difficulty": "Beginner",
+  "time": "60 minutes",
+  "details": {
+    "intro": {
+      "courseData": "background.sh",
+      "code": "foreground.sh",
+      "text": "intro.md"
+    },
+    "steps": [
+      {
+        "title": "Setting up your Datadog account",
+        "text": "step1.md"
+      },
+      {
+        "title": "Deploying the Datadog agent",
+        "text": "step2.md"
+      },
+      {
+        "title": "Creating our first monitor",
+        "text": "step3.md"
+      }
+    ],
+    "finish": {
+      "text": "finish.md"
+    },
+    "assets": {
+    "host01": [
+      {
+        "file": "prepenvironment",
+        "target": "/usr/local/bin",
+        "chmod": "+x"
+      }
+    ]
+    }
+  },
+  "files": [
+  ],
+  "environment": {
+    "uilayout": "editor-terminal-v1",
+    "exclusionPatterns": ["./go/*", "./Desktop/*"],
+    "hideHiddenFiles": true
+  },
+  "backend": {
+    "imageid": "datadog-kubernetes-cluster-running:1.16"
+  }
+}

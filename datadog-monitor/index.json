@@ -21,6 +21,10 @@
       {
         "title": "Creating our first monitor",
         "text": "step3.md"
+      },
+      {
+        "title": "Adding an application monitor",
+        "text": "step4.md"
       }
     ],
     "finish": {

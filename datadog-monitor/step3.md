@@ -14,15 +14,15 @@ After clicking on `Done` you can copy the full query in your clipboard:
 
 ![Screenshot of query to copy](./assets/copy_query.png)
 
-Open the configuration for the Datadog Monitor and review it a bit `cluster-config-files/datadog-monitor-disk.yaml`{{open}}. We are assigning a name to our monitor and a series of tags. We are missing the query, though. Edit the file with the query you copied from the notebook and adding "> 0.5" to it, to alert when it goes above 50%. The final file should look like this:
+Open the configuration for the Datadog Monitor and review it a bit `cluster-config-files/datadog-monitor-disk.yaml`{{open}}. We are assigning a name to our monitor and a series of tags. We are missing the query, though. Edit the file with the query you copied from the notebook and prepending `avg(last_10m):` (we want to alert when the condition happens for the past 10 minutes) and appending `> 0.5` to it, to alert when usage goes above 50%. The final file should look like this:
 
 ```
 apiVersion: datadoghq.com/v1alpha1
 kind: DatadogMonitor
 metadata:
-name: datadog-monitor-test
+  name: disk-usage-nodes
 spec:
-  query: "avg:system.disk.in_use{*} by {host} > 0.5"
+  query: "avg(last_10m):avg:system.disk.in_use{*} by {host} > 0.5"
   type: "metric alert"
   name: "Disk space on Kubernetes nodes"
   message: "We are running out of disk space!"
@@ -34,3 +34,16 @@ Let's apply it:
 
 `kubectl apply -f cluster-config-files/datadog-monitor-disk.yaml`{{execute}}
 
+Once created, we can check the status of the monitor directly from the terminal by running `kubectl get datadogmonitor disk-usage-nodes`{{execute}}:
+
+```
+NAME               ID         MONITOR STATE   LAST TRANSITION        LAST SYNC              SYNC STATUS   AGE
+disk-usage-nodes   35907247   OK              2021-05-24T10:22:33Z   2021-05-24T10:24:33Z   OK            3m10s
+```
+
+Navigating to [the monitors section in Datadog](https://app.datadoghq.com/monitors/manage) we can now see our new monitor:
+
+![Screenshot of monitors section](./assets/monitors.png)
+![Screenshot of disk usage monitor](./assets/disk_usage_monitor.png)
+
+We recommend always edit the monitor using the DatadogMonitor YAML definition and saving the changes to your Git repo before applying it to your cluster, instead of editing directly the monitor in the Datadog application, to follow GitOps principles.

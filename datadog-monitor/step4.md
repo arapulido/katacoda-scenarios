@@ -53,4 +53,4 @@ Navigating to [the monitors section in Datadog](https://app.datadoghq.com/monito
 ![Screenshot of monitors section](./assets/monitors2.png)
 ![Screenshot of disk usage monitor](./assets/error_rate_monitor.png)
 
-We recommend always edit the monitor using the DatadogMonitor YAML definition and saving the changes to your Git repo before applying it to your cluster, instead of editing directly the monitor in the Datadog application, to follow GitOps principles.
+We recommend to always edit the monitor using the DatadogMonitor YAML definition and saving the changes to your Git repo before applying it to your cluster, instead of editing directly the monitor in the Datadog application, to follow GitOps principles.

@@ -29,5 +29,16 @@ if [ "$STATUS" != "complete" ]; then
     NPODS=$(kubectl get pods -n kube-system -l component=kube-apiserver --field-selector=status.phase=Running | grep -v NAME | wc -l)
   done
 
+  echo "Applying the commerce app"
+  kubectl create ns fake-traffic
+  kubectl apply -f cluster-config-files/ecommerce-app/
+
+  NPODS=$(kubectl get pods --field-selector=status.phase=Running | grep -v NAME | wc -l)
+
+  while [ "$NPODS" != "4" ]; do
+    sleep 0.3
+    NPODS=$(kubectl get pods --field-selector=status.phase=Running | grep -v NAME | wc -l)
+  done
+
   echo "complete">>/root/status.txt
 fi

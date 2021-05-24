@@ -1,5 +1,5 @@
 {
-  "title": "Understanding Datadog's Operator",
+  "title": "Managing Datadog Monitors from Kubernetes configurations",
   "description": "",
   "difficulty": "Beginner",
   "time": "60 minutes",

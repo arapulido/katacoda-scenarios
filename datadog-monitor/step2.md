@@ -35,8 +35,8 @@ We are creating a new type of Kubernetes object called `DatadogAgent`. Let's che
 `kubectl get datadogagent`{{execute}}. You should get an output similar to this one:
 
 ```
-NAME      ACTIVE   AGENT             CLUSTER-AGENT   CLUSTER-CHECKS-RUNNER   AGE
-datadog   True     Running (2/2/2)                                           3m47s
+NAME      ACTIVE   AGENT             CLUSTER-AGENT     CLUSTER-CHECKS-RUNNER   AGE
+datadog   True     Running (2/2/2)   Running (1/1/1)                           70s
 ```
 
 (If you get an status of `Progressing` run again the command until the Datadog pod is running)

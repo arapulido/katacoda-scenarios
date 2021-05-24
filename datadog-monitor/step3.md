@@ -14,7 +14,7 @@ After clicking on `Done` you can copy the full query in your clipboard:
 
 ![Screenshot of query to copy](./assets/copy_query.png)
 
-Open the configuration for the Datadog Monitor and review it a bit `cluster-config-files/datadog-monitor-disk.yaml`{{open}}. We are assigning a name to our monitor and a series of tags. We are missing the query, though. Edit the file with the query you copied from the notebook and prepending `avg(last_10m):` (we want to alert when the condition happens for the past 10 minutes) and appending `> 0.5` to it, to alert when usage goes above 50%. The final file should look like this:
+Open the configuration for the Datadog Monitor and review it a bit `cluster-config-files/datadog-monitor-disk.yaml`{{open}}. We are assigning a name to our monitor and a series of tags. We are missing the query, though. Edit the file with the query you copied from the notebook prepending `avg(last_10m):` (we want to alert when the condition happens for the past 10 minutes) and appending `> 0.5` to it, to alert when usage goes above 50%. The final file should look like this:
 
 ```
 apiVersion: datadoghq.com/v1alpha1

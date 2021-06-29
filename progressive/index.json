@@ -1,0 +1,52 @@
+{
+  "title": "Progressive Delivery in Kubernetes",
+  "description": "",
+  "difficulty": "Intermediate",
+  "time": "60 minutes",
+  "details": {
+    "intro": {
+      "courseData": "background.sh",
+      "code": "foreground.sh",
+      "text": "intro.md"
+    },
+    "steps": [
+      {
+        "title": "The API keys",
+        "text": "step1.md"
+      },
+      {
+        "title": "Setting up the Datadog agent",
+        "text": "step2.md"
+      }
+    ],
+    "finish": {
+      "text": "finish.md"
+    },
+    "assets": {
+    "host01": [
+      {
+        "file": "wait-datadog.sh",
+        "target": "/usr/local/bin",
+        "chmod": "+x"
+      }
+    ]
+    }
+  },
+  "files": [
+  ],
+  "environment": {
+    "uilayout": "editor-terminal-v1",
+    "exclusionPatterns": ["./go/*", "./Desktop/*"],
+    "hideHiddenFiles": true,
+    "showdashboard": true,
+    "dashboards": [
+      {
+        "name": "Ecommerce App",
+        "port": 30001
+      }
+    ]
+  },
+  "backend": {
+    "imageid": "datadog-kubernetes-cluster-running:1.16"
+  }
+}

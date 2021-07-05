@@ -6,6 +6,6 @@ Open the original file that we used to deploy version `1.0` of the `advertisemen
 
 Let's check [the `advertisements` service page](https://app.datadoghq.com/apm/service/advertisements) in Datadog. That page is the entry point to get information about a particular service: latency distributions, errors, number of requests, etc. Thanks to the `DD_VERSION` tag that we are sending, we can also get the different versions of the service we have deployed in our cluster:
 
-![Screenshot of ads servcie](./assets/ads_service.png)
+![Screenshot of ads service overview page](./assets/ads_service.png)
 
 You can see that currently only version `1.0` is running in our cluster. We will deploy a new version in our next step.

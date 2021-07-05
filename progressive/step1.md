@@ -1,4 +1,4 @@
-Wait some minutes until your environment is setup. Once it is setup, you will see the following message in your terminal:`OK, the training environment is installed and ready to go.`
+Wait some minutes until your environment is setup. Once it is setup, you will see the following message in your terminal: `OK, the training environment is installed and ready to go.`
 
 Once the environment is ready, you can check the different cluster nodes and the Kubernetes version they are running by executing this command: `kubectl get nodes`{{execute}} 
 

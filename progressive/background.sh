@@ -38,6 +38,7 @@ if [ "$STATUS" != "complete" ]; then
   kubectl create ns fake-traffic
   kubectl apply -f manifest-files/database -n database
   kubectl apply -f manifest-files/ecommerce-v1 -n ns1 
+  kubectl apply -f manifest-files/fake-traffic -n fake-traffic
   
   # NPODS=$(kubectl get pods --field-selector=status.phase=Running | grep -v NAME | wc -l)
 

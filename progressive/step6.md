@@ -1,0 +1,3 @@
+We are going to apply a second deployment for the `advertisements` service, that uses a different docker image label, that makes the ads service to always delivery a banner that states `Version 2.0`, so we can easily distinguish them.
+
+Open the file called `manifest-files/servicenetwork/advertisements.yaml`{{open}} and try to spot the differences with the original one. You can spot the differences running the following `diff` command: `diff -u manifest-files/ecommerce-v1/advertisements.yaml  manifest-files/servicenetwork/advertisements.yaml`{{execute}}

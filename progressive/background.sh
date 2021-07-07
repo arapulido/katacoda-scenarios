@@ -33,7 +33,7 @@ if [ "$STATUS" != "complete" ]; then
   done
 
   echo "Deploying NGINX Ingress controller"
-  helm install nginx nginx/nginx-ingress --set controller.service.type=NodePort --set controller.service.httpPort.nodePort=32000 -n kube-system
+  helm install nginx nginx/nginx-ingress --set controller.service.type=NodePort --set controller.service.httpPort.nodePort=32000 set controller.service.httpsPort.enable=false -n kube-system
 
   echo "Creating the ecommerce application and deploying datadog"
   kubectl create ns database

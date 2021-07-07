@@ -59,6 +59,10 @@
       {
         "name": "Ecommerce App",
         "port": 30001
+      },
+      {
+        "name": "Ingress Service",
+        "port": 32000
       }
     ]
   },

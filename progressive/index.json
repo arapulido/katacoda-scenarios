@@ -63,6 +63,6 @@
     ]
   },
   "backend": {
-    "imageid": "datadog-kubernetes-cluster-running:1.16"
+    "imageid": "datadog-k8s-v118-cluster-running"
   }
 }

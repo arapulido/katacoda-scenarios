@@ -33,7 +33,7 @@ if [ "$STATUS" != "complete" ]; then
   done
 
   echo "Deploying NGINX Ingress controller"
-  helm install nginx nginx/nginx-ingress --set controller.service.type=NodePort --set controller.service.httpPort.nodePort=32000 set controller.service.httpsPort.enable=false -n kube-system
+  kubectl apply -f manifest-files/ingress-controller
 
   echo "Creating the ecommerce application and deploying datadog"
   kubectl create ns database
@@ -43,12 +43,12 @@ if [ "$STATUS" != "complete" ]; then
   kubectl apply -f manifest-files/ecommerce-v1 -n ns1 
   kubectl apply -f manifest-files/fake-traffic -n fake-traffic
   
-  # NPODS=$(kubectl get pods --field-selector=status.phase=Running | grep -v NAME | wc -l)
+  NPODS=$(kubectl get pods -n ns1 --field-selector=status.phase=Running | grep -v NAME | wc -l)
 
-  # while [ "$NPODS" != "4" ]; do
-  #   sleep 0.3
-  #   NPODS=$(kubectl get pods --field-selector=status.phase=Running | grep -v NAME | wc -l)
-  # done
+  while [ "$NPODS" != "3" ]; do
+    sleep 0.3
+    NPODS=$(kubectl get pods -n ns1 --field-selector=status.phase=Running | grep -v NAME | wc -l)
+  done
 
   echo "complete">>/root/status.txt
 fi

@@ -33,6 +33,10 @@
       {
         "title": "Service Networking",
         "text": "step6.md"
+      },
+      {
+        "title": "Ingress for Frontend",
+        "text": "step7.md"
       }
     ],
     "finish": {

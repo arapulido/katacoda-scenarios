@@ -18,20 +18,24 @@ We have now two different deployments for `frontend` with a different set of lab
 
 Click again on the "Service Ingress" tab and refresh several times the page. As you can see, you still only see version 1.0 for the `frontend` service. The reason is that we haven't added an Ingress object for the second service. Let's do that now.
 
-We are going to create a second Ingress object for our canary service. Open the file called `manifest-files/ingress/ecommerce-v2/ingressv2.yaml`{{open}} and try to spot the differences with the first frontend Ingress object. You can spot the differences running the following `diff` command: `diff -u manifest-files/ecommerce-v1/ingress/ingressv1.yaml  manifest-files/ingress/ecommerce-v2/ingressv2.yaml`{{execute}}
+We are going to create a second Ingress object for our canary service. Open the file called `manifest-files/ingress/ecommerce-v2/ingressv2.yaml`{{open}} and try to spot the differences with the first frontend Ingress object. You can spot the differences running the following `diff` command: `diff -u manifest-files/ingress/ingressv1.yaml  manifest-files/ingress/ecommerce-v2/ingressv2.yaml`{{execute}}
 
-You can see that we have added two NGINX annotations:
+You can see that apart from the  NGINX canary annotations, we are creating this second Ingress object in the `ns2` namespace, and, therefore, it will reference the `frontend` service in that namespace:
 
 ```
+-  name: frontend-ingress
+-  namespace: ns1
++  name: frontend-ingress
++  namespace: ns2
+   annotations:
+     nginx.ingress.kubernetes.io/rewrite-target: /
 +    nginx.ingress.kubernetes.io/canary: "true"
 +    nginx.ingress.kubernetes.io/canary-weight: "50"
 ```
 
-With those two annonations we are telling the NGINX Ingress controller that this second Ingress is a canary of the first one (it has the same `path`), and to direct 50% of the traffic to this canary service.
+Let's apply that new Ingress object: `kubectl apply -f manifest-files/ingress_ns/ingressv2.yaml`{{execute}}
 
-Let's apply that new Ingress object: `kubectl apply -f manifest-files/ingress/ecommerce-v2/ingressv2.yaml`{{execute}}
-
-Refresh several times again the page for the `Ingress Service`. You will see that sometimes you are getting the old logo and sometimes you are getting the the one:
+Refresh several times again the page for the `Ingress Service`. You will see that sometimes you are getting the old logo and sometimes you are getting the new one:
 
 ![Screenshot of new logo](./assets/storedog_logo.png)
 

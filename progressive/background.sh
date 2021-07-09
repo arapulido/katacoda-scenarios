@@ -31,16 +31,18 @@ if [ "$STATUS" != "complete" ]; then
     NPODS=$(kubectl get pods -n kube-system -l component=kube-apiserver --field-selector=status.phase=Running | grep -v NAME | wc -l)
   done
 
-  echo "Deploying NGINX Ingress controller"
+  wall -n "Deploying NGINX Ingress controller"
   kubectl apply -f manifest-files/ingress-controller
 
-  echo "Creating the ecommerce application and deploying datadog"
+  wall -n "Creating the ecommerce application and deploying datadog"
   kubectl create ns database
   kubectl create ns ns1
+  kubectl create ns ns2
   kubectl create ns fake-traffic
   kubectl apply -f manifest-files/database -n database
   kubectl apply -f manifest-files/ecommerce-v1 -n ns1 
   kubectl apply -f manifest-files/fake-traffic -n fake-traffic
+  kubectl apply -f manifest-files/ingress_ns/db.yaml -n ns2
   
   NPODS=$(kubectl get pods -n ns1 --field-selector=status.phase=Running | grep -v NAME | wc -l)
 

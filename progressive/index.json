@@ -41,6 +41,10 @@
       {
         "title": "Canary with Ingress",
         "text": "step8.md"
+      },
+      {
+        "title": "Ingress on different namespaces",
+        "text": "step9.md"
       }
     ],
     "finish": {

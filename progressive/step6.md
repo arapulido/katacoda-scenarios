@@ -8,7 +8,7 @@ Let's apply this second deployment: `kubectl apply -f manifest-files/servicenetw
 
 We have now two different deployments with the same set of labels, running different docker images: `kubectl get deployments -n ns1 -l service=advertisements --show-labels`{{€xecute}}. The pods part of each of these deployments also share the set of labels: `kubectl get pods -n ns1 -l service=advertisements --show-labels`{{€xecute}}
 
-The `frontend` service will select any pod that matches those two common labels: `kubectl get svc advertisements -n ns1 -o custom-columns="Name:metadata.name,Selector:spec.selector"`{{execute}}, and it will select one of the two randomnly with the same weight.
+The `advertisements` service will select any pod that matches those two common labels: `kubectl get svc advertisements -n ns1 -o custom-columns="Name:metadata.name,Selector:spec.selector"`{{execute}}, and it will select one of the two randomnly with the same weight.
 
 Go back to the Ecommerce application and refresh the page. Sometimes you should get the ads banner "Version 1.0" and sometimes you will get the one with "Version 2.0", confirming that we have completed a Blue/Green deployment.
 
@@ -26,4 +26,4 @@ Are we getting new errors? Is the latency of the two versions similar? Are we ha
 
 Progressive delivery and a correct observability strategy can help you making these decisions.
 
-**IMPORTANT**: Before continuing, let's revert the second version of the `advertisements` service to make sure the rest of the scenario works correctly: `kubectl delete -f manifest-files/servicenetwork/advertisements.yaml`{{execute}}
+**IMPORTANT**: Before continuing, let's revert the second version of the `advertisements` service to make sure the rest of the labs work correctly: `kubectl delete -f manifest-files/servicenetwork/advertisements.yaml`{{execute}}

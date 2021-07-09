@@ -1,29 +1,48 @@
-We are going to apply a second deployment for the `advertisements` service, that uses a different docker image label, that makes the ads service to always delivery a banner that states `Version 2.0`, so we can easily distinguish them.
+Our Ecommerce logo is the Spree standard one:
 
-Open the file called `manifest-files/servicenetwork/advertisements.yaml`{{open}} and try to spot the differences with the original one. You can spot the differences running the following `diff` command: `diff -u manifest-files/ecommerce-v1/advertisements.yaml  manifest-files/servicenetwork/advertisements.yaml`{{execute}}
+![Screenshot of the Spree logo](./assets/spree_logo.png)
 
-As you can see we have modified the image tag and the value for the `DD_VERSION` environment variable, to make sure we can track correctly both versions in Datadog. Also, you can see that this second deployment will have the exact same labels as the first one, and, therefore, will be selected by the `frontend` service selector as well.
+We are going to apply a second deployment for the `frontend` service, that uses a different docker image label, that changes the default logo, so we can distinguish them easily.
 
-Let's apply this second deployment: `kubectl apply -f manifest-files/servicenetwork/advertisements.yaml`{{execute}}
+Open the file called `manifest-files/ingress/ecommerce-v2/frontend.yaml`{{open}} and try to spot the differences with the original one. You can spot the differences running the following `diff` command: `diff -u manifest-files/ecommerce-v1/frontend.yaml  manifest-files/ingress/ecommerce-v2/frontend.yaml`{{execute}}
 
-We have now two different deployments with the same set of labels, running different docker images: `kubectl get deployments -n ns1 -l service=advertisements --show-labels`{{€xecute}}. The pods part of each of these deployments also share the set of labels: `kubectl get pods -n ns1 -l service=advertisements --show-labels`{{€xecute}}
+As you can see we have modified the image tag and the value for the `DD_VERSION` environment variable, to make sure we can track correctly both versions in Datadog. Also, you can see that this second deployment will change the labels slightly, because we will also create a second different Kubernetes service for this one.
 
-The `frontend` service will select any pod that matches those two common labels: `kubectl get svc advertisements -n ns1 -o custom-columns="Name:metadata.name,Selector:spec.selector"`{{execute}}, and it will select one of the two randomnly with the same weight.
+Open the file called `manifest-files/ingress/ecommerce-v2/frontend-svc.yaml`{{open}} and try to spot the differences with the first frontend service. You can spot the differences running the following `diff` command: `diff -u manifest-files/ecommerce-v1/frontend-svc.yaml  manifest-files/ingress/ecommerce-v2/frontend-svc.yaml`{{execute}}
 
-Go back to the Ecommerce application and refresh the page. Sometimes you should get the ads banner "Version 1.0" and sometimes you will get the one with "Version 2.0", confirming that we have completed a Blue/Green deployment.
+As you can see, the only difference is that this second service selects the pods with the label `service:frontendv2`, which is the label we had changed for this second deployment.
 
-![Screenshot of Ecommerce app with ads version 2.0](./assets/ads_v2.png)
+Let's apply the second deployment and the second service: `kubectl apply -f manifest-files/ingress/ecommerce-v2/frontend.yaml && kubectl apply -f manifest-files/ingress/ecommerce-v2/frontend-svc.yaml`{{execute}}
 
-Let's go back to our [Advertisements Service Overview page](https://app.datadoghq.com/apm/service/advertisements/). Datadog is now tracking two different versions of the `advertisements` service:
+We have now two different deployments for `frontend` with a different set of labels, running different docker images: `kubectl get deployments -n ns1  --show-labels | grep frontend`{{execute}}.
 
-![Screenshot of ads service overview page with two versions](./assets/ads_service_page_v2.png)
+Click again on the "Service Ingress" tab and refresh several times the page. As you can see, you still only see version 1.0 for the `frontend` service. The reason is that we haven't added an Ingress object for the second service. Let's do that now.
+
+We are going to create a second Ingress object for our canary service. Open the file called `manifest-files/ingress/ecommerce-v2/ingressv2.yaml`{{open}} and try to spot the differences with the first frontend Ingress object. You can spot the differences running the following `diff` command: `diff -u manifest-files/ecommerce-v1/ingress/ingressv1.yaml  manifest-files/ingress/ecommerce-v2/ingressv2.yaml`{{execute}}
+
+You can see that we have added two NGINX annotations:
+
+```
++    nginx.ingress.kubernetes.io/canary: "true"
++    nginx.ingress.kubernetes.io/canary-weight: "50"
+```
+
+With those two annonations we are telling the NGINX Ingress controller that this second Ingress is a canary of the first one (it has the same `path`), and to direct 50% of the traffic to this canary service.
+
+Let's apply that new Ingress object: `kubectl apply -f manifest-files/ingress/ecommerce-v2/ingressv2.yaml`{{execute}}
+
+Refresh several times again the page for the `Ingress Service`. You will see that sometimes you are getting the old logo and sometimes you are getting the the one:
+
+![Screenshot of new logo](./assets/storedog_logo.png)
+
+Let's navigate to the [Frontend Service Overview page](https://app.datadoghq.com/apm/service/store-frontend) in Datadog. Datadog is now tracking two different versions of the `store-frontend` service:
+
+![Screenshot of frontend service overview page with two versions](./assets/frontend_service_page_v2.png)
 
 Click on the `2.0` row and you will get a comparison between the two versions:
 
-![Screenshot of ads service comparison between version 1.0 and version 2.0](./assets/ads_service_comparison.png)
+![Screenshot of frontend service comparison between version 1.0 and version 2.0](./assets/frontend_service_comparison.png)
 
 Are we getting new errors? Is the latency of the two versions similar? Are we happy with progressively moving this release forward or shall we rollback?
 
-Progressive delivery and a correct observability strategy can help you making these decisions.
-
-**IMPORTANT**: Before continuing, let's revert the second version of the `advertisements` service to make sure the rest of the scenario works correctly: `kubectl delete -f manifest-files/servicenetwork/advertisements.yaml`{{execute}}
+**IMPORTANT**: Before continuing, let's revert the second version of the `frontend` service to make sure the rest of the labs work correctly: `kubectl delete -f manifest-files/ingress/ecommerce-v2/`{{execute}}

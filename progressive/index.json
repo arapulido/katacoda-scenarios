@@ -37,6 +37,10 @@
       {
         "title": "Ingress for Frontend",
         "text": "step7.md"
+      },
+      {
+        "title": "Canary with Ingress",
+        "text": "step8.md"
       }
     ],
     "finish": {

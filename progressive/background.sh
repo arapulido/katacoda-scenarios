@@ -15,7 +15,6 @@ if [ "$STATUS" != "complete" ]; then
   chmod 700 get_helm.sh
   ./get_helm.sh
   helm repo add datadog https://helm.datadoghq.com
-  helm repo add nginx https://helm.nginx.com/stable
   helm repo update
 
   NNODES=$(kubectl get nodes | grep Ready | wc -l)

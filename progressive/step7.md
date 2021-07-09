@@ -1,6 +1,8 @@
-We will be using NGINX as our Ingress Controller. This is already running for you in your cluster. Check that the NGINX Ingress Controller is running correctly by executing this command: `kubectl get pods -n ingress-nginx -l kubernetes.io/component=controller`{{execute}} You should get an output similar to this one:
+We will be using NGINX as our Ingress Controller. This is already running for you in your cluster. Check that the NGINX Ingress Controller is running correctly by executing this command: `kubectl get pods -n ingress-nginx -l app.kubernetes.io/component=controller`{{execute}} You should get an output similar to this one:
 
 ```
+NAME                                       READY   STATUS    RESTARTS   AGE
+ingress-nginx-controller-6c6f5c766-cngvv   1/1     Running   0          29m
 ```
 
 Clicking on the "Ingress Service" tab will open the NodePort for the Ingress service. Click on that tab. As we don't have yet any Ingress objects created you should get a webpage similar to this:

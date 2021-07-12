@@ -17,6 +17,7 @@ if [ "$STATUS" != "complete" ]; then
   helm repo add datadog https://helm.datadoghq.com
   helm repo update
 
+
   NNODES=$(kubectl get nodes | grep Ready | wc -l)
 
   while [ "$NNODES" != "2" ]; do
@@ -30,6 +31,11 @@ if [ "$STATUS" != "complete" ]; then
     sleep 0.3
     NPODS=$(kubectl get pods -n kube-system -l component=kube-apiserver --field-selector=status.phase=Running | grep -v NAME | wc -l)
   done
+
+  # Add Istio
+  curl -O https://storage.googleapis.com/istio-release/releases/1.10.2/istioctl-1.10.2-linux-amd64.tar.gz && tar xzvf istioctl-1.10.2-linux-amd64.tar.gz 
+  mv istioctl /usr/local/bin
+  istioctl install --set profile=demo -y
 
   wall -n "Deploying NGINX Ingress controller"
   kubectl apply -f manifest-files/ingress-controller

@@ -45,6 +45,14 @@
       {
         "title": "Ingress on different namespaces",
         "text": "step9.md"
+      },
+      {
+        "title": "Set up Ecommerce app with Service Mesh",
+        "text": "step10.md"
+      },
+      {
+        "title": "Canary deployments with Istio",
+        "text": "step11.md"
       }
     ],
     "finish": {
@@ -75,6 +83,10 @@
       {
         "name": "Ingress Service",
         "port": 32000
+      },
+      {
+        "name": "Istio Ingress Gateway",
+        "port": 30003
       }
     ]
   },

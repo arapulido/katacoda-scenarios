@@ -33,9 +33,8 @@ if [ "$STATUS" != "complete" ]; then
   done
 
   # Add Istio
-  curl -O https://storage.googleapis.com/istio-release/releases/1.10.2/istioctl-1.10.2-linux-amd64.tar.gz && tar xzvf istioctl-1.10.2-linux-amd64.tar.gz 
-  mv istioctl /usr/local/bin
-  istioctl install --set profile=demo -y
+  wall -n "Deploying Istio"
+  kubectl apply -f manifest-files/istio/istio-config.yaml
 
   wall -n "Deploying NGINX Ingress controller"
   kubectl apply -f manifest-files/ingress-controller
@@ -44,6 +43,7 @@ if [ "$STATUS" != "complete" ]; then
   kubectl create ns database
   kubectl create ns ns1
   kubectl create ns ns2
+  kubectl create ns ns3
   kubectl create ns fake-traffic
   kubectl apply -f manifest-files/database -n database
   kubectl apply -f manifest-files/ecommerce-v1 -n ns1 

@@ -13,7 +13,7 @@ We are going to create a first Ingress object to redirect all traffic, regardles
 
 Let's apply that new Ingress object: `kubectl apply -f manifest-files/ingress/ingressv1.yaml`{{execute}}
 
-Once the Ingress object have been created, refresh the NGINX page and you should get now the Ecommerce application:
+Once the Ingress object has been created, refresh the NGINX page and you should get now the Ecommerce application:
 
 ![Screenshot of Ecommerce app](./assets/app.png)
 

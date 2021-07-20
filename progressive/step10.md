@@ -7,6 +7,10 @@ istio-ingressgateway   1/1     1            1           37m
 istiod                 1/1     1            1           38m
 ```
 
+Datadog comes with an out-of-the-box Istio integration. Open [the integration tile in Datadog](https://app.datadoghq.com/account/settings#integrations/istio) and if it is not already install it, click on Install:
+
+![Screenshot of Istio Integration](./assets/istion_integration.png)
+
 We are going to tell Istio to add the Envoy proxy to any pod deployed to namespace `ns3`, by adding it the label `istio-injection`:
 
 `kubectl label namespace ns3 istio-injection=enabled`{{execute}}
@@ -22,7 +26,7 @@ Let's now deploy the E-commerce application in the `ns3` namespace:
 
 `kubectl apply -f manifest-files/istio/ecommerce-istio -n ns3`{{execute}}
 
-Let's check the pods that are now running in that namespace: `kubectl get pods -n ns3`{{execute}} You should get an output similar to this one (If not all containers are Ready yet, you can execute the previous command several times, until you get all pods up and running):
+Let's check the pods that are now running in that namespace: `kubectl get pods -n ns3`{{execute}} You should get an output similar to this one (If not all containers are Ready yet, you can execute this command several times, until you get all pods up and running):
 
 ```
 NAME                              READY   STATUS    RESTARTS   AGE
@@ -41,3 +45,13 @@ frontend-575bd7dddb-kqnkw         arapulido/frontend:1.0,docker.io/istio/proxyv2
 ```
 
 As you can see, Istio has injected an Envoy proxy container into each of the pods deployed to namespace `ns3`. All comunication between those pods will happen through the Envoy proxy sidecar containers.
+
+The E-commerce application is deployed to namespace `ns3` but not accessible from the outside. To make it accessible, create an [Istio Ingress Gateway](https://istio.io/latest/docs/concepts/traffic-management/#gateways), which is similar to the Kubernetes Ingress object, but specific for Istio.
+
+Open the file called `manifest-files/istio/frontend-gateway.yaml`{{open}}. Browse it around to understand what we are doing here. Basically, we are saying that for any path, and any host, to redirect all external traffic to our `frontend` service in namespace `ns3`.
+
+Let's apply it: `kubectl apply -f manifest-files/istio/frontend-gateway.yaml`{{execute}}
+
+Once the Gateway and VirtualService objects have been created, click on the "Istio Ingress Gateway" to access the E-commerce application through Istio Gatway:
+
+![Screenshot of Ecommerce app](./assets/app.png)

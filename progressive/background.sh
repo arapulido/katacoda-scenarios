@@ -6,7 +6,7 @@ STATUS=$(cat /root/status.txt)
 
 if [ "$STATUS" != "complete" ]; then
   echo ""> /root/status.txt
-  wall -n "Creating ecommerce deployment"
+  wall -n "Setting up the Kubernetes cluster"
 
   git clone -b progressive https://github.com/arapulido/katacoda-scenarios-files.git manifest-files
 
@@ -34,6 +34,8 @@ if [ "$STATUS" != "complete" ]; then
 
   # Add Istio
   wall -n "Deploying Istio"
+  kubectl create ns istio-system
+  kubectl apply -f manifest-files/istio/istio-config.yaml
   kubectl apply -f manifest-files/istio/istio-config.yaml
 
   wall -n "Deploying NGINX Ingress controller"

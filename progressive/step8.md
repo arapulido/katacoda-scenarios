@@ -33,7 +33,7 @@ You can see that apart from the  NGINX canary annotations, we are creating this 
 +    nginx.ingress.kubernetes.io/canary-weight: "50"
 ```
 
-Let's apply that new Ingress object: `kubectl apply -f manifest-files/ingress_ns/ingressv2.yaml`{{execute}}
+Let's apply that new Ingress object: `kubectl apply -f manifest-files/ingress/ecommerce-v2/ingressv2.yaml`{{execute}}
 
 Refresh several times again the page for the `Ingress Service`. You will see that sometimes you are getting the old logo and sometimes you are getting the new one:
 

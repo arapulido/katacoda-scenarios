@@ -11,6 +11,20 @@ Clicking on the "Ingress Service" tab will open the NodePort for the Ingress ser
 
 We are going to create a first Ingress object to redirect all traffic, regardless of the host, to our `frontend` service in the `ns1` namespace. Open the file called `manifest-files/ingress/ingressv1.yaml`{{open}} As you can see, for all paths with a prefix of `/` (basically, any path) will be redirected to the `frontend` service.
 
+```
+[...]
+  - http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: frontend
+            port:
+              number: 80
+[...]
+```
+
 Let's apply that new Ingress object: `kubectl apply -f manifest-files/ingress/ingressv1.yaml`{{execute}}
 
 Once the Ingress object has been created, refresh the NGINX page and you should get now the Ecommerce application:

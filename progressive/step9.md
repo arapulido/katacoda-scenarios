@@ -25,41 +25,23 @@ Click again on the "Service Ingress" tab and refresh several times the page. As 
 
 We are going to create a second Ingress object for our canary service. Open the file called `manifest-files/ingress_ns/ingressv2.yaml`{{open}} and try to spot the differences with the first frontend Ingress object. You can spot the differences running the following `diff` command: `diff -u manifest-files/ingress/ingressv1.yaml  manifest-files/ingress_ns/ingressv2.yaml`{{execute}}
 
-Our Ecommerce logo is the Spree standard one:
-
-![Screenshot of the Spree logo](./assets/spree_logo.png)
-
-We are going to apply a second deployment for the `frontend` service, that uses a different docker image label, that changes the default logo, so we can distinguish them easily.
-
-Open the file called `manifest-files/ingress/ecommerce-v2/frontend.yaml`{{open}} and try to spot the differences with the original one. You can spot the differences running the following `diff` command: `diff -u manifest-files/ecommerce-v1/frontend.yaml  manifest-files/ingress/ecommerce-v2/frontend.yaml`{{execute}}
-
-As you can see we have modified the image tag and the value for the `DD_VERSION` environment variable, to make sure we can track correctly both versions in Datadog. Also, you can see that this second deployment will change the labels slightly, because we will also create a second different Kubernetes service for this one.
-
-Open the file called `manifest-files/ingress/ecommerce-v2/frontend-svc.yaml`{{open}} and try to spot the differences with the first frontend service. You can spot the differences running the following `diff` command: `diff -u manifest-files/ecommerce-v1/frontend-svc.yaml  manifest-files/ingress/ecommerce-v2/frontend-svc.yaml`{{execute}}
-
-As you can see, the only difference is that this second service selects the pods with the label `service:frontendv2`, which is the label we had changed for this second deployment.
-
-Let's apply the second deployment and the second service: `kubectl apply -f manifest-files/ingress/ecommerce-v2/frontend.yaml && kubectl apply -f manifest-files/ingress/ecommerce-v2/frontend-svc.yaml`{{execute}}
-
-We have now two different deployments for `frontend` with a different set of labels, running different docker images: `kubectl get deployments -n ns1  --show-labels | grep frontend`{{execute}}.
-
-Click again on the "Service Ingress" tab and refresh several times the page. As you can see, you still only see version 1.0 for the `frontend` service. The reason is that we haven't added an Ingress object for the second service. Let's do that now.
-
-We are going to create a second Ingress object for our canary service. Open the file called `manifest-files/ingress/ecommerce-v2/ingressv2.yaml`{{open}} and try to spot the differences with the first frontend Ingress object. You can spot the differences running the following `diff` command: `diff -u manifest-files/ecommerce-v1/ingress/ingressv1.yaml  manifest-files/ingress/ecommerce-v2/ingressv2.yaml`{{execute}}
-
-You can see that we have added two NGINX annotations:
-
 ```
+-  name: frontend-ingress
+-  namespace: ns1
++  name: frontend-ingress
++  namespace: ns2
+   annotations:
+     nginx.ingress.kubernetes.io/rewrite-target: /
 +    nginx.ingress.kubernetes.io/canary: "true"
 +    nginx.ingress.kubernetes.io/canary-weight: "50"
 ```
 
-With those two annonations we are telling the NGINX Ingress controller that this second Ingress is a canary of the first one (it has the same `path`), and to direct 50% of the traffic to this canary service.
+You see that the second Ingress gets deployed in the namespace `ns2`, alongside the second version of our application. Also, this Ingress will be a "canary" of the first one.
 
-Let's apply that new Ingress object: `kubectl apply -f manifest-files/ingress/ecommerce-v2/ingressv2.yaml`{{execute}}
+Let's apply that object: `kubectl apply -f manifest-files/ingress_ns/ingressv2.yaml`{{execute}}
 
-Refresh several times again the page for the `Ingress Service`. You will see that sometimes you are getting the Version 1.0 banner and sometimes you are getting the Version 2.0 one:
+Click again on the "Service Ingress" tab and refresh several times the page. Sometimes you should get the ads banner "Version 1.0" and sometimes you will get the one with "Version 2.0":
 
 ![Screenshot of Ecommerce app with ads version 2.0](./assets/ads_v2.png)
 
-**IMPORTANT**: Before continuing, let's revert the second version of the application to make sure the rest of the labs work correctly: `kubectl delete ns ns2`{{execute}}
+**IMPORTANT**: Before continuing, let's revert the second version of the application to make sure the rest of the scenario works correctly: `kubectl delete ns ns2`{{execute}}

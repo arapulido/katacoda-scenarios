@@ -49,4 +49,8 @@ Click on the `2.0` row and you will get a comparison between the two versions:
 
 Are we getting new errors? Is the latency of the two versions similar? Are we happy with progressively moving this release forward or shall we rollback?
 
+If you wait long enough, you will see that this second version has a slightly higher error rate and it might be safer to rollback. You can get also this information in the `frontend` service overview page:
+
+![Screenshot of frontend service comparison for error rates](./assets/frontend_error_rate.png)
+
 **IMPORTANT**: Before continuing, let's revert the second version of the `frontend` service to make sure the rest of the labs work correctly: `kubectl delete -f manifest-files/ingress/ecommerce-v2/`{{execute}}

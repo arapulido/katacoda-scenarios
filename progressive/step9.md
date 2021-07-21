@@ -44,4 +44,4 @@ Click again on the "Service Ingress" tab and refresh several times the page. Som
 
 ![Screenshot of Ecommerce app with ads version 2.0](./assets/ads_v2.png)
 
-**IMPORTANT**: Before continuing, let's revert the second version of the application to make sure the rest of the scenario works correctly: `kubectl delete ns ns2`{{execute}}
+**IMPORTANT**: Before continuing, let's remove the first and the second version of the application to make sure the rest of the scenario works correctly: `kubectl delete ns ns1 && kubectl delete ns ns2`{{execute}}

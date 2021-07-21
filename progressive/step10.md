@@ -55,3 +55,9 @@ Let's apply it: `kubectl apply -f manifest-files/istio/frontend-gateway.yaml`{{e
 Once the Gateway and VirtualService objects have been created, click on the "Istio Ingress Gateway" to access the E-commerce application through Istio Gatway:
 
 ![Screenshot of Ecommerce app](./assets/app.png)
+
+Let's open the [Istio default dashboard](https://app.datadoghq.com/screen/integration/30320/istio-overview-v15) to see what metrics we are getting from our Istio deployment:
+
+![Screenshot of Istio Dashboard](./assets/istio_dashboard.png)
+
+The "Mesh Metrics" section will collect metrics around the application services that Istio that are part of the mesh. In our case, our E-commerce application running in the `ns3` namespace. The rest of the metrics check for the correct behaviour of Istio in our cluster. As a key component of a cluster, it is very important that we track these Istio metrics and understand them. Although monitoring Istio is out of scope for this workshop, you can read what these metrics are and how to interpret them in [this blog post](https://www.datadoghq.com/blog/istio-metrics/).

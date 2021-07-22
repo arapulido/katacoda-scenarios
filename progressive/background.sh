@@ -8,16 +8,6 @@ if [ "$STATUS" != "complete" ]; then
   echo ""> /root/status.txt
   wall -n "Setting up the Kubernetes cluster"
 
-  git clone -b progressive https://github.com/arapulido/katacoda-scenarios-files.git manifest-files
-
-  # Add Helm 3
-  curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
-  chmod 700 get_helm.sh
-  ./get_helm.sh
-  helm repo add datadog https://helm.datadoghq.com
-  helm repo update
-
-
   NNODES=$(kubectl get nodes | grep Ready | wc -l)
 
   while [ "$NNODES" != "2" ]; do
@@ -32,6 +22,16 @@ if [ "$STATUS" != "complete" ]; then
     NPODS=$(kubectl get pods -n kube-system -l component=kube-apiserver --field-selector=status.phase=Running | grep -v NAME | wc -l)
   done
 
+  # Get the manifest files for the scenario
+  git clone -b progressive https://github.com/arapulido/katacoda-scenarios-files.git manifest-files
+
+  # Add Helm 3
+  curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+  chmod 700 get_helm.sh
+  ./get_helm.sh
+  helm repo add datadog https://helm.datadoghq.com
+  helm repo update
+
   # Add Istio
   wall -n "Deploying Istio"
   kubectl create ns istio-system
@@ -41,7 +41,7 @@ if [ "$STATUS" != "complete" ]; then
   wall -n "Deploying NGINX Ingress controller"
   kubectl apply -f manifest-files/ingress-controller
 
-  wall -n "Creating the ecommerce application and deploying datadog"
+  wall -n "Creating the ecommerce application"
   kubectl create ns database
   kubectl create ns ns1
   kubectl create ns ns2

@@ -1,5 +1,3 @@
-Wait some minutes until your environment is setup. Once it is setup, you will see the following message in your terminal:`OK, the training environment is installed and ready to go.`
-
 The first thing we are going to do is to deploy the Datadog Helm chart passing our API key:
 
 `helm install datadog --set datadog.apiKey=$DD_API_KEY datadog/datadog -f manifest-files/datadog/datadog-helm-values.yaml --version=2.16.6`{{execute}}

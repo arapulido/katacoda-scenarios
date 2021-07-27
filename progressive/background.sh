@@ -41,7 +41,7 @@ if [ "$STATUS" != "complete" ]; then
   wall -n "Deploying NGINX Ingress controller"
   kubectl apply -f manifest-files/ingress-controller
 
-  wall -n "Creating the ecommerce application"
+  wall -n "Deploying the ecommerce application"
   kubectl create ns database
   kubectl create ns ns1
   kubectl create ns ns2

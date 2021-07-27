@@ -10,11 +10,22 @@ As you can see we have modified the image tag and the value for the `DD_VERSION`
 
 Open the file called `manifest-files/ingress/ecommerce-v2/frontend-svc.yaml`{{open}} and try to spot the differences with the first frontend service. You can spot the differences running the following `diff` command: `diff -u manifest-files/ecommerce-v1/frontend-svc.yaml  manifest-files/ingress/ecommerce-v2/frontend-svc.yaml`{{execute}}
 
-As you can see, the only difference is that this second service selects the pods with the label `service:frontendv2`, which is the label we had changed for this second deployment.
+As you can see, the only difference is that this second service selects the pods with the label `service:frontendv2`, which is the label we had changed for this second deployment. We have also removed the NodePort for this second service, as we will be accessing it through Ingress.
+
+```
+   selector:
+-    service: frontend
++    service: frontendv2
+```
 
 Let's apply the second deployment and the second service: `kubectl apply -f manifest-files/ingress/ecommerce-v2/frontend.yaml && kubectl apply -f manifest-files/ingress/ecommerce-v2/frontend-svc.yaml`{{execute}}
 
-We have now two different deployments for `frontend` with a different set of labels, running different docker images: `kubectl get deployments -n ns1  --show-labels | grep frontend`{{execute}}.
+We have now two different deployments for `frontend` with a different set of labels, running different docker images: `kubectl get deployments -n ns1  --show-labels | grep frontend`{{execute}} You may need to rerun this command several times until you see the `frontendv2` deployment ready.
+
+```
+frontend         1/1     1            1           21m   app=ecommerce,service=frontend
+frontendv2       1/1     1            1           27s   app=ecommerce,service=frontendv2
+```
 
 Click again on the "Service Ingress" tab and refresh several times the page. As you can see, you still only see version 1.0 for the `frontend` service. The reason is that we haven't added an Ingress object for the second service. Let's do that now.
 

@@ -9,7 +9,7 @@ istiod                 1/1     1            1           38m
 
 Datadog comes with an out-of-the-box Istio integration. Open [the integration tile in Datadog](https://app.datadoghq.com/account/settings#integrations/istio) and if it is not already install it, click on Install:
 
-![Screenshot of Istio Integration](./assets/istion_integration.png)
+![Screenshot of Istio Integration](./assets/istio_integration.png)
 
 We are going to tell Istio to add the Envoy proxy to any pod deployed to namespace `ns3`, by adding it the label `istio-injection`:
 
@@ -52,7 +52,7 @@ Open the file called `manifest-files/istio/frontend-gateway.yaml`{{open}}. Brows
 
 Let's apply it: `kubectl apply -f manifest-files/istio/frontend-gateway.yaml`{{execute}}
 
-Once the Gateway and VirtualService objects have been created, click on the "Istio Ingress Gateway" to access the E-commerce application through Istio Gatway:
+Once the Gateway and VirtualService objects have been created, click on the "Istio Ingress Gateway" tab to access the E-commerce application through Istio Gatway:
 
 ![Screenshot of Ecommerce app](./assets/app.png)
 

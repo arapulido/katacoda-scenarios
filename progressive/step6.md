@@ -6,7 +6,7 @@ As you can see we have modified the image tag and the value for the `DD_VERSION`
 
 Let's apply this second deployment: `kubectl apply -f manifest-files/servicenetwork/advertisements.yaml`{{execute}}
 
-We have now two different deployments with the same set of labels, running different docker images: `kubectl get deployments -n ns1 -l service=advertisements --show-labels`{{€xecute}}. The pods that are part of each of these deployments also share the set of labels: `kubectl get pods -n ns1 -l service=advertisements --show-labels`{{€xecute}}
+We have now two different deployments with the same set of labels, running different docker images: `kubectl get deployments -n ns1 -l service=advertisements --show-labels`{{execute}}. The pods that are part of each of these deployments also share the set of labels: `kubectl get pods -n ns1 -l service=advertisements --show-labels`{{execute}}
 
 The `advertisements` service will select any pod that matches those two common labels: `kubectl get svc advertisements -n ns1 -o custom-columns="Name:metadata.name,Selector:spec.selector"`{{execute}}, and it will select one of the two randomnly with the same weight.
 

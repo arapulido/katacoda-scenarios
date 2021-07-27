@@ -1,6 +1,6 @@
 As you have seen, VirtualServices can be used to bind traffic from a Gateway to a particular internal Kubernetes "host", but VirtualServices can be used to create rules to manage internal traffic as well.
 
-We are going to use VirtualServices in combination with [DestinationsRules](https://istio.io/latest/docs/reference/config/networking/destination-rule/) to be able to create a canary deployment for the `advertisements` service. Destination Rules are rules to configures what happens to your network traffic once it has reached the destination defined in a Virtual Service.
+We are going to use VirtualServices in combination with [DestinationsRules](https://istio.io/latest/docs/reference/config/networking/destination-rule/) to be able to create a canary deployment for the `advertisements` service. Destination Rules are rules to configure what happens to your network traffic once it has reached the destination defined in a Virtual Service.
 
 We are going to create a second deployment of the `advertisements` container. Open the file called `manifest-files/istio/ads_v2/advertisements_v2.yaml`{{open}} Can you spot the differences between this deployment and the current one running on namespace `ns3`. You can see the differences running this command: `diff -u manifest-files/istio/ecommerce-istio/advertisements.yaml manifest-files/istio/ads_v2/advertisements_v2.yaml`{{execute}}
 

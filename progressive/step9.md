@@ -2,9 +2,9 @@ We are going to deploy version 2.0 for the `advertisements` service, but this ti
 
 As this is not the service that the Ingress object calls, but rather a service that the `frontend` service calls, we are going to duplicate our application in a second namespace.
 
-Open the folder called `manifest-files/ingress_ns/ecommerce-v2`{{open}} and browse around. You can see the differences between the manifests in this folder and the one in `ecommerce-v1` by running this command: `diff -u manifest-files/ecommerce-v1 manifest-files/ingress_ns/ecommerce-v2`{{execute}}
+Open the folder called `manifest-files/ingress_ns/ecommerce-v2` and browse around. You can see the differences between the manifests in this folder and the one in `ecommerce-v1` by running this command: `diff -u manifest-files/ecommerce-v1 manifest-files/ingress_ns/ecommerce-v2`{{execute}}
 
-As you can see, the only differences are that: we are creating the services and deployments in the `ns2` namespace; we have changed the NodePort for the `frontend` service to avoid clashes, and we are using the `2.0` label for the `advertisements` docker image (similar to what we did in the labs about Service Networking).
+As you can see, the only differences are that: we are creating the services and deployments in the `ns2` namespace; we have changed the NodePort for the `frontend` service to avoid clashes, and we are using the `2.0` label for the `advertisements` docker image and for `DD_VERSION` (similar to what we did in the labs about Service Networking).
 
 Let's apply the complete folder: `kubectl apply -f manifest-files/ingress_ns/ecommerce-v2/`{{execute}}
 

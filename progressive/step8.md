@@ -31,17 +31,23 @@ Click again on the "Service Ingress" tab and refresh several times the page. As 
 
 We are going to create a second Ingress object for our canary service. Open the file called `manifest-files/ingress/ecommerce-v2/ingressv2.yaml`{{open}} and try to spot the differences with the first frontend Ingress object. You can spot the differences running the following `diff` command: `diff -u manifest-files/ingress/ingressv1.yaml  manifest-files/ingress/ecommerce-v2/ingressv2.yaml`{{execute}}
 
-You can see that apart from the  NGINX canary annotations, we are creating this second Ingress object in the `ns2` namespace, and, therefore, it will reference the `frontend` service in that namespace:
+You can see that apart from the  NGINX canary annotations, this Ingress object will point to the second `frontendv2` service, instead of the first one:
 
 ```
 -  name: frontend-ingress
--  namespace: ns1
-+  name: frontend-ingress
-+  namespace: ns2
++  name: frontend-ingress-v2 
+   namespace: ns1
    annotations:
      nginx.ingress.kubernetes.io/rewrite-target: /
 +    nginx.ingress.kubernetes.io/canary: "true"
 +    nginx.ingress.kubernetes.io/canary-weight: "50"
+
+[...]
+         pathType: Prefix
+         backend:
+           service:
+-            name: frontend
++            name: frontendv2
 ```
 
 Let's apply that new Ingress object: `kubectl apply -f manifest-files/ingress/ecommerce-v2/ingressv2.yaml`{{execute}}

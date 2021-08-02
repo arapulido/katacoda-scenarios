@@ -27,12 +27,20 @@
         "text": "step4.md"
       },
       {
+        "title": "You're done for now!",
+        "text": "interim.md"
+      },
+      {
         "title": "Service Overview Page",
         "text": "step5.md"
       },
       {
         "title": "Service Networking",
         "text": "step6.md"
+      },
+      {
+        "title": "You're done for now!",
+        "text": "interim.md"
       },
       {
         "title": "Ingress for Frontend",
@@ -43,16 +51,32 @@
         "text": "step8.md"
       },
       {
+        "title": "You're done for now!",
+        "text": "interim.md"
+      },
+      {
         "title": "Ingress on different namespaces",
         "text": "step9.md"
+      },
+      {
+        "title": "You're done for now!",
+        "text": "interim.md"
       },
       {
         "title": "Set up Ecommerce app with Service Mesh",
         "text": "step10.md"
       },
       {
-        "title": "Canary deployments with Istio",
+        "title": "You're done for now!",
+        "text": "interim.md"
+      },
+      {
+        "title": "Destination Rules with Istio",
         "text": "step11.md"
+      },
+      {
+        "title": "Canary deployments with Istio",
+        "text": "step12.md"
       }
     ],
     "finish": {

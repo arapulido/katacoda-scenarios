@@ -18,7 +18,7 @@ Let's go back to our [Advertisements Service Overview page](https://app.datadogh
 
 ![Screenshot of ads service overview page with two versions](./assets/ads_service_page_v2.png)
 
-Click on the `2.0` row and you will get a comparison between the two versions:
+Click on the `2.0` row under "Deployments" and you will get a comparison between the two versions:
 
 ![Screenshot of ads service comparison between version 1.0 and version 2.0](./assets/ads_service_comparison.png)
 

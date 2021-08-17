@@ -21,7 +21,7 @@ discounts        ClusterIP   10.102.145.2    <none>        5001/TCP       75m
 frontend         NodePort    10.108.72.123   <none>        80:30002/TCP   74m
 ```
 
-Click again on the "Service Ingress" tab and refresh several times the page. As you can see, you still only see version 1.0 for the `advertisements` service. The reason is that we haven't added an Ingress object for the `frontend` service in the `ns2` namespace. Let's do that now.
+Click again on the "Ingress Service" tab and refresh several times the page. As you can see, you still only see version 1.0 for the `advertisements` service. The reason is that we haven't added an Ingress object for the `frontend` service in the `ns2` namespace. Let's do that now.
 
 We are going to create a second Ingress object for our canary service. Open the file called `manifest-files/ingress_ns/ingressv2.yaml`{{open}} and try to spot the differences with the first frontend Ingress object. You can spot the differences running the following `diff` command: `diff -u manifest-files/ingress/ingressv1.yaml  manifest-files/ingress_ns/ingressv2.yaml`{{execute}}
 
@@ -40,7 +40,7 @@ You see that the second Ingress gets deployed in the namespace `ns2`, alongside 
 
 Let's apply that object: `kubectl apply -f manifest-files/ingress_ns/ingressv2.yaml`{{execute}}
 
-Click again on the "Service Ingress" tab and refresh several times the page. Sometimes you should get the ads banner "Version 1.0" and sometimes you will get the one with "Version 2.0":
+Click again on the "Ingress Service" tab and refresh several times the page. Sometimes you should get the ads banner "Version 1.0" and sometimes you will get the one with "Version 2.0":
 
 ![Screenshot of Ecommerce app with ads version 2.0](./assets/ads_v2.png)
 

@@ -27,7 +27,7 @@ frontend         1/1     1            1           21m   app=ecommerce,service=fr
 frontendv2       1/1     1            1           27s   app=ecommerce,service=frontendv2
 ```
 
-Click again on the "Service Ingress" tab and refresh several times the page. As you can see, you still only see version 1.0 for the `frontend` service. The reason is that we haven't added an Ingress object for the second service. Let's do that now.
+Click again on the "Ingress Service" tab and refresh several times the page. As you can see, you still only see version 1.0 for the `frontend` service. The reason is that we haven't added an Ingress object for the second service. Let's do that now.
 
 We are going to create a second Ingress object for our canary service. Open the file called `manifest-files/ingress/ecommerce-v2/ingressv2.yaml`{{open}} and try to spot the differences with the first frontend Ingress object. You can spot the differences running the following `diff` command: `diff -u manifest-files/ingress/ingressv1.yaml  manifest-files/ingress/ecommerce-v2/ingressv2.yaml`{{execute}}
 
@@ -56,11 +56,11 @@ Refresh several times again the page for the `Ingress Service`. You will see tha
 
 ![Screenshot of new logo](./assets/storedog_logo.png)
 
-Let's navigate to the [Frontend Service Overview page](https://app.datadoghq.com/apm/service/store-frontend) in Datadog. Datadog is now tracking two different versions of the `store-frontend` service:
+Let's navigate to the [Frontend Service Overview page](https://app.datadoghq.com/apm/service/store-frontend/) in Datadog. Datadog is now tracking two different versions of the `store-frontend` service:
 
 ![Screenshot of frontend service overview page with two versions](./assets/frontend_service_page_v2.png)
 
-Click on the `2.0` row and you will get a comparison between the two versions:
+Click on the `2.0` row under "Deployments" and you will get a comparison between the two versions:
 
 ![Screenshot of frontend service comparison between version 1.0 and version 2.0](./assets/frontend_service_comparison.png)
 

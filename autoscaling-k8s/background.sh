@@ -35,7 +35,6 @@ if [ "$STATUS" != "complete" ]; then
   NPODS=$(kubectl get pods --field-selector=status.phase=Running | grep -v NAME | wc -l)
 
   while [ "$NPODS" != "4" ]; do
-    wall -n "here"
     sleep 0.3
     NPODS=$(kubectl get pods --field-selector=status.phase=Running | grep -v NAME | wc -l)
   done

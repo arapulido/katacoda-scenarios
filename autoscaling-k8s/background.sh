@@ -25,9 +25,13 @@ if [ "$STATUS" != "complete" ]; then
   done
 
   wall -n "Deploying metrics server, kube-state-metrics and commerce app"
+  sleep 1
   kubectl create ns fake-traffic
+  sleep 1
   kubectl apply -f k8s-manifests/metrics-server/
+  sleep 1
   kubectl apply -f k8s-manifests/kube-state-metrics/
+  sleep 1
   kubectl apply -f k8s-manifests/ecommerce-app/
   sleep 1
 

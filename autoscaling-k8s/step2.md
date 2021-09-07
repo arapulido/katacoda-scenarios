@@ -1,10 +1,10 @@
 The first thing we are going to do is to deploy the Datadog Helm chart passing our API key:
 
-`helm install datadog --set datadog.apiKey=$DD_API_KEY datadog/datadog -f manifest-files/datadog/datadog-helm-values.yaml --version=2.16.6`{{execute}}
+`helm install datadog --set datadog.apiKey=$DD_API_KEY datadog/datadog -f k8s-manifests/datadog/datadog-helm-values.yaml --version=2.16.6`{{execute}}
 
 Let's check the workloads that have been deployed:
 
-`kubectl get deployments`{{execute}}
+`kubectl get deployments | grep datadog`{{execute}}
 
 ```
 NAME                         READY   UP-TO-DATE   AVAILABLE   AGE

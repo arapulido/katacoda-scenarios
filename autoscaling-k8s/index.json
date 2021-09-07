@@ -60,34 +60,6 @@
         "file": "wait-datadog.sh",
         "target": "/usr/local/bin",
         "chmod": "+x"
-      },
-      {
-        "file": "datadog-agent.yaml",
-        "target": "/root/datadog/"
-      },
-      {
-        "file": "node-agent-rbac.yaml",
-        "target": "/root/datadog/"
-      },
-      {
-        "file": "datadog-agent-with-cluster-agent.yaml",
-        "target": "/root/datadog/"
-      },
-      {
-        "file": "datadog-cluster-agent.yaml",
-        "target": "/root/datadog/"
-      },
-      {
-        "file": "cluster-agent-rbac.yaml",
-        "target": "/root/datadog/"
-      },
-      {
-        "file": "hpa-rbac.yaml",
-        "target": "/root/datadog/"
-      },
-      {
-        "file": "datadogmetrics_crd.yaml",
-        "target": "/root/datadog/"
       }
     ]
     }

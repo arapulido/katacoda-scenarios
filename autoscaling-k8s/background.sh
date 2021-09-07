@@ -8,7 +8,15 @@ if [ "$STATUS" != "complete" ]; then
   echo ""> /root/status.txt
   wall -n "Setting up the environment"
 
-  git clone https://github.com/arapulido/autoscaling-workshop-files.git k8s-manifests
+  # Get the manifest files for the scenario
+  git clone -b autoscaling https://github.com/arapulido/katacoda-scenarios-files.git k8s-manifests
+
+  # Add Helm 3
+  curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+  chmod 700 get_helm.sh
+  ./get_helm.sh
+  helm repo add datadog https://helm.datadoghq.com
+  helm repo update
 
   NNODES=$(kubectl get nodes | grep Ready | wc -l)
 
@@ -29,8 +37,6 @@ if [ "$STATUS" != "complete" ]; then
   kubectl create ns fake-traffic
   sleep 1
   kubectl apply -f k8s-manifests/metrics-server/
-  sleep 1
-  kubectl apply -f k8s-manifests/kube-state-metrics/
   sleep 1
   kubectl apply -f k8s-manifests/ecommerce-app/
   sleep 1

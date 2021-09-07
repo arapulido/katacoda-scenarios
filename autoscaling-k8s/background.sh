@@ -6,7 +6,7 @@ STATUS=$(cat /root/status.txt)
 
 if [ "$STATUS" != "complete" ]; then
   echo ""> /root/status.txt
-  wall -n "Creating ecommerce deployment"
+  wall -n "Setting up the environment"
 
   git clone https://github.com/arapulido/autoscaling-workshop-files.git k8s-manifests
 
@@ -24,7 +24,7 @@ if [ "$STATUS" != "complete" ]; then
     NPODS=$(kubectl get pods -n kube-system -l component=kube-apiserver --field-selector=status.phase=Running | grep -v NAME | wc -l)
   done
 
-  echo "Applying metrics server, kube-state-metrics and commerce app"
+  wall -n "Deploying metrics server, kube-state-metrics and commerce app"
   kubectl create ns fake-traffic
   kubectl apply -f k8s-manifests/metrics-server/
   kubectl apply -f k8s-manifests/kube-state-metrics/

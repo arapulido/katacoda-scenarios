@@ -12,7 +12,7 @@ Clicking on that host will show some system metrics from it, like CPU utilizatio
 
 ## Service Map
 
-As our application receives traffic and is instrumented for APM, we should start seeing some traces arriving within Datadog. Those traces are used to build a diagram of our application’s activity. You can view this diagram by navigating to the [Service Map](https://app.datadoghq.com/apm/map):
+As our application receives traffic and is instrumented for APM, we should start seeing some traces arriving within Datadog. Those traces are used to build a diagram of our application’s activity. You can view this diagram by navigating to the [Service Map](https://app.datadoghq.com/apm/map?env=autoscaling-k8s-workshop):
 
 ![Screenshot of Service Map](./assets/service_map.png)
 

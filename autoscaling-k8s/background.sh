@@ -25,14 +25,17 @@ if [ "$STATUS" != "complete" ]; then
   done
 
   wall -n "Deploying metrics server, kube-state-metrics and commerce app"
+  sleep 1
   kubectl create ns fake-traffic
   kubectl apply -f k8s-manifests/metrics-server/
   kubectl apply -f k8s-manifests/kube-state-metrics/
   kubectl apply -f k8s-manifests/ecommerce-app/
+  sleep 1
 
   NPODS=$(kubectl get pods --field-selector=status.phase=Running | grep -v NAME | wc -l)
 
   while [ "$NPODS" != "4" ]; do
+    wall -n "here"
     sleep 0.3
     NPODS=$(kubectl get pods --field-selector=status.phase=Running | grep -v NAME | wc -l)
   done

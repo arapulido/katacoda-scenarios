@@ -104,31 +104,31 @@ External Metrics
 ----------------
   Total: 1
   Valid: 1
-
-* horizontal pod autoscaler: default/frontendhpaduration
+  
+* horizontal pod autoscaler: default/frontendhpahits
   Metric name: trace.rack.request.hits
   Labels:
   - service: store-frontend
-  Value: 2.2
-  Timestamp: 2020-04-01 08:06:30.000000 UTC
+  Value: 4.2
+  Timestamp: 2021-09-09 15:39:00 UTC (1631201940000)
   Valid: true
 ```
 
-That states that the Cluster Agent is correctly getting the value of the metric requested by our HPA object. Let's get the HPA object again to see if the metric is being reflected there. Execute the following command: `kubectl get hpa frontendhpaduration`{{execute}}:
+That states that the Cluster Agent is correctly getting the value of the metric requested by our HPA object. Let's get the HPA object again to see if the metric is being reflected there. Execute the following command: `kubectl get hpa frontendhpahits`{{execute}}:
 
 ```
-NAME                  REFERENCE             TARGETS          MINPODS   MAXPODS   REPLICAS   AGE
-frontendhpaduration   Deployment/frontend   6099m/6 (avg)   1         3         1          33m
+NAME              REFERENCE             TARGETS          MINPODS   MAXPODS   REPLICAS   AGE
+frontendhpahits   Deployment/frontend   4200m/10 (avg)   1         3         1          119s
 ```
 
-Let's generate some more fake traffic to force the p99 latency to go beyond 6 seconds. Execute the following command: `kubectl apply -f k8s-manifests/autoscaling/spike-traffic.yaml`{{execute}}
+Let's generate some more fake traffic to force the number of requests to go above 1 per second. Execute the following command: `kubectl apply -f k8s-manifests/autoscaling/spike-traffic.yaml`{{execute}}
 
-Let's watch the HPA object to check when something changes: `kubectl get hpa frontendhpaduration -w`{{execute}}. Wait some minutes to see the replicas number going up. Once you are done watching the object, type `Ctrl+C` to go back to the terminal.
+Let's watch the HPA object to check when something changes: `kubectl get hpa frontendhpahits -w`{{execute}}. Wait some minutes to see the replicas number going up. Once you are done watching the object, type `Ctrl+C` to go back to the terminal.
 
-Did the deployment scale? Navigate in Datadog to the Autoscaling Workshop dashboard you created in a previous step of this course. Can you see the the correlation between the increase in the p99 latency and the increase in number of replicas?
+Did the deployment scale? Navigate in Datadog to the Autoscaling Workshop dashboard you created in a previous step of this course. Can you see the the correlation between the increase in the number of requests and the increase in number of replicas?
 
 ![Screenshot of HPA External Dashboard](./assets/dashboard-hpa-external.png)
 
-You can obtain more information about the different scaling events that happened by describing the HPA object: `kubectl describe hpa frontendhpaduration`{{execute}}
+You can obtain more information about the different scaling events that happened by describing the HPA object: `kubectl describe hpa frontendhpahits`{{execute}}
 
-Before moving to the next step, let's clean up our HPA and let's redeploy the Ecommerce application, so we go back to 1 replica. Execute the following command: `kubectl delete -f k8s-manifests/autoscaling/spike-traffic.yaml && kubectl delete hpa frontendhpaduration && kubectl apply -f k8s-manifests/ecommerce-app`{{execute}}
+Before moving to the next step, let's clean up our HPA and let's redeploy the Ecommerce application, so we go back to 1 replica. Execute the following command: `kubectl delete -f k8s-manifests/autoscaling/spike-traffic.yaml && kubectl delete hpa frontendhpahits && kubectl apply -f k8s-manifests/ecommerce-app`{{execute}}

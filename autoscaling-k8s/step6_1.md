@@ -1,17 +1,12 @@
+To use the Cluster Agent as External Metrics Server using the DatadogMetric object we will need to modify our Datadog Helm installation and set the `clusterAgent.metricsProvider.useDatadogMetrics` option to `true`. You can check the differences between our previous Helm chart values files and the one we are going to use now:
 
-Before we enable DatadogMetrics in our cluster agent deployment, we need to create the [Custom Resource Definition](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) (CRD) in our Kubernetes API. Deploy the DatadogMetrics CRD by applying the `datadog/datadogmetrics_crd.yaml` manifest: `kubectl apply -f datadog/datadogmetrics_crd.yaml`{{execute}}
+`diff -U3 k8s-manifests/datadog/datadog-helm-values-external-metrics.yaml k8s-manifests/datadog/datadog-helm-values-crd.yaml`{{execute}}
 
-Now, we will need to edit the Cluster Agent manifest to enable it to work with DatadogMetrics objects. Open the file called `datadog/datadog-cluster-agent.yaml`{{open}} with the editor and find the following section:
+`helm upgrade datadog --set datadog.apiKey=$DD_API_KEY --set datadog.appKey=$DD_APP_KEY datadog/datadog -f k8s-manifests/datadog/datadog-helm-values-crd.yaml --version=2.16.6`{{execute}}
 
-```
-- name: DD_EXTERNAL_METRICS_PROVIDER_USE_DATADOGMETRIC_CRD
-  value: 'false'
-```
+Wait until the Datadog agent is running by executing this command: `wait-cluster-agent.sh`{{execute}}
 
-Edit the value to `true` and re-apply the manifest by executing `kubectl apply -f datadog/datadog-cluster-agent.yaml`{{execute}}
-
-
-Let's check that the change had effect by executing the cluster agent status command: `kubectl exec -ti deploy/datadog-cluster-agent -- agent status | grep "Custom Metrics Server" -A3`{{execute}} You should get output similar to this:
+Once the pod is running, let's check that the metrics server now expects DatadogMetrics objects. Execute the following command: `kubectl exec -ti deploy/datadog-cluster-agent -- agent status | grep "Custom Metrics Server" -A3`{{execute}} If the Metrics Server now expects DatadogMetric objects, you should get the following output:
 
 ```
 Custom Metrics Server

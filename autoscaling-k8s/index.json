@@ -87,7 +87,7 @@
   "files": [
     "frontend-vpa.yaml",
     "frontend-hpa-cpu.yaml",
-    "frontend-hpa-latency.yaml",
+    "frontend-hpa-hits.yaml",
     "frontend-wpa.yaml",
     "datadog-metric.yaml",
     "hpa-query.yaml"

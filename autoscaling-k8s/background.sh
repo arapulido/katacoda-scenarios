@@ -32,7 +32,7 @@ if [ "$STATUS" != "complete" ]; then
     NPODS=$(kubectl get pods -n kube-system -l component=kube-apiserver --field-selector=status.phase=Running | grep -v NAME | wc -l)
   done
 
-  wall -n "Deploying metrics server, kube-state-metrics and commerce app"
+  wall -n "Deploying metrics server and commerce app"
   sleep 1
   kubectl create ns fake-traffic
   sleep 1

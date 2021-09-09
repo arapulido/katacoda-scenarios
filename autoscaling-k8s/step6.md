@@ -4,19 +4,23 @@ Let's check what metrics do we have available by navigating to the [Metrics Summ
 
 ![Screenshot of Metrics Summary](./assets/metrics_summary.png)
 
-As we discussed, the LETS (Latency, Errors, Traffic, Saturation) framework is a good place to start when we want to start tracking our application. We will scale our application using the latency we are seeing in the `store-frontend` service. Right now, our application is getting regular traffic coming from the deployment called `regular-traffic`. What latency is the service `store-frontend` experiencing? To answer that question we can navigate to the [Service Map](https://app.datadoghq.com/apm/map?env=ruby-shop) in Datadog and hover over the `store-frontend` service. What latency are we seeing?
+As we discussed, the LETS (Latency, Errors, Traffic, Saturation) framework is a good place to start when we want to start tracking our application. We will scale our application using the number of requests per second we are seeing in the `store-frontend` service. Right now, our application is getting regular traffic coming from the deployment called `regular-traffic`. How many requests/sec is the `store-frontend` getting? To answer that question we can navigate to the [Service Map](https://app.datadoghq.com/apm/map?env=ruby-shop) in Datadog and hover over the `store-frontend` service. How many requests per second are we seeing?
 
-![Screenshot of Service Map Latency](./assets/service_map_latency.png)
+![Screenshot of Service Map Hits](./assets/service_map_hits.png)
 
-We are experiencing a latency of around 6 seconds and we don't want it to grow a lot when the traffic increases. For that, we are going to create a HPA object that uses the `trace.rack.request.duration.by.service.99p` and that will have 6 seconds as the limit to start scaling our deployment.
+We are getting about 0.2 req/sec, but the actual metric is a count metric with a 10 second interval:
 
-We are going to create a new file called `frontend-hpa-latency.yaml` (file creation happens automatically by clicking below on "Copy to Editor"):
+![Screenshot of hits metrics summary](./assets/hits_metrics_summary.png)
 
-<pre class="file" data-filename="frontend-hpa-latency.yaml" data-target="replace">
+So, the value we will get from the External Metrics Server is that value x 10. We want to scale our service once we go above 1 request per second, to make sure that our service is able to cope with the extra traffic. For that, we are going to create a HPA object that uses the `trace.rack.request.hits` and that will have 10 requests in 10 seconds as the limit to start scaling our deployment.
+
+We are going to create a new file called `frontend-hpa-hits.yaml` (file creation happens automatically by clicking below on "Copy to Editor"):
+
+<pre class="file" data-filename="frontend-hpa-hits.yaml" data-target="replace">
 apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: frontendhpaduration
+  name: frontendhpahits
 spec:
   minReplicas: 1
   maxReplicas: 3
@@ -28,13 +32,13 @@ spec:
   - type: External
     external:
       metric:
-        name: "trace.rack.request.duration.by.service.99p"
+        name: "trace.rack.request.hits"
         selector:
           matchLabels:
             service: store-frontend
       target:
         type: AverageValue
-        averageValue: 6 
+        averageValue: 10
 </pre>
 
 Let's drilldown on each section to understand what's going on:
@@ -53,17 +57,17 @@ In this section we are specifying the pods that will be the target for the horiz
   - type: External
     external:
       metric:
-        name: "trace.rack.request.duration.by.service.99p"
+        name: "trace.rack.request.hits"
         selector:
           matchLabels:
             service: store-frontend
       target:
         type: AverageValue
-        averageValue: 6
+        averageValue: 10
 
 ```
 
-In this section we are specifying the metric that the HPA will use to drive the scaling events. In this case we are telling the HPA that when pods that are part of the Deployment `frontend` experience an average p99 latency over 6 seconds, create a scaling event that will increase the number of replicas.
+In this section we are specifying the metric that the HPA will use to drive the scaling events. In this case we are telling the HPA that when pods that are part of the Deployment `frontend` experience get more than 10 requests each 10 seconds, create a scaling event that will increase the number of replicas.
 
 
 ```
@@ -71,20 +75,20 @@ minReplicas: 1
 maxReplicas: 3
 ```
 
-In this section of the specification we are specifiying the minimum and maximum number of replicas for the target that we want. In this case we are telling the HPA controller that, even if the replicas are experiencing over 6 seconds of p99 latency, to not go above 3 replicas.
+In this section of the specification we are specifiying the minimum and maximum number of replicas for the target that we want. In this case we are telling the HPA controller that, even if the replicas are getting more than 1 request per second, to not go above 3 replicas.
 
-Create the HPA object by applying the manifest: `kubectl apply -f frontend-hpa-latency.yaml`{{execute}}
+Create the HPA object by applying the manifest: `kubectl apply -f frontend-hpa-hits.yaml`{{execute}}
 
-Let's check that the object has been created correctly. Execute the following command: `kubectl get hpa frontendhpaduration`{{execute}} You should get output similar to this:
+Let's check that the object has been created correctly. Execute the following command: `kubectl get hpa frontendhpahits`{{execute}} You should get output similar to this:
 
 ```
 NAME                  REFERENCE             TARGETS          MINPODS   MAXPODS   REPLICAS   AGE
-frontendhpaduration   Deployment/frontend   <unknown>/6 (avg)   1         3         1        5s
+frontendhpahits       Deployment/frontend   <unknown>/10 (avg)   1         3         1        5s
 ```
 
 On that output we can check the current value of the metric, the threshold for the scaling events, and the current number of replicas. If you are getting an `<unknown>` value for the current value of the metric is because it was just created and it hasn't got a metric value yet.
 
-Let's check that the Datadog Cluster Agent is now taking care of that HPA object. Execute the following command: `kubectl describe hpa frontendhpaduration`{{execute}} and make sure that you get the following object event: 
+Let's check that the Datadog Cluster Agent is now taking care of that HPA object. Execute the following command: `kubectl describe hpa frontendhpahits`{{execute}} and make sure that you get the following object event:
 
 ```
 Events:
@@ -102,10 +106,10 @@ External Metrics
   Valid: 1
 
 * horizontal pod autoscaler: default/frontendhpaduration
-  Metric name: trace.rack.request.duration.by.service.99p
+  Metric name: trace.rack.request.hits
   Labels:
   - service: store-frontend
-  Value: 6.224347114562988
+  Value: 2.2
   Timestamp: 2020-04-01 08:06:30.000000 UTC
   Valid: true
 ```

@@ -88,11 +88,6 @@
         "file": "wait-datadog.sh",
         "target": "/usr/local/bin",
         "chmod": "+x"
-      },
-      {
-        "file": "wait-cluster-agent.sh",
-        "target": "/usr/local/bin",
-        "chmod": "+x"
       }
     ]
     }

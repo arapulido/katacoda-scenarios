@@ -23,6 +23,10 @@
         "text": "step2_1.md"
       },
       {
+        "title": "You're done for now!",
+        "text": "interim.md"
+      },
+      {
         "title": "Vertical Pod Autoscaler",
         "text": "step3.md"
       },
@@ -31,8 +35,16 @@
         "text": "step3_1.md"
       },
       {
+        "title": "You're done for now!",
+        "text": "interim.md"
+      },
+      {
         "title": "Horizontal Pod Autoscaling based on resource data",
         "text": "step4.md"
+      },
+      {
+        "title": "You're done for now!",
+        "text": "interim.md"
       },
       {
         "title": "Datadog Cluster Agent",
@@ -43,8 +55,16 @@
         "text": "step6.md"
       },
       {
+        "title": "You're done for now!",
+        "text": "interim.md"
+      },
+      {
         "title": "HPA with DatadogMetric object",
         "text": "step6_1.md"
+      },
+      {
+        "title": "You're done for now!",
+        "text": "interim.md"
       },
       {
         "title": "WPA with External Metrics",

@@ -4,7 +4,7 @@ Let's check what metrics do we have available by navigating to the [Metrics Summ
 
 ![Screenshot of Metrics Summary](./assets/metrics_summary.png)
 
-As we discussed, the LETS (Latency, Errors, Traffic, Saturation) framework is a good place to start when we want to start tracking our application. We will scale our application using the number of requests per second we are seeing in the `store-frontend` service. Right now, our application is getting regular traffic coming from the deployment called `regular-traffic`. How many requests/sec is the `store-frontend` getting? To answer that question we can navigate to the [Service Map](https://app.datadoghq.com/apm/map?env=ruby-shop) in Datadog and hover over the `store-frontend` service. How many requests per second are we seeing?
+As we discussed, the LETS (Latency, Errors, Traffic, Saturation) framework is a good place to start when we want to start tracking our application. We will scale our application using the number of requests per second we are seeing in the `store-frontend` service. Right now, our application is getting regular traffic coming from the deployment called `regular-traffic`. How many requests/sec is the `store-frontend` getting? To answer that question we can navigate to the [Service Map](https://app.datadoghq.com/apm/map?env=autoscaling-k8s-workshop) in Datadog and hover over the `store-frontend` service. How many requests per second are we seeing?
 
 ![Screenshot of Service Map Hits](./assets/service_map_hits.png)
 

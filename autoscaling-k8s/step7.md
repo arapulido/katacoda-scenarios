@@ -1,4 +1,12 @@
-In order to be able to deploy Watermark Pod Autoscaler objects (WPAs) we will need to modify our Datadog Helm installation and set the `clusterAgent.metricsProvider.wpaController` option to `true`. You can check the differences between our previous Helm chart values files and the one we are going to use now:
+In order to be able to deploy Watermark Pod Autoscaler objects (WPAs) we first need to deploy the Custom Resource Definition and the controller, as these are not part of a default Kubernetes distribution.
+
+Let's create the CRDs first. Execute the following command:
+
+`kubectl apply -f k8s-manifests/watermarkpodautoscaler/crd/`{{{execute}}}
+
+This will create a new WatermarkPodAutoscaler object in the Kubernetes API.
+
+Then, we will need to modify our Datadog Helm installation and set the `clusterAgent.metricsProvider.wpaController` option to `true`. You can check the differences between our previous Helm chart values files and the one we are going to use now:
 
 `diff -U3 k8s-manifests/datadog/datadog-helm-values-crd.yaml k8s-manifests/datadog/datadog-helm-values-wpa.yaml`{{execute}}
 

@@ -1,43 +1,18 @@
 In order to be able to deploy Watermark Pod Autoscaler objects (WPAs) we first need to deploy the Custom Resource Definition and the controller, as these are not part of a default Kubernetes distribution.
 
-Let's create the CRDs first. Execute the following command:
+Let's create the CRDs first. Execute the following command: `kubectl apply -f k8s-manifests/watermarkpodautoscaler/crd/`{{execute}} This will create a new WatermarkPodAutoscaler object in the Kubernetes API.
 
-`kubectl apply -f k8s-manifests/watermarkpodautoscaler/crd/`{{{execute}}}
+Let's apply now the manifests that deploy the WPA controller. This controller will watch for new WPA objects created and create scaling events based on the metrics. Execute the following command: `kubectl apply -f k8s-manifests/watermarkpodautoscaler/`{{execute}}
 
-This will create a new WatermarkPodAutoscaler object in the Kubernetes API.
+Check that the `watermarkpodautoscaler` is running correctly: `kubectl get pod $(kubectl get pods -l name=watermarkpodautoscaler -o jsonpath='{.items[0].metadata.name}')`{{execute}}
 
-Then, we will need to modify our Datadog Helm installation and set the `clusterAgent.metricsProvider.wpaController` option to `true`. You can check the differences between our previous Helm chart values files and the one we are going to use now:
+Then, we will need to modify our Datadog Helm installation and set the `clusterAgent.metricsProvider.wpaController` option to `true` to configure the Cluster Agent to work with WPA objects. You can check the differences between our previous Helm chart values files and the one we are going to use now:
 
 `diff -U3 k8s-manifests/datadog/datadog-helm-values-crd.yaml k8s-manifests/datadog/datadog-helm-values-wpa.yaml`{{execute}}
 
 `helm upgrade datadog --set datadog.apiKey=$DD_API_KEY --set datadog.appKey=$DD_APP_KEY datadog/datadog -f k8s-manifests/datadog/datadog-helm-values-wpa.yaml --version=2.16.6`{{execute}}
 
 Wait until the Datadog agent is running by executing this command: `wait-cluster-agent.sh`{{execute}}
-
-Once the pod is running, let's check that the metrics server now expects DatadogMetrics objects. Execute the following command: `kubectl exec -ti deploy/datadog-cluster-agent -- agent status | grep "Custom Metrics Server" -A3`{{execute}} If the Metrics Server now expects DatadogMetric objects, you should get the following output:
-
-```
-Custom Metrics Server
-=====================
-  External metrics provider uses DatadogMetric - Check status directly from Kubernetes with: `kubectl get datadogmetric`
-```
-
-In order to be able to deploy Watermark Pod Autoscaler objects (WPAs) we first need to deploy the Custom Resource Definition and the controller, as these are not part of a default Kubernetes distribution.
-
-Let's create the CRDs first. Execute the following command: `kubectl apply -f k8s-manifests/watermarkpodautoscaler/crd/`{{execute}} This will create a new WatermarkPodAutoscaler object in the Kubernetes API. 
-
-Let's apply now the manifests that deploy the WPA controller. This controller will watch for new WPA objects created and create scaling events based on the metrics. Execute the following command: `kubectl apply -f k8s-manifests/watermarkpodautoscaler/`{{execute}}
-
-Check that the `watermarkpodautoscaler` is running correctly: `kubectl get pod $(kubectl get pods -l name=watermarkpodautoscaler -o jsonpath='{.items[0].metadata.name}')`{{execute}}
-
-Now, we will need to edit the Cluster Agent manifest to enable working with WPA objects. Open the file called `datadog/datadog-cluster-agent.yaml`{{open}} with the editor and find the following section:
-
-```
-- name: DD_EXTERNAL_METRICS_PROVIDER_WPA_CONTROLLER
-  value: 'false'
-```
-
-Edit the value to `true` and re-apply the manifest by executing `kubectl apply -f datadog/datadog-cluster-agent.yaml`{{execute}}
 
 Similar to the HPA example, we will create a WPA object that will scale our `frontend` deployment based on the p99 latency that the service experiences.
 

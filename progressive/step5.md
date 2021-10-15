@@ -13,7 +13,9 @@ Open the original file that we used to deploy version `1.0` of the `advertisemen
 
 `DD_ENV`, `DD_SERVICE`, and `DD_VERSION` are part of [Datadog's Unified Service Tagging](https://docs.datadoghq.com/getting_started/tagging/unified_service_tagging/?tab=kubernetes) that allows to correctly correlate metrics, logs and traces for your application different services, taking into account the different environments you may have (production, staging, etc.) and the different versions of your services that you may be running.
 
-Let's check [the `advertisements` service page](https://app.datadoghq.com/apm/service/advertisements/) in Datadog. That page is the entry point to get information about a particular service: latency distributions, errors, number of requests, etc. Thanks to the `DD_VERSION` tag that we are sending, we can also get the different versions of the service we have deployed in our cluster:
+Let's check [the `advertisements` service page](https://app.datadoghq.com/apm/service/advertisements/?env=progressive) in Datadog. You can also get to this page through the Datadog menu: APM -> Services, and then selecting the `advertisements` service from the list.
+
+That page is the entry point to get information about a particular service: latency distributions, errors, number of requests, etc. Thanks to the `DD_VERSION` tag that we are sending, we can also get the different versions of the service we have deployed in our cluster:
 
 ![Screenshot of ads service overview page](./assets/ads_service.png)
 

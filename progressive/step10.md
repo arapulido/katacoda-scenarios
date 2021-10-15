@@ -7,15 +7,15 @@ istio-ingressgateway   1/1     1            1           37m
 istiod                 1/1     1            1           38m
 ```
 
-Datadog comes with an out-of-the-box Istio integration. Open [the integration tile in Datadog](https://app.datadoghq.com/account/settings#integrations/istio) and if it is not already install it, click on Install:
+Datadog comes with an out-of-the-box Istio integration. Open [the integration tile in Datadog](https://app.datadoghq.com/account/settings#integrations/istio) -- you can also reach this through the Datadog menu on Integrations -> Integrations, and then search for "Istio" -- and if it is not already installed, click on Install:
 
 ![Screenshot of Istio Integration](./assets/istio_integration.png)
 
-We are going to tell Istio to add the Envoy proxy to any pod deployed to namespace `ns3`, by adding it the label `istio-injection`:
+We are going to tell Istio to add the Envoy proxy to any pod deployed to namespace `ns3`, by adding the label: `istio-injection`:
 
 `kubectl label namespace ns3 istio-injection=enabled`{{execute}}
 
-Now we are going to deploy the E-commerce application again, this time in this Istio enabled namespace. You can check the differences between our original deployment and this one by running this command: `diff -u manifest-files/ecommerce-v1 manifest-files/istio/ecommerce-istio`{{execute}}. You can see that the main difference (aside from the change in namespace) is that we have changed the type of Service for the `frontend` service to `ClusterIP`, making it unaccessible from outside the cluster:
+Now we are going to deploy the E-commerce application again, this time in this Istio enabled namespace. You can check the differences between our original deployment and this one by running this command: `diff --color -u manifest-files/ecommerce-v1 manifest-files/istio/ecommerce-istio`{{execute}}. You can see that the main difference (aside from the change in namespace) is that we have changed the type of Service for the `frontend` service to `ClusterIP`, making it unaccessible from outside the cluster:
 
 ```
 -  type: NodePort
@@ -52,11 +52,13 @@ Open the file called `manifest-files/istio/frontend-gateway.yaml`{{open}}. Brows
 
 Let's apply it: `kubectl apply -f manifest-files/istio/frontend-gateway.yaml`{{execute}}
 
-Once the Gateway and VirtualService objects have been created, click on the "Istio Ingress Gateway" tab to access the E-commerce application through Istio Gatway:
+Once the Gateway and VirtualService objects have been created, click on the "Istio Ingress Gateway" tab to access the E-commerce application through Istio Gateway:
 
 ![Screenshot of Ecommerce app](./assets/app.png)
 
-Let's open the [Istio default dashboard](https://app.datadoghq.com/screen/integration/30320/istio-overview-v15) to see what metrics we are getting from our Istio deployment:
+Let's open the [Istio default dashboard](https://app.datadoghq.com/screen/integration/30320/istio-overview-v15) -- You can also navigate to this dashboard through the Datadog menu: Dashboards and then search for "Istio overview" -- to see what metrics we are getting from our Istio deployment. :
+
+![Screenshot of Istio Dashboard menu](./assets/istio_overview_menu.png)
 
 ![Screenshot of Istio Dashboard](./assets/istio_dashboard.png)
 

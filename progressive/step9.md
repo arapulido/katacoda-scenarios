@@ -2,13 +2,13 @@ We are going to deploy version 2.0 for the `advertisements` service, but this ti
 
 As this is not the service that the Ingress object calls, but rather a service that the `frontend` service calls, we are going to duplicate our application in a second namespace.
 
-Open the folder called `manifest-files/ingress_ns/ecommerce-v2` and browse around. You can see the differences between the manifests in this folder and the one in `ecommerce-v1` by running this command: `diff -u manifest-files/ecommerce-v1 manifest-files/ingress_ns/ecommerce-v2`{{execute}}
+Open the folder called `manifest-files/ingress_ns/ecommerce-v2` and browse around. You can see the differences between the manifests in this folder and the one in `ecommerce-v1` by running this command: `diff --color -u manifest-files/ecommerce-v1 manifest-files/ingress_ns/ecommerce-v2`{{execute}}
 
 As you can see, the only differences are that: we are creating the services and deployments in the `ns2` namespace; we have changed the NodePort for the `frontend` service to avoid clashes, and we are using the `2.0` label for the `advertisements` docker image and for `DD_VERSION` (similar to what we did in the labs about Service Networking).
 
 Let's apply the complete folder: `kubectl apply -f manifest-files/ingress_ns/ecommerce-v2/`{{execute}}
 
-We have now our application replicated in namespace `ns2`. Let's check it: `kubectl get deploy -n ns2 && kubectl get svc -n ns2`{{execute}} You should get an output similar to this one:
+We now have our application replicated in namespace `ns2`. Let's check it: `kubectl get deploy -n ns2 && kubectl get svc -n ns2`{{execute}} You should get an output similar to this one:
 
 ```
 NAME             READY   UP-TO-DATE   AVAILABLE   AGE
@@ -23,7 +23,7 @@ frontend         NodePort    10.108.72.123   <none>        80:30002/TCP   74m
 
 Click again on the "Ingress Service" tab and refresh several times the page. As you can see, you still only see version 1.0 for the `advertisements` service. The reason is that we haven't added an Ingress object for the `frontend` service in the `ns2` namespace. Let's do that now.
 
-We are going to create a second Ingress object for our canary service. Open the file called `manifest-files/ingress_ns/ingressv2.yaml`{{open}} and try to spot the differences with the first frontend Ingress object. You can spot the differences running the following `diff` command: `diff -u manifest-files/ingress/ingressv1.yaml  manifest-files/ingress_ns/ingressv2.yaml`{{execute}}
+We are going to create a second Ingress object for our canary service. Open the file called `manifest-files/ingress_ns/ingressv2.yaml`{{open}} and try to spot the differences with the first frontend Ingress object. You can spot the differences running the following `diff` command: `diff --color -u manifest-files/ingress/ingressv1.yaml  manifest-files/ingress_ns/ingressv2.yaml`{{execute}}
 
 ```
 -  name: frontend-ingress

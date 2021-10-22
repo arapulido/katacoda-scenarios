@@ -12,31 +12,31 @@
     "steps": [
       {
         "title": "Setting up your Datadog account",
-        "text": "step1.md"
+        "text": "keys.md"
       },
       {
         "title": "Deploying the agent: default options",
-        "text": "step2.md"
+        "text": "basic.md"
       },
       {
         "title": "Specifying the agent versions",
-        "text": "step6.md"
+        "text": "versions.md"
       },
       {
         "title": "Adding tolerations to the agent pods",
-        "text": "step3.md"
+        "text": "tolerations.md"
       },
       {
         "title": "Setting environment variables",
-        "text": "step4.md"
+        "text": "kubelet.md"
       },
       {
-        "title": "Enabling log, process and APM",
-        "text": "step5.md"
+        "title": "Enabling logs and APM",
+        "text": "agents.md"
       },
       {
         "title": "Enabling ClusterChecks and the Cluster Checks Runner",
-        "text": "step7.md"
+        "text": "clusterchecks.md"
       }
     ],
     "finish": {

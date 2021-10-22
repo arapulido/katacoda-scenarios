@@ -35,8 +35,8 @@ We are creating a new type of Kubernetes object called `DatadogAgent`. Let's che
 `kubectl get datadogagent`{{execute}}. You should get an output similar to this one:
 
 ```
-NAME      ACTIVE   AGENT             CLUSTER-AGENT   CLUSTER-CHECKS-RUNNER   AGE
-datadog   True     Running (1/1/1)                                           3m47s
+NAME      ACTIVE   AGENT             CLUSTER-AGENT     CLUSTER-CHECKS-RUNNER   AGE
+datadog   True     Running (1/1/1)   Running (1/1/1)                           86s
 ```
 
 (If you get an status of `Progressing` run again the command until the Datadog pod is running)
@@ -86,9 +86,9 @@ Check the different checks that are running by default. You can see that the Kub
 
 ```
 [...]
-kubelet (5.1.0)
+kubelet (7.0.0)
 ---------------
-Instance ID: kubelet:d884b5186b651429 [ERROR]
+Instance ID: kubelet:5bbc63f3938c02f4 [ERROR]
 Configuration Source: file:/etc/datadog-agent/conf.d/kubelet.d/conf.yaml.default
 [...]
 =====================
@@ -99,6 +99,3 @@ Datadog Cluster Agent
   Successfully connected to the Datadog Cluster Agent.
   - Running: 1.15.0+commit.6781e85
 ```
-Open now the [Live Containers view in Datadog](https://app.datadoghq.com/orchestration/overview/pod?cols=name%2Cstatus%2Cready%2Crestarts%2Cage%2Clabels&paused=false&sort=&tags=kube_cluster_name%3Akatacoda) to watch your Kubernetes objects directly from Datadog:
-
-![Screenshot of the Orchestration Explorer](./assets/orchestration_explorer.png)

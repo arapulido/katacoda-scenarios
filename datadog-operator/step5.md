@@ -1,4 +1,4 @@
-Logs collection, APM and the process monitoring are disabled by default in the `DatadogAgent` object unless enabled explicitely.
+Logs collection and APM are disabled by default in the `DatadogAgent` object unless enabled explicitely.
 
 For example, if you run the agent status command:
 
@@ -17,12 +17,10 @@ Logs Agent
 [...]
 ```
 
-The Datadog Operator makes it very easy to enable logs, APM and process monitoring. Open the file called `dd-operator-configs/datadog-agent-agents.yaml`{{open}} and check how we have added an `apm`, a `process` and a `log` sections to the `agent` section to enable those features.
+The Datadog Operator makes it very easy to enable logs, APM and process monitoring. Open the file called `dd-operator-configs/datadog-agent-agents.yaml`{{open}} and check how we have added an `apm` and a `log` sections to the `agent` section to enable those features.
 
 ```
 apm:
-  enabled: true
-process:
   enabled: true
 log:
   enabled: true
@@ -41,11 +39,11 @@ You can follow the update from the `DatadogAgent` object status (type `Ctrl+C` t
 
 ```
 controlplane $ kubectl get datadogagent -w
-NAME      ACTIVE   AGENT              CLUSTER-AGENT   CLUSTER-CHECKS-RUNNER   AGE
-datadog   True     Updating (2/1/1)                                           8m9s
-datadog   True     Updating (2/1/1)                                           8m13s
-datadog   True     Running (2/1/2)                                            8m43s
-datadog   True     Running (2/2/2)                                            8m52s
+NAME      ACTIVE   AGENT              CLUSTER-AGENT     CLUSTER-CHECKS-RUNNER   AGE
+datadog   True     Updating (2/1/1)   Running (1/1/1)                           18m
+datadog   True     Updating (2/1/1)   Running (1/1/1)                           18m
+datadog   True     Running (2/1/2)    Running (1/1/1)                           18m
+datadog   True     Running (2/2/2)    Running (1/1/1)                           18m
 ```
 
 Once the updated pods are up and running, run again the agent status command in the Datadog's agent pod running in the worker node:

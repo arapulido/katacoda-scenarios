@@ -25,9 +25,9 @@ You can follow the update from the `DatadogAgent` object status (type `Ctrl+C` t
 `kubectl get datadogagent -w`{{execute}}
 
 ```
-controlplane $ kubectl get datadogagent -w
-NAME      ACTIVE   AGENT              CLUSTER-AGENT   CLUSTER-CHECKS-RUNNER   AGE
-datadog   True     Updating (2/1/1)                                           8m9s
-datadog   True     Updating (2/1/1)                                           8m13s
-datadog   True     Running (2/1/2)                                            8m43s
-datadog   True     Running (2/2/2)                                            8m52s
+NAME      ACTIVE   AGENT                 CLUSTER-AGENT      CLUSTER-CHECKS-RUNNER   AGE
+datadog   True     Progressing (1/0/1)   Updating (2/1/1)                           7m17s
+datadog   True     Progressing (1/0/1)   Updating (2/2/1)                           7m25s
+datadog   True     Progressing (1/0/1)   Running (1/1/1)                            7m37s
+datadog   True     Running (1/1/1)       Running (1/1/1)                            8m2s
+```

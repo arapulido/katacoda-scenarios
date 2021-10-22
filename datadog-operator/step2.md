@@ -2,7 +2,7 @@ The first thing we are going to do is to deploy the Datadog Operator Helm chart 
 
 Let's deploy the charts:
 
-`helm install my-datadog-operator datadog/datadog-operator --version="0.5.0"`{{execute}}
+`helm install my-datadog-operator datadog/datadog-operator --version="0.7.2"`{{execute}}
 
 `helm install ksm stable/kube-state-metrics --version="2.8.11"`{{execute}}
 
@@ -18,9 +18,15 @@ Once we have the operator up and running, we are ready to deploy the Datadog age
 
 `kubectl create secret generic datadog-secret --from-literal api-key=$DD_API_KEY --from-literal app-key=$DD_APP_KEY`{{execute}}
 
-Let's deploy now the Datadog node agent. Open the configuration we are going to apply and review it a bit `dd-operator-configs/datadog-agent-basic.yaml`{{open}}. Can you see the relation between the secret we just created and that configuration?
+Let's deploy now the Datadog node agent and cluster agent. Open the configuration we are going to apply and review it a bit `dd-operator-configs/datadog-agent-basic.yaml`{{open}}. Can you see the relation between the secret we just created and that configuration?
 
-Let's apply it:
+The [Datadog Node Agent](https://docs.datadoghq.com/agent/kubernetes/) will gather system metrics from all your Kubernetes nodes and will collect metrics, logs and traces from the containers running on each of the nodes.
+
+The [Datadog Cluster Agent](https://docs.datadoghq.com/agent/cluster_agent/) provides a streamlined, centralized approach to collecting cluster level monitoring data. By acting as a proxy between the API server and node-based Agents, the Cluster Agent helps to alleviate server load. It also relays cluster level metadata to node-based Agents, allowing them to enrich the metadata of locally collected metrics.
+
+The Cluster Agent is also required to enable the [Kubernetes resources view](https://docs.datadoghq.com/infrastructure/livecontainers/?tab=helm#kubernetes-resources-view) in the Live Containers page. We will enable that view in this step as well.
+
+Let's apply the configuration:
 
 `kubectl apply -f dd-operator-configs/datadog-agent-basic.yaml`{{execute}}
 
@@ -36,6 +42,15 @@ datadog   True     Running (1/1/1)                                           3m4
 (If you get an status of `Progressing` run again the command until the Datadog pod is running)
 
 That object describes the intent of our Datadog deployment, and the operator creates the needed Kubernetes objects to match that intent. Let's check them:
+
+`kubectl get deploy datadog-cluster-agent`{{execute}}
+
+```
+NAME                    READY   UP-TO-DATE   AVAILABLE   AGE
+datadog-cluster-agent   1/1     1            1           5m42s
+```
+
+This is the Deployment that deploys the Cluster Agent into our cluster.
 
 `kubectl get daemonset`{{execute}}
 
@@ -67,11 +82,23 @@ Let's check the status of the Datadog agent:
 
 `kubectl exec -ti ds/datadog-agent -- agent status`{{execute}}
 
-Check the different checks that are running by default. You can see that the Kubelet check is failing. We will fix the configuration in a later step.
+Check the different checks that are running by default. You can see that the Kubelet check is failing. We will fix the configuration in a later step. As we discussed, the Node Agents need to communicate with the Cluster Agent to get metrics from the API server. We can check that this connection is happening correctly checking the "Datadog Cluster Agent" section of the output.
 
 ```
+[...]
 kubelet (5.1.0)
 ---------------
 Instance ID: kubelet:d884b5186b651429 [ERROR]
 Configuration Source: file:/etc/datadog-agent/conf.d/kubelet.d/conf.yaml.default
+[...]
+=====================
+Datadog Cluster Agent
+=====================
+
+  - Datadog Cluster Agent endpoint detected: https://10.98.129.75:5005
+  Successfully connected to the Datadog Cluster Agent.
+  - Running: 1.15.0+commit.6781e85
 ```
+Open now the [Live Containers view in Datadog](https://app.datadoghq.com/orchestration/overview/pod?cols=name%2Cstatus%2Cready%2Crestarts%2Cage%2Clabels&paused=false&sort=&tags=kube_cluster_name%3Akatacoda) to watch your Kubernetes objects directly from Datadog:
+
+![Screenshot of the Orchestration Explorer](./assets/orchestration_explorer.png)

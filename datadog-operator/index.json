@@ -19,6 +19,10 @@
         "text": "step2.md"
       },
       {
+        "title": "Specifying the agent versions",
+        "text": "step6.md"
+      },
+      {
         "title": "Adding tolerations to the agent pods",
         "text": "step3.md"
       },
@@ -29,10 +33,6 @@
       {
         "title": "Enabling log, process and APM",
         "text": "step5.md"
-      },
-      {
-        "title": "Enabling the Cluster Agent and the Orchestrator Explorer",
-        "text": "step6.md"
       },
       {
         "title": "Enabling ClusterChecks and the Cluster Checks Runner",
@@ -60,6 +60,6 @@
     "hideHiddenFiles": true
   },
   "backend": {
-    "imageid": "datadog-kubernetes-cluster-running:1.16"
+    "imageid": "datadog-k8s-v118-cluster-running"
   }
 }

@@ -17,7 +17,7 @@ Logs Agent
 [...]
 ```
 
-The Datadog Operator makes it very easy to enable logs, APM and process monitoring. Open the file called `dd-operator-configs/datadog-agent-agents.yaml`{{open}} and check how we have added an `apm` and a `log` sections to the `agent` section to enable those features.
+The Datadog Operator makes it very easy to enable logs and APM. Open the file called `dd-operator-configs/datadog-agent-agents.yaml`{{open}} and check how we have added an `apm` and a `log` sections to the `agent` section to enable those features.
 
 ```
 apm:

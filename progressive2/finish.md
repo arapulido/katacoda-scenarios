@@ -1,0 +1,1 @@
+Congratulations! We have now practiced how to implement Progressive Delivery using Service Networking. We will now dive into using Ingress for it. Let's go! 

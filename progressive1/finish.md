@@ -1,1 +1,1 @@
-We have now ensure that our Kubernetes Cluster has enough telemetry to help us making the right delivery decisions. We will start doing Progressive Delivery in the next session. See you there!
+We have now ensured that our Kubernetes Cluster has enough telemetry to help us making the right delivery decisions. We will start doing Progressive Delivery in the next session. See you there!

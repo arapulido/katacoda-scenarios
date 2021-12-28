@@ -1,8 +1,8 @@
 {
-  "title": "Progressive Delivery in Kubernetes. Deploying the Datadog Agent",
+  "title": "Progressive Delivery in Kubernetes. Service Networking.",
   "description": "",
   "difficulty": "Intermediate",
-  "time": "20 minutes",
+  "time": "60 minutes",
   "details": {
     "intro": {
       "courseData": "background.sh",
@@ -11,20 +11,12 @@
     },
     "steps": [
       {
-        "title": "The API keys",
-        "text": "step1.md"
+        "title": "Service Overview Page",
+        "text": "step5.md"
       },
       {
-        "title": "Setting up the Datadog agent",
-        "text": "step2.md"
-      },
-      {
-        "title": "The Ecommerce App",
-        "text": "step3.md"
-      },
-      {
-        "title": "Browsing Datadog",
-        "text": "step4.md"
+        "title": "Service Networking",
+        "text": "step6.md"
       }
     ],
     "finish": {

@@ -33,7 +33,7 @@ if [ "$STATUS" != "complete" ]; then
   helm repo update
 
   # Deploy Datadog
-  helm install datadog --set datadog.apiKey=$DD_API_KEY datadog/datadog -f manifest-files/datadog/datadog-helm-values.yaml --version=2.16.6
+  #helm install datadog --set datadog.apiKey=$DD_API_KEY datadog/datadog -f manifest-files/datadog/datadog-helm-values.yaml --version=2.16.6
 
   wall -n "Deploying the ecommerce application"
   kubectl create ns database

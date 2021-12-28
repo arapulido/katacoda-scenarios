@@ -25,5 +25,3 @@ Click on the `2.0` row under "Deployments" and you will get a comparison between
 Are we getting new errors? Is the latency of the two versions similar? Are we happy with progressively moving this release forward or shall we rollback?
 
 Progressive delivery and a correct observability strategy can help you making these decisions. In this case we can clearly see that the new version of the `advertisements` service is adding extra latency (about 200ms). Something is wrong with this release. We can quickly rollback before moving the release forward to avoid this extra latency reaching more of our customers and investigate the root cause.
-
-**IMPORTANT**: Before continuing, let's revert the second version of the `advertisements` service to make sure the rest of the labs work correctly: `kubectl delete -f manifest-files/servicenetwork/advertisements.yaml`{{execute}}

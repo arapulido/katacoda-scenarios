@@ -1,22 +1,5 @@
 Wait some minutes until your environment is setup. Once it is setup, you will see the following message in your terminal:`OK, the training environment is installed and ready to go.`
 
-To not use your production environment, remember that we have created a new Datadog account for you. You should see your credentials in the terminal:
-
-```
-A Datadog account has been created for you.
-You can login at http://app.datadoghq.com using
-the following credentials:
-
-Username:       <username>
-Password:       <password>
-
-Use these credentials to login at http://app.datadoghq.com
-This account will expire in 4 days..
-A new account will be created at that time.
-```
-
-You can always retrieve again these credentials by running this command: `creds`{{execute}}.
-
 For this first progressive delivery scenario, we are going to use the power of service networking and labels in Kubernetes to do a canary deployment of our `advertisements` service.
 
 Open the original file that we used to deploy version `1.0` of the `advertisements` service `manifest-files/ecommerce-v1/advertisements.yaml`{{open}} and check that the image name points to tag `1.0` of the image, and that `DD_VERSION` environment variable is set to `1.0`.

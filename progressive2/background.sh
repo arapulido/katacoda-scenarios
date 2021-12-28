@@ -32,7 +32,6 @@ if [ "$STATUS" != "complete" ]; then
   helm repo add datadog https://helm.datadoghq.com
   helm repo update
 
-
   wall -n "Deploying the ecommerce application"
   kubectl create ns database
   kubectl create ns ns1
@@ -41,10 +40,6 @@ if [ "$STATUS" != "complete" ]; then
   kubectl apply -f manifest-files/ecommerce-v1 -n ns1 
   kubectl apply -f manifest-files/fake-traffic -n fake-traffic
   
-  # Deploy Datadog
-  helm install datadog --set datadog.apiKey=$DD_API_KEY datadog/datadog -f manifest-files/datadog/datadog-helm-values.yaml --version=2.16.6
-  helm upgrade datadog --set datadog.apiKey=$DD_API_KEY datadog/datadog -f manifest-files/datadog/datadog-helm-values.yaml --version=2.16.6
-
   NPODS=$(kubectl get pods -n ns1 --field-selector=status.phase=Running | grep -v NAME | wc -l)
 
   while [ "$NPODS" != "3" ]; do

@@ -1,0 +1,68 @@
+{
+  "title": "Progressive Delivery in Kubernetes. Deploying the Datadog Agent",
+  "description": "",
+  "difficulty": "Intermediate",
+  "time": "20 minutes",
+  "details": {
+    "intro": {
+      "courseData": "background.sh",
+      "code": "foreground.sh",
+      "text": "intro.md"
+    },
+    "steps": [
+      {
+        "title": "The API keys",
+        "text": "step1.md"
+      },
+      {
+        "title": "Setting up the Datadog agent",
+        "text": "step2.md"
+      },
+      {
+        "title": "The Ecommerce App",
+        "text": "step3.md"
+      },
+      {
+        "title": "Browsing Datadog",
+        "text": "step4.md"
+      }
+    ],
+    "finish": {
+      "text": "finish.md"
+    },
+    "assets": {
+    "host01": [
+      {
+        "file": "wait-datadog.sh",
+        "target": "/usr/local/bin",
+        "chmod": "+x"
+      }
+    ]
+    }
+  },
+  "files": [
+  ],
+  "environment": {
+    "uilayout": "editor-terminal-v1",
+    "exclusionPatterns": ["./go/*", "./Desktop/*"],
+    "hideHiddenFiles": true,
+    "showdashboard": true,
+    "dashboards": [
+      {
+        "name": "Ecommerce App",
+        "port": 30001
+      },
+      {
+        "name": "Ingress Service",
+        "port": 32000
+      },
+      {
+        "name": "Istio Ingress Gateway",
+        "port": 30003
+      }
+    ]
+  },
+  "backend": {
+    "imageid": "datadog-k8s-v118-cluster-running"
+  }
+}

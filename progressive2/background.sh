@@ -31,6 +31,7 @@ if [ "$STATUS" != "complete" ]; then
   ./get_helm.sh
   helm repo add datadog https://helm.datadoghq.com
   helm repo update
+  echo "helm installed" >>/root/status.txt
 
   wall -n "Deploying the ecommerce application"
   kubectl create ns database

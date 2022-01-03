@@ -1,0 +1,1 @@
+Congratulations! We have now practiced how to implement Progressive Delivery using Ingress. We will now dive into using a Service Mesh (Istio) for it. Let's go! 

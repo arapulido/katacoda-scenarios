@@ -1,5 +1,5 @@
 {
-  "title": "Progressive Delivery in Kubernetes. Service Networking.",
+  "title": "Progressive Delivery in Kubernetes. Ingress.",
   "description": "",
   "difficulty": "Intermediate",
   "time": "30 minutes",
@@ -11,12 +11,16 @@
     },
     "steps": [
       {
-        "title": "Service Overview Page",
-        "text": "step5.md"
+        "title": "Ingress for Frontend",
+        "text": "step7.md"
       },
       {
-        "title": "Service Networking",
-        "text": "step6.md"
+        "title": "Canary with Ingress",
+        "text": "step8.md"
+      },
+      {
+        "title": "Ingress on different namespaces",
+        "text": "step9.md"
       }
     ],
     "finish": {
@@ -41,8 +45,8 @@
     "showdashboard": true,
     "dashboards": [
       {
-        "name": "Ecommerce App",
-        "port": 30001
+        "name": "Ingress Service",
+        "port": 32000
       }
     ]
   },

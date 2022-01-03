@@ -11,6 +11,10 @@
     },
     "steps": [
       {
+        "title": "Set up Ecommerce app with Service Mesh",
+        "text": "step10.md"
+      },
+      {
         "title": "Destination Rules with Istio",
         "text": "step11.md"
       },

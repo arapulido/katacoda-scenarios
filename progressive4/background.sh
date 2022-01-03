@@ -39,6 +39,13 @@ if [ "$STATUS" != "complete" ]; then
   kubectl apply -f manifest-files/istio/istio-config.yaml
   kubectl apply -f manifest-files/istio/istio-config.yaml
 
+  # Wait for Istio
+  NPODS=$(kubectl get pods -n istio-system 2> /dev/null | grep "1/1" | wc -l)
+  while [ "$NPODS" != "3" ]; do
+    sleep 0.3
+    NPODS=$(kubectl get pods -n istio-system 2> /dev/null | grep "1/1" | wc -l)
+  done
+
   wall -n "Deploying the ecommerce application"
   kubectl create ns database
   kubectl create ns ns1

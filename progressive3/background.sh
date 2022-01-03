@@ -40,7 +40,6 @@ if [ "$STATUS" != "complete" ]; then
   kubectl create ns database
   kubectl create ns ns1
   kubectl create ns ns2
-  kubectl create ns ns3
   kubectl create ns fake-traffic
   kubectl apply -f manifest-files/database -n database
   kubectl apply -f manifest-files/ecommerce-v1 -n ns1 

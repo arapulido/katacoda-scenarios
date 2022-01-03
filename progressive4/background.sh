@@ -48,21 +48,10 @@ if [ "$STATUS" != "complete" ]; then
 
   wall -n "Deploying the ecommerce application"
   kubectl create ns database
-  kubectl create ns ns1
-  kubectl create ns ns2
   kubectl create ns ns3
   kubectl create ns fake-traffic
   kubectl apply -f manifest-files/database -n database
-  kubectl apply -f manifest-files/ecommerce-v1 -n ns1 
   kubectl apply -f manifest-files/fake-traffic -n fake-traffic
-  kubectl apply -f manifest-files/ingress_ns/db.yaml -n ns2
   
-  NPODS=$(kubectl get pods -n ns1 --field-selector=status.phase=Running | grep -v NAME | wc -l)
-
-  while [ "$NPODS" != "3" ]; do
-    sleep 0.3
-    NPODS=$(kubectl get pods -n ns1 --field-selector=status.phase=Running | grep -v NAME | wc -l)
-  done
-
   echo "complete">>/root/status.txt
 fi

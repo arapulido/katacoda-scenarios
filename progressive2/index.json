@@ -23,13 +23,6 @@
       "text": "finish.md"
     },
     "assets": {
-    "host01": [
-      {
-        "file": "wait-datadog.sh",
-        "target": "/usr/local/bin",
-        "chmod": "+x"
-      }
-    ]
     }
   },
   "files": [

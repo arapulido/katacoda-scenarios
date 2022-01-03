@@ -1,3 +1,5 @@
+Wait some minutes until your environment is setup. Once it is setup, you will see the following message in your terminal:`OK, the training environment is installed and ready to go.`
+
 We will be using NGINX as our Ingress Controller. This is already running for you in your cluster. Check that the NGINX Ingress Controller is running correctly by executing this command: `kubectl get pods -n ingress-nginx -l app.kubernetes.io/component=controller`{{execute}} You should get an output similar to this one:
 
 ```

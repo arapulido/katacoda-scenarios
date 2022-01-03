@@ -1,0 +1,45 @@
+{
+  "title": "Progressive Delivery in Kubernetes. Service Meshes (Istio).",
+  "description": "",
+  "difficulty": "Intermediate",
+  "time": "30 minutes",
+  "details": {
+    "intro": {
+      "courseData": "background.sh",
+      "code": "foreground.sh",
+      "text": "intro.md"
+    },
+    "steps": [
+      {
+        "title": "Destination Rules with Istio",
+        "text": "step11.md"
+      },
+      {
+        "title": "Canary deployments with Istio",
+        "text": "step12.md"
+      }
+    ],
+    "finish": {
+      "text": "finish.md"
+    },
+    "assets": {
+    }
+  },
+  "files": [
+  ],
+  "environment": {
+    "uilayout": "editor-terminal-v1",
+    "exclusionPatterns": ["./go/*", "./Desktop/*"],
+    "hideHiddenFiles": true,
+    "showdashboard": true,
+    "dashboards": [
+      {
+        "name": "Istio Ingress Gateway",
+        "port": 30003
+      }
+    ]
+  },
+  "backend": {
+    "imageid": "datadog-k8s-v118-cluster-running"
+  }
+}
